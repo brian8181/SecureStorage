@@ -1,0 +1,10 @@
+C:\Users\brian\Source\CryptoCloud\POCLibrary\obj\Debug\POCLibrary.csprojResolveAssemblyReference.cache
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\POCLibrary.dll
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\POCLibrary.pdb
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\Utility.dll
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\MySql.Data.dll
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\System.Data.SQLite.dll
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\Utility.pdb
+C:\Users\brian\Source\CryptoCloud\POCLibrary\bin\Debug\System.Data.SQLite.xml
+C:\Users\brian\Source\CryptoCloud\POCLibrary\obj\Debug\POCLibrary.dll
+C:\Users\brian\Source\CryptoCloud\POCLibrary\obj\Debug\POCLibrary.pdb

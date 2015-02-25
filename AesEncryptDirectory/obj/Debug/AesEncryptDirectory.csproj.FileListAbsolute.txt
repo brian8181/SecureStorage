@@ -1,0 +1,11 @@
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\obj\Debug\AesEncryptDirectory.csprojResolveAssemblyReference.cache
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\AesEncryptDirectory.exe.config
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\AesEncryptDirectory.exe
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\AesEncryptDirectory.pdb
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\Utility.dll
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\MySql.Data.dll
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\System.Data.SQLite.dll
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\Utility.pdb
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\bin\Debug\System.Data.SQLite.xml
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\obj\Debug\AesEncryptDirectory.exe
+C:\Users\brian\Source\CryptoCloud\AesEncryptDirectory\obj\Debug\AesEncryptDirectory.pdb
