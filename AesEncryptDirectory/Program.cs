@@ -31,10 +31,12 @@ namespace AesEncryptDirectory
                 string path = "c:\\tmp\\outfiles\\" + Path.GetFileName(file);
                 File.WriteAllBytes(path, crypt);
 
+
+                // maybe hash file before encryption?
                 HMACSHA256 hmacsha256 = new HMACSHA256(aes.Key);
                 byte[] hash = hmacsha256.ComputeHash(data);
                 
-                File.WriteAllBytes("c:\\tmp\\outfiles\\_dir\\" + Path.GetFileNameWithoutExtension(file) + ".sig", hash);
+                File.WriteAllBytes("c:\\tmp\\outfiles\\_dir\\" + Path.GetFileName(file) + ".sig", hash);
 
             }
 
