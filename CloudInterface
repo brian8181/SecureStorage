@@ -1,0 +1,33 @@
+ICloudConnection
+{
+	byte[] GetKey(); // a global key
+	byte[] GetIV();  // a global iv, maybe append open to output
+	ICloud GetInterface(string user, string pass)
+}
+
+ICloud
+{
+
+	string GetDirectory(string path);
+	bool validateSig(byte[] file, byte[] sig);
+	void CreateDirectory(string path);
+	void CreateFile(string path, byte[] data);
+	byte[] ReadFile(string path);
+	void UpdateFile(string path);
+	void DeleteFile(string path);
+}
+
+ICrypt
+{
+	byte[] Decrypt(byte[] iv, byte[] key);
+	void Ecrypt(byte[] iv, byte[] key, byte[] data);
+	byte[] Hash(byte[] salt, byte[] key, byte[] data); // hash + salt = output
+	byte[] ValidateHash(byte[] hash, byte[] data); // hash + salt = input(data)
+}
+
+ICloudUtility
+{
+	GenerateKey();
+	GenerateIV();
+	CreateCloud();
+}
