@@ -98,9 +98,9 @@ namespace Utility
             Array.Copy(key, aes_key, key.Length);
             Array.Copy(iv, 0, aes_key, key.Length + 1, iv.Length);
 
-            // encrypt key using rsa public key
+            // encrypt key using qrsa public key
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            //rsa.FromXmlString("");
+            //qrsa.FromXmlString("");
             byte[] enc_key = rsa.Encrypt(aes_key, true);
 
             
@@ -114,7 +114,7 @@ namespace Utility
             return null;
 
             // 2 dycrypt
-            // use private rsa key to get aes key
+            // use private qrsa key to get aes key
             // dycrypt data using aes key
 
         }

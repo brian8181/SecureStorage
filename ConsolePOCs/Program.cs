@@ -16,37 +16,46 @@ namespace ConsolePOCs
             //File.WriteAllBytes("c:\\tmp\\privatekey2048.xml", ASCIIEncoding.ASCII.GetBytes(keys.PrivateKey));
             //File.WriteAllBytes("c:\\tmp\\publickey2048.xml", ASCIIEncoding.ASCII.GetBytes(keys.PublicKey));
 
-            QuickRSA.CreateKeyPair("c:\\tmp\\keys");
+            //QuickRSA.CreateKeyPair("c:\\tmp\\keys\\");
          
-            QuickRSA rsa = new QuickRSA();
-            rsa.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
+            QuickRSA qrsa = new QuickRSA();
+            qrsa.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
+            // save public key
+            //string pub_xml = qrsa.RSA.ToXmlString( false );
+            //File.WriteAllBytes("c:\\tmp\\My_Public.key", ASCIIEncoding.ASCII.GetBytes(pub_xml));
+            qrsa.SaveKey("c:\\tmp\\My_Public2.key", true);
 
             ////NO GO! -- byte[] data = File.ReadAllBytes("C:\\tmp\\infiles\\Desert.jpg");
             byte[] data = ASCIIEncoding.ASCII.GetBytes("Hello World!");
-            byte[] enc_data = rsa.Encrypt(data);
+            byte[] enc_data = qrsa.Encrypt(data);
             
-            byte[] denc_data = rsa.Decrypt(enc_data);
+            byte[] denc_data = qrsa.Decrypt(enc_data);
             string s = ASCIIEncoding.ASCII.GetString(denc_data);
 
 
 
-            byte[] signed_data = rsa.SignData(enc_data);
-            bool v = rsa.VerifyData(enc_data, signed_data);
+            byte[] signed_data = qrsa.SignData(enc_data, "c:\\tmp\\privatekey2048.xml");
+            bool v = qrsa.VerifyData(enc_data, signed_data);
 
             /////////////// TEST AES_RSA_HYBRID ///////////////////
-            QuickRSA rsa1 = new QuickRSA();
-            rsa1.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
-            byte[] data3 = File.ReadAllBytes("C:\\tmp\\infiles\\Desert.jpg");
-            byte[] rsa_aes_data = rsa1.Encrypt_RSA_AES(data3);
-            
+            byte[] rsa_aes_data = null;
+            using (QuickRSA rsa1 = new QuickRSA())
+            {
+                rsa1.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
+                byte[] data3 = File.ReadAllBytes("C:\\tmp\\infiles\\Desert.jpg");
+                rsa_aes_data = rsa1.Encrypt_RSA_AES(data3, "c:\\tmp\\privatekey2048.xml");
+            }
 
-            QuickRSA rsa2 = new QuickRSA();
-            rsa2.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
-            byte[] final = rsa2.Decrypt_RSA_AES(rsa_aes_data);
-            //string s2 = ASCIIEncoding.ASCII.GetString(final);
-            File.WriteAllBytes("c:\\tmp\\data66.jpg", final);
-            
 
+            using (QuickRSA rsa2 = new QuickRSA())
+            {
+                rsa2.LoadKey(UTF32Encoding.ASCII.GetString(File.ReadAllBytes("c:\\tmp\\privatekey2048.xml")));
+                byte[] final = rsa2.Decrypt_RSA_AES(rsa_aes_data, true);
+                //string s2 = ASCIIEncoding.ASCII.GetString(final);
+                File.WriteAllBytes("c:\\tmp\\data67.jpg", final);
+
+                bool ok = rsa2.VerifyData_RSA_AES(rsa_aes_data);
+            }
 
             ////////////////////////////////////////////////////////
 
