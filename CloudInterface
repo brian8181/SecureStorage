@@ -9,7 +9,7 @@ ICloud
 {
 
 	string GetDirectory(string path);
-	bool validateSig(byte[] file, byte[] sig);
+	bool ValidateSig(byte[] file, byte[] sig);
 	void CreateDirectory(string path);
 	void CreateFile(string path, byte[] data);
 	byte[] ReadFile(string path);
