@@ -66,38 +66,14 @@ namespace AesEncryptDirectory
             //CreateXML();
 
             //CreateKey("c:\\tmp\\aes_key\\key");
-            InitializeFileSystem("c:\\tmp\\infiles");
+            LoadKey("c:\\tmp\\aes_key\\key");
+            //InitializeFileSystem("c:\\tmp\\infiles");
+            GetDir("c:\\tmp\\fs\\ROOT");
+            XmlNode node = GetFile("c:\\tmp\\fs\\ROOT", "Chrysanthemum.jpg");
+           
+            
 
         }
-
-        //public static void CreateFakeXML()
-        //{
-        //    XmlDocument doc = new XmlDocument();
-
-        //    //(1) the xml declaration is recommended, but not mandatory
-        //    XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-        //    XmlElement root = doc.DocumentElement;
-        //    doc.InsertBefore(xmlDeclaration, root);
-
-        //    //(2) string.Empty makes cleaner code
-        //    XmlElement element1 = doc.CreateElement(string.Empty, "body", string.Empty);
-        //    doc.AppendChild(element1);
-
-        //    XmlElement element2 = doc.CreateElement(string.Empty, "level1", string.Empty);
-        //    element1.AppendChild(element2);
-
-        //    XmlElement element3 = doc.CreateElement(string.Empty, "level2", string.Empty);
-        //    XmlText text1 = doc.CreateTextNode("text");
-        //    element3.AppendChild(text1);
-        //    element2.AppendChild(element3);
-
-        //    XmlElement element4 = doc.CreateElement(string.Empty, "level2", string.Empty);
-        //    XmlText text2 = doc.CreateTextNode("other text");
-        //    element4.AppendChild(text2);
-        //    element2.AppendChild(element4);
-
-        //    doc.Save("c:\\tmp\\document.xml");
-        //}
 
         public static void CreateXML()
         {
@@ -167,13 +143,18 @@ namespace AesEncryptDirectory
             File.WriteAllBytes(path, key);
         }
 
-        byte[] key = null;
-        byte[] iv = null;
+        static byte[] key = null;
+        static byte[] iv = null;
 
         public static void LoadKey(string path)
         {
             byte[] key_iv = File.ReadAllBytes(path);
-            //
+
+            key = new byte[32];
+            iv = new byte[16];
+
+            Array.Copy(key_iv, key, 32);
+            Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
         /// <summary>
@@ -190,9 +171,9 @@ namespace AesEncryptDirectory
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            AesManaged aes = new AesManaged();
-            aes.GenerateKey();
-            aes.GenerateIV();
+            //AesManaged aes = new AesManaged();
+            //aes.GenerateKey();
+            //aes.GenerateIV();
             
             FileInfo[] in_files = DirectoryExt.GetFileInfos(path, "*");
             foreach (FileInfo file in in_files)
@@ -203,7 +184,7 @@ namespace AesEncryptDirectory
                 root.AppendChild(file_node);
 
                 byte[] data = File.ReadAllBytes(file.FullName);
-                byte[] crypt = Utility.CryptoFunctions.EncryptAES(aes.Key, data, aes.IV);
+                byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
 
                 byte[] md5 = CryptoFunctions.MD5(file.Name);
                 
@@ -214,7 +195,7 @@ namespace AesEncryptDirectory
 
                 //ADD SALT
                 
-                HMACSHA256 hmacsha256 = new HMACSHA256(aes.Key);
+                HMACSHA256 hmacsha256 = new HMACSHA256(key);
                 byte[] hash = hmacsha256.ComputeHash(data);
                 XmlNode signature = file_node.AppendChild(doc.CreateElement(string.Empty, "signature", string.Empty));
                 signature.InnerText = Convert.ToBase64String(hash);
@@ -236,7 +217,8 @@ namespace AesEncryptDirectory
             
             //  get file & encrypt
             byte[] data2 = File.ReadAllBytes("c:\\tmp\\root.xml");
-            byte[] crypt2 = Utility.CryptoFunctions.EncryptAES(aes.Key, data2, aes.IV);
+            string test = ASCIIEncoding.ASCII.GetString(data2);
+            byte[] crypt2 = Utility.CryptoFunctions.EncryptAES(key, data2, iv);
             // save encryptede contents as ROOT 
             File.WriteAllBytes("c:\\tmp\\fs\\ROOT", crypt2);
 
@@ -251,15 +233,101 @@ namespace AesEncryptDirectory
             return Utility.PasswordHash.CreateHash(name);
         }
 
+       // static ICloudFile cf = new CloudFile("c:\\tmp\\fs\\ROOT");
+
+        /// <summary>
+        /// return dir file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] GetDir(string path)
+        {
+            byte[] bts = File.ReadAllBytes(path);
+            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+            File.WriteAllBytes("tmp.xml", data);
+
+            //string xml = ASCIIEncoding.ASCII.GetString(data);
+
+            XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(xml);
+            doc.Load("tmp.xml");
+            XmlNodeList nodes = doc.SelectNodes("/root/file[name = \"Chrysanthemum.jpg\"]");
+
+
+            foreach (XmlNode n in nodes)
+            {
+                XmlNode name_node = n.FirstChild;
+                string name = name_node.InnerText;
+
+
+                string xml = n.OuterXml;
+                XmlNodeList l = n.SelectNodes("file/signature");
+
+                //XmlNode sig_node = n.FirstChild.NextSibling;
+                //string sig = sig_node.InnerText;
+                string sig  = n["signature"].InnerText;
+                
+            }
+
+
+
+            return null;
+        }
+
+        /// <summary>
+        /// get & decrypt file
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static XmlNode GetFile(string path, string name)
+        {
+            byte[] bts = File.ReadAllBytes(path);
+            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+            File.WriteAllBytes("tmp.xml", data);
+
+            //string xml = ASCIIEncoding.ASCII.GetString(data);
+
+            XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(xml);
+            doc.Load("tmp.xml");
+            XmlNodeList nodes = doc.SelectNodes("/root/file[name = \"" + name + "\"]");
+            return nodes[0];
+        }
+
+        //THE BIG THERE IO FUNCTIONS, can do anything with just these 3 
+        public static void Create(string path, byte[] data)
+        {
+
+        }
+
+        public static byte[] Read(string path)
         {
             return null;
         }
 
-        public static byte[] GetFile(string name)
+        public static void Delete(string path)
         {
-            return null;
         }
+
+        //AGGREGATE FUNCTIONS, use big 3
+        public static void Copy(string src, string dst)
+        {
+            //read file
+            //create new copy
+        }
+
+        public static void Move(string src, string dst)
+        {
+        }
+
+        public static void Update(string path, byte[] data)
+        {
+            //copy file
+            //delete old file
+            //crate file
+        }
+
+
 
     }
 }

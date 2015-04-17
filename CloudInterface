@@ -13,8 +13,15 @@ ICloud
 	void CreateDirectory(string path);
 	void CreateFile(string path, byte[] data);
 	byte[] ReadFile(string path);
+
+	// use copy & delete to update a file
 	void UpdateFile(string path);
+
+	// removes file a loction
 	void DeleteFile(string path);
+
+	// create copy of file to another location
+	void Copy(string src, string dst);
 }
 
 ICrypt
@@ -31,3 +38,24 @@ ICloudUtility
 	GenerateIV();
 	CreateCloud();
 }
+
+
+
+// file inteface
+
+Create
+Open
+Read
+Write
+Delete
+Update , delete & write
+
+// todo
+IFile
+{
+	FileStream Open(string path, FileMode mode,	FileAccess access);
+	public override int Read(byte[] array, int offset, int count);
+
+}
+
+
