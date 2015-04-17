@@ -274,6 +274,21 @@ namespace AesEncryptDirectory
             return null;
         }
 
+        public class FileDesc
+        {
+            string name;
+            string signature;
+            byte[] data;
+            DateTime created;
+            DateTime modified;
+        }
+
+
+        public static FileDesc[] GetDirectory(string path, bool recursive = false)
+        {
+            return null;
+        }
+
         /// <summary>
         /// get & decrypt file
         /// </summary>
@@ -291,11 +306,18 @@ namespace AesEncryptDirectory
             //doc.LoadXml(xml);
             doc.Load("tmp.xml");
             XmlNodeList nodes = doc.SelectNodes("/root/file[name = \"" + name + "\"]");
+                        
+
             return nodes[0];
         }
 
         //THE BIG THERE IO FUNCTIONS, can do anything with just these 3 
-        public static void Create(string path, byte[] data)
+        public static void Create(string path, byte[] data, string sigature)
+        {
+            //
+        }
+
+        public static void Create(FileDesc file_desc)
         {
 
         }

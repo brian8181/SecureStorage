@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AesEncryptDirectory
+namespace CryptoCloudLib
 {
-    interface ICloudFile
+    public interface ICloudFile
     {
         string[] GetDirectory(string path);
         bool ValidateSig(byte[] file, byte[] sig);
