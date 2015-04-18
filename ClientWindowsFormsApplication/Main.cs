@@ -35,7 +35,12 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-
+            
+            InitializeFrm dlg = new InitializeFrm();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Cloud.InitializeFileSystem(dlg.dirBrowser.TextBox.Text);
+            }
         }
 
         private void btnSettings_Click(object sender, EventArgs e)

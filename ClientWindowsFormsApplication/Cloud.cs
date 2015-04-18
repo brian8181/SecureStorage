@@ -16,6 +16,32 @@ namespace ClientWindowsFormsApplication
         private static byte[] key = null;
         private static byte[] iv  = null;
 
+        public static void CreateKey(string path)
+        {
+            AesManaged aes = new AesManaged();
+            aes.GenerateKey();
+            aes.GenerateIV();
+
+            byte[] key = new byte[aes.Key.Length + aes.IV.Length];
+
+            Array.Copy(aes.Key, key, aes.Key.Length);
+            Array.Copy(aes.IV, 0, key, aes.Key.Length, aes.IV.Length);
+
+            File.WriteAllBytes(path, key);
+        }
+
+        public static void LoadKey(string path)
+        {
+            byte[] key_iv = File.ReadAllBytes(path);
+
+            key = new byte[32];
+            iv = new byte[16];
+
+            Array.Copy(key_iv, key, 32);
+            Array.Copy(key_iv, 32, iv, 0, 16);
+        }
+
+
         /// <summary>
         /// set up a directorey based off local dir, include all from above
         /// </summary>
