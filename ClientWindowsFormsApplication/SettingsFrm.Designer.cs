@@ -92,7 +92,7 @@
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private Utility.GUI.DirBrowser dirBrowserWD;
-        private Utility.GUI.DirBrowser dirBrowserKD;
+        public Utility.GUI.DirBrowser dirBrowserWD;
+        public Utility.GUI.DirBrowser dirBrowserKD;
     }
 }

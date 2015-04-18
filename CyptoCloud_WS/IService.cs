@@ -11,30 +11,9 @@ namespace CyptoCloud_WS
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService" in both code and config file together.
     [ServiceContract]
-    public interface IService : ITest//, ICloudFile
+    public interface IService : ILowLevel
     {
-
-        [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        [OperationContract]
-        string[] GetDirectory(string path);
-        //bool ValidateSig(byte[] file, byte[] sig);
-        //void CreateDirectory(string path);
-        //// create file
-        //void Create(string path, byte[] data);
-        //// get file contents
-        //byte[] Read(string path);
-        //// use copy & delete to update a file
-        ////void Update(string path, byte[] data);
-        //// removes file a loction
-        //void Delete(string path);
-        //// create copy of file to another location
-        //void Copy(string src, string dst);
-
+     
     }
 
 

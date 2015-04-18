@@ -15,77 +15,61 @@ namespace CyptoCloud_WS
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service.svc or Service.svc.cs at the Solution Explorer and start debugging.
     public class Service : IService
     {
-        public string GetData(int value)
+        private string working_dir = "c:\\tmp\\svr\\";
+
+        #region ILowLevel Members
+
+        public void CreateEmpty(string name, int len, bool random = false)
         {
-            return string.Format("You entered: {0}", value);
+            throw new NotImplementedException();
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public void Create(string name, byte[] data)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            File.WriteAllBytes(working_dir + name, data);
         }
 
-        #region IService Members
-
-
-        public string Hello()
+        public byte[] Read(string name)
         {
-            return "Hello World!";
+            return File.ReadAllBytes(working_dir + name);
         }
 
-        #endregion
-
-        #region IService Members
-
-
-        public byte[] GetDirectory(string path)
+        public void Write(string name, int start, byte[] data)
         {
-            byte[] bts = File.ReadAllBytes(path);
-            //byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-            //File.WriteAllBytes("tmp.xml", data);
-
-            ////string xml = ASCIIEncoding.ASCII.GetString(data);
-
-            //XmlDocument doc = new XmlDocument();
-            ////doc.LoadXml(xml);
-            //doc.Load("tmp.xml");
-            //XmlNodeList nodes = doc.SelectNodes("/root/file[name = \"Chrysanthemum.jpg\"]");
-
-
-            //foreach (XmlNode n in nodes)
-            //{
-            //    XmlNode name_node = n.FirstChild;
-            //    string name = name_node.InnerText;
-
-
-            //    string xml = n.OuterXml;
-            //    XmlNodeList l = n.SelectNodes("file/signature");
-
-            //    //XmlNode sig_node = n.FirstChild.NextSibling;
-            //    //string sig = sig_node.InnerText;
-            //    string sig = n["signature"].InnerText;
-
-            //}
-
-            return bts;
+            throw new NotImplementedException();
         }
 
-        #endregion
+        public void Delete(string name)
+        {
+            File.Delete(working_dir + name);
+        }
 
+        public void Append(string name, byte[] data)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Move(string src, string dst)
+        {
+            throw new NotImplementedException();
+        }
 
-        #region IService Members
+        public void Copy(string src, string dst)
+        {
+            throw new NotImplementedException();
+        }
 
+        public byte[] ReadData(string name, int start, int lenght)
+        {
+            throw new NotImplementedException();
+        }
 
-        string[] IService.GetDirectory(string path)
+        public void MoveData(string src, int src_idx, string dst, int dst_idx, int len)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyData(string src, int src_idx, string dst, int dst_idx, int len)
         {
             throw new NotImplementedException();
         }

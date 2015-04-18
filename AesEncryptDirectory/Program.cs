@@ -67,9 +67,9 @@ namespace AesEncryptDirectory
 
             //CreateKey("c:\\tmp\\aes_key\\key");
             LoadKey("c:\\tmp\\aes_key\\key");
-            //InitializeFileSystem("c:\\tmp\\infiles");
-            GetDir("c:\\tmp\\fs\\ROOT");
-            XmlNode node = GetFile("c:\\tmp\\fs\\ROOT", "Chrysanthemum.jpg");
+            InitializeFileSystem("c:\\tmp\\infiles");
+            //GetDir("c:\\tmp\\fs\\ROOT");
+           //XmlNode node = GetFile("c:\\tmp\\fs\\ROOT", "Chrysanthemum.jpg");
            
             
 
@@ -253,8 +253,7 @@ namespace AesEncryptDirectory
             doc.Load("tmp.xml");
             XmlNodeList nodes = doc.SelectNodes("/root/file[name = \"Chrysanthemum.jpg\"]");
 
-
-            foreach (XmlNode n in nodes)
+             foreach (XmlNode n in nodes)
             {
                 XmlNode name_node = n.FirstChild;
                 string name = name_node.InnerText;
@@ -266,8 +265,13 @@ namespace AesEncryptDirectory
                 //XmlNode sig_node = n.FirstChild.NextSibling;
                 //string sig = sig_node.InnerText;
                 string sig  = n["signature"].InnerText;
+
+                 
+
                 
             }
+
+
 
 
 

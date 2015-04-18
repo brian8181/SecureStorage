@@ -21,14 +21,11 @@ namespace ClientWindowsFormsApplication
 
            dirBrowserWD.TextBox.Text = Properties.Settings.Default.working_dir;
            dirBrowserKD.TextBox.Text = Properties.Settings.Default.key_path;
-
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.working_dir = dirBrowserWD.TextBox.Text;
-            Properties.Settings.Default.key_path = dirBrowserKD.TextBox.Text;
-            Properties.Settings.Default.Save();
+           
         }
     }
 }

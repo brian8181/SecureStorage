@@ -25,7 +25,7 @@ namespace ClientWindowsFormsApplication.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string working_dir {
             get {
                 return ((string)(this["working_dir"]));
@@ -37,13 +37,25 @@ namespace ClientWindowsFormsApplication.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string key_path {
             get {
                 return ((string)(this["key_path"]));
             }
             set {
                 this["key_path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string init_dir {
+            get {
+                return ((string)(this["init_dir"]));
+            }
+            set {
+                this["init_dir"] = value;
             }
         }
     }
