@@ -44,6 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cloud.cs" />
+    <Compile Include="CreateFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateFrm.Designer.cs">
+      <DependentUpon>CreateFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteFrm.Designer.cs">
+      <DependentUpon>DeleteFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,6 +65,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReadFrm.Designer.cs">
+      <DependentUpon>ReadFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsFrm.Designer.cs">
+      <DependentUpon>SettingsFrm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CreateFrm.resx">
+      <DependentUpon>CreateFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteFrm.resx">
+      <DependentUpon>DeleteFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -64,6 +95,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReadFrm.resx">
+      <DependentUpon>ReadFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsFrm.resx">
+      <DependentUpon>SettingsFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -76,6 +113,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\utility\utility.extra\utility.extra.csproj">
+      <Project>{20FCCCAF-EF9B-48F8-9810-0365985AAEA2}</Project>
+      <Name>utility.extra</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utility\utility\utility.csproj">
+      <Project>{4dfc8774-e67d-4eff-9249-301c0d5eb158}</Project>
+      <Name>utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

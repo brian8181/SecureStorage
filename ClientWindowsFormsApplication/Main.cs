@@ -29,8 +29,21 @@ namespace ClientWindowsFormsApplication
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            DeleteFrm dlg = new DeleteFrm();
+            dlg.ShowDialog();
+        }
+
+        private void btnInitialize_Click(object sender, EventArgs e)
+        {
 
         }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            SettingsFrm dlg = new SettingsFrm();
+            dlg.ShowDialog();
+        }
+
 
        
     }

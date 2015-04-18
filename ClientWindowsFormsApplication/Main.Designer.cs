@@ -32,9 +32,11 @@
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.btnCreateKey = new System.Windows.Forms.Button();
+            this.btnLoadKey = new System.Windows.Forms.Button();
+            this.cbSync = new System.Windows.Forms.CheckBox();
+            this.btnInitialize = new System.Windows.Forms.Button();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -47,7 +49,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(200, 106);
+            this.btnCreate.Location = new System.Drawing.Point(194, 222);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -57,7 +59,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(200, 135);
+            this.btnRead.Location = new System.Drawing.Point(194, 251);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -67,7 +69,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(200, 164);
+            this.btnDelete.Location = new System.Drawing.Point(194, 280);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -75,42 +77,64 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // button1
+            // btnCreateKey
             // 
-            this.button1.Location = new System.Drawing.Point(200, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Create Key";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCreateKey.Location = new System.Drawing.Point(200, 62);
+            this.btnCreateKey.Name = "btnCreateKey";
+            this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
+            this.btnCreateKey.TabIndex = 4;
+            this.btnCreateKey.Text = "Create Key";
+            this.btnCreateKey.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnLoadKey
             // 
-            this.button2.Location = new System.Drawing.Point(200, 31);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(102, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Load Key";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnLoadKey.Location = new System.Drawing.Point(200, 91);
+            this.btnLoadKey.Name = "btnLoadKey";
+            this.btnLoadKey.Size = new System.Drawing.Size(102, 23);
+            this.btnLoadKey.TabIndex = 5;
+            this.btnLoadKey.Text = "Load Key";
+            this.btnLoadKey.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // cbSync
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(222, 329);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(62, 17);
-            this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "syncing";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbSync.AutoSize = true;
+            this.cbSync.Location = new System.Drawing.Point(222, 329);
+            this.cbSync.Name = "cbSync";
+            this.cbSync.Size = new System.Drawing.Size(62, 17);
+            this.cbSync.TabIndex = 6;
+            this.cbSync.Text = "syncing";
+            this.cbSync.UseVisualStyleBackColor = true;
+            // 
+            // btnInitialize
+            // 
+            this.btnInitialize.Location = new System.Drawing.Point(200, 5);
+            this.btnInitialize.Name = "btnInitialize";
+            this.btnInitialize.Size = new System.Drawing.Size(102, 23);
+            this.btnInitialize.TabIndex = 7;
+            this.btnInitialize.Text = "Initialize";
+            this.btnInitialize.UseVisualStyleBackColor = true;
+            this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Location = new System.Drawing.Point(200, 33);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(102, 23);
+            this.btnSettings.TabIndex = 8;
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(308, 358);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnSettings);
+            this.Controls.Add(this.btnInitialize);
+            this.Controls.Add(this.cbSync);
+            this.Controls.Add(this.btnLoadKey);
+            this.Controls.Add(this.btnCreateKey);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnRead);
             this.Controls.Add(this.btnCreate);
@@ -130,9 +154,11 @@
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button btnCreateKey;
+        private System.Windows.Forms.Button btnLoadKey;
+        private System.Windows.Forms.CheckBox cbSync;
+        private System.Windows.Forms.Button btnInitialize;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 
