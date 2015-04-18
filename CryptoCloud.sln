@@ -28,6 +28,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientConsoleApplication", 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWindowsFormsApplication", "ClientWindowsFormsApplication\ClientWindowsFormsApplication.csproj", "{A40EB0E1-096F-45BF-B78C-D83F43348792}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E94DC9F5-FA03-4130-B3EE-D0239A2ED060} = {E94DC9F5-FA03-4130-B3EE-D0239A2ED060}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWebApplication", "ClientWebApplication\ClientWebApplication.csproj", "{71CAF1B2-C321-4A66-9A7F-0E4B912C6339}"
 EndProject
