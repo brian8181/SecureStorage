@@ -50,7 +50,6 @@ namespace ClientWindowsFormsApplication
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
             GetDirs();
-            
         }
 
         public void GetDirs()

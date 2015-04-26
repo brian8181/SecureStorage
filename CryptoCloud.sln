@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LowLevelDataAPI", "LowLevel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSyncService", "CloudSyncService\CloudSyncService.csproj", "{A6F3D657-E0B2-4885-88F0-F0F9CBB49DF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlTesting", "XmlTesting\XmlTesting.csproj", "{DBCB96E4-45C2-44EE-97F1-FB725366B69A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,12 @@ Global
 		{A6F3D657-E0B2-4885-88F0-F0F9CBB49DF1}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F3D657-E0B2-4885-88F0-F0F9CBB49DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F3D657-E0B2-4885-88F0-F0F9CBB49DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBCB96E4-45C2-44EE-97F1-FB725366B69A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

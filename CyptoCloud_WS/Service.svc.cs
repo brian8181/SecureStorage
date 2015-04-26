@@ -19,29 +19,29 @@ namespace CyptoCloud_WS
 
         #region ILowLevel Members
 
-        public void CreateEmpty(string name, int len, bool random = false)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Create(string name, byte[] data)
         {
             File.WriteAllBytes(working_dir + name, data);
+        }
+
+        public void CreateEmpty(string name, int len, bool random = false)
+        {
+            throw new NotImplementedException();
         }
 
         public byte[] Read(string name)
         {
             return File.ReadAllBytes(working_dir + name);
         }
+        
+        public void Delete(string name)
+        {
+            File.Delete(working_dir + name);
+        }
 
         public void Write(string name, int start, byte[] data)
         {
             throw new NotImplementedException();
-        }
-
-        public void Delete(string name)
-        {
-            File.Delete(working_dir + name);
         }
 
         public void Append(string name, byte[] data)
