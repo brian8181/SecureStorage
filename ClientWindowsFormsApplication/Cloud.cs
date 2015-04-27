@@ -45,70 +45,6 @@ namespace ClientWindowsFormsApplication
         }
 
 
-        /// <summary>
-        /// set up a directorey based off local dir, include all from above
-        /// </summary>
-        public void InitializeFileSystem(string path)
-        {
-            string work_dir = Properties.Settings.Default.working_dir;
-            LoadKey(Properties.Settings.Default.key_path + "\\key");
-            
-            XmlDocument doc = new XmlDocument();    
-            //xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            XmlElement decel = doc.DocumentElement;
-            XmlNode node = doc.InsertBefore(xmlDeclaration, decel);
-            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
-            doc.AppendChild(root);
-
-            FileInfo[] in_files = DirectoryExt.GetFileInfos(path, "*");
-            foreach (FileInfo file in in_files)
-            {
-                XmlElement file_node = doc.CreateElement(string.Empty, "file", string.Empty);
-                XmlNode name = file_node.AppendChild(doc.CreateElement(string.Empty, "name", string.Empty));
-                name.InnerText = Path.GetFileName(file.FullName);
-                root.AppendChild(file_node);
-
-                byte[] data = File.ReadAllBytes(file.FullName);
-                byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-
-                byte[] md5 = CryptoFunctions.MD5(file.Name);
-
-                // need a hash as file name
-                string hash_name = CryptoFunctions.FromBytesToHex(md5);
-                string file_path = Properties.Settings.Default.working_dir + "\\" + hash_name;
-                File.WriteAllBytes(file_path, crypt);
-
-                //ADD SALT
-
-                HMACSHA256 hmacsha256 = new HMACSHA256(key);
-                byte[] hash = hmacsha256.ComputeHash(data);
-                XmlNode signature = file_node.AppendChild(doc.CreateElement(string.Empty, "signature", string.Empty));
-                signature.InnerText = Convert.ToBase64String(hash);
-                root.AppendChild(file_node);
-
-                DateTime dt = DateTime.Now;
-
-                XmlNode created = file_node.AppendChild(doc.CreateElement(string.Empty, "created", string.Empty));
-                created.InnerText = dt.ToFileTime().ToString();
-                root.AppendChild(file_node);
-
-                XmlNode modified = file_node.AppendChild(doc.CreateElement(string.Empty, "modified", string.Empty));
-                modified.InnerText = dt.ToFileTimeUtc().ToString();
-                root.AppendChild(file_node);
-            }
-
-            // save tmp location
-            doc.Save("c:\\tmp\\root3.xml");
-
-            //  get file & encrypt
-            byte[] data2 = File.ReadAllBytes("c:\\tmp\\root.xml");
-            string test = ASCIIEncoding.ASCII.GetString(data2);
-            byte[] crypt2 = Utility.CryptoFunctions.EncryptAES(key, data2, iv);
-            // save encryptede contents as ROOT 
-            File.WriteAllBytes("c:\\tmp\\fs\\ROOT", crypt2);
-        }
-
         public XmlNodeList GetDirectories()
         {
             // decrypt
@@ -124,12 +60,15 @@ namespace ClientWindowsFormsApplication
             return nodes;
         }
 
-        public void Create(string name, byte[] data)
+        public void Create(string path, byte[] data)
         {
-            byte[] md5 = CryptoFunctions.MD5(name);
-            // need a hash as file name
+            byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+            byte[] md5 = CryptoFunctions.MD5(path);
+            // need a hash as file path
+
+            // the hash is insecure dictionay attack is possible, use HMAC 
             string hash_name = CryptoFunctions.FromBytesToHex(md5);
-            cloud.Create(hash_name, data);
+            cloud.Create(hash_name, data); 
 
             // add node to ROOT
 
@@ -139,19 +78,49 @@ namespace ClientWindowsFormsApplication
             File.WriteAllBytes("tmp.xml", data);
 
             // do not need a a member var
-            XmlDocument root = new XmlDocument();
+            XmlDocument doc = new XmlDocument();
             // BKP hack, could just load string but there is an issue here
-            root.Load("tmp.xml");
+            doc.Load("tmp.xml");
 
-            XmlNode node = root.FirstChild;
-            string s = node.Name;
+            XmlNode root = doc.DocumentElement;
+            XmlNode file = doc.CreateElement(string.Empty, "file", string.Empty);
+
+            //APPEND path
+            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+            name_node.InnerText = Path.GetFileName(path);
+            file.AppendChild(name_node);
+
+            //APPEND signature
+            byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
+            XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
+            signature_node.InnerText = Convert.ToBase64String(sha256);
+            file.AppendChild(signature_node);
+
+            //APPEND dates
+            DateTime dt = DateTime.Now;
+
+            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
+            created_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(created_node);
+
+            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
+            modified_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(modified_node);
             
+            root.AppendChild(file);
+            doc.Save("tmp.xml");
+
+
+            // delete old dir file
+            cloud.Delete("ROOT");
+            // create new ROOT/dir
+            data = File.ReadAllBytes("tmp.xml");
+            crypt = CryptoFunctions.EncryptAES(key, data, iv);
+            cloud.Create("ROOT", crypt);
                 
 
         }
-
-
-
+        
         public void Delete(string name)
         {
             // delete file 
@@ -169,7 +138,7 @@ namespace ClientWindowsFormsApplication
             // BKP hack, could just load string but there is an issue here
             root.Load("tmp.xml");
 
-            //XmlNode n = FindFileNode(name);
+            //XmlNode n = FindFileNode(path);
             XmlNode n = root.SelectSingleNode("/root/file[name = \"" + name + "\"]");
             n.ParentNode.RemoveChild(n);
             root.Save("tmp.xml");
@@ -182,82 +151,50 @@ namespace ClientWindowsFormsApplication
             cloud.Create("ROOT", crypt);
         }
 
-        //public XmlNode CreateFileNode()
+
+
+
+
+
+
+
+
+
+        ///// <summary>
+        ///// get all file nodes
+        ///// </summary>
+        ///// <param path="doc"></param>
+        ///// <returns></returns>
+        //public XmlNodeList GetFileNodes(out XmlDocument doc)
         //{
-        //    XmlDocument doc = new XmlDocument();    
+        //    // decrypt
+        //    byte[] bts = cloud.Read("ROOT");
+        //    byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+        //    File.WriteAllBytes("tmp.xml", data);
+
+        //    doc = new XmlDocument();
+        //    // BKP hack, could just load string but there is an issue here
         //    doc.Load("tmp.xml");
-        //    XmlNode root = doc.NextSibling;
-
-        //    XmlElement file_node = doc.CreateElement(string.Empty, "file", string.Empty);
-        //    XmlNode name = file_node.AppendChild(doc.CreateElement(string.Empty, "name", string.Empty));
-        //    name.InnerText = Path.GetFileName(file.FullName);
-        //    root.AppendChild(file_node);
-
-        //    byte[] data = File.ReadAllBytes(file.FullName);
-        //    byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-
-        //    byte[] md5 = CryptoFunctions.MD5(file.Name);
-
-        //    // need a hash as file name
-        //    string hash_name = CryptoFunctions.FromBytesToHex(md5);
-        //    string file_path = Properties.Settings.Default.working_dir + "\\" + hash_name;
-        //    File.WriteAllBytes(file_path, crypt);
-
-        //    //ADD SALT
-
-        //    HMACSHA256 hmacsha256 = new HMACSHA256(key);
-        //    byte[] hash = hmacsha256.ComputeHash(data);
-        //    XmlNode signature = file_node.AppendChild(doc.CreateElement(string.Empty, "signature", string.Empty));
-        //    signature.InnerText = Convert.ToBase64String(hash);
-        //    root.AppendChild(file_node);
-
-        //    DateTime dt = DateTime.Now;
-
-        //    XmlNode created = file_node.AppendChild(doc.CreateElement(string.Empty, "created", string.Empty));
-        //    created.InnerText = dt.ToFileTime().ToString();
-        //    root.AppendChild(file_node);
-
-        //    XmlNode modified = file_node.AppendChild(doc.CreateElement(string.Empty, "modified", string.Empty));
-        //    modified.InnerText = dt.ToFileTimeUtc().ToString();
-        //    root.AppendChild(file_node);
+        //    return doc.SelectNodes("/root/file");
         //}
 
+        ///// <summary>
+        ///// find a file node by path
+        ///// </summary>
+        ///// <param path="nodes"></param>
+        ///// <param path="path"></param>
+        ///// <returns></returns>
+        //public XmlNode FindFileNode(string name)
+        //{
+        //    // decrypt
+        //    byte[] bts = cloud.Read("ROOT");
+        //    byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+        //    File.WriteAllBytes("tmp.xml", data);
 
-        /// <summary>
-        /// get all file nodes
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <returns></returns>
-        public XmlNodeList GetFileNodes(out XmlDocument doc)
-        {
-            // decrypt
-            byte[] bts = cloud.Read("ROOT");
-            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-            File.WriteAllBytes("tmp.xml", data);
-
-            doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
-            return doc.SelectNodes("/root/file");
-        }
-
-        /// <summary>
-        /// find a file node by name
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public XmlNode FindFileNode(string name)
-        {
-            // decrypt
-            byte[] bts = cloud.Read("ROOT");
-            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-            File.WriteAllBytes("tmp.xml", data);
-
-            XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
-            return doc.SelectSingleNode("/root/file[name = \"" + name + "\"]");
-        }
+        //    XmlDocument doc = new XmlDocument();
+        //    // BKP hack, could just load string but there is an issue here
+        //    doc.Load("tmp.xml");
+        //    return doc.SelectSingleNode("/root/file[path = \"" + name + "\"]");
+        //}
     }
 }

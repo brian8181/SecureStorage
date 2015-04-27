@@ -66,7 +66,7 @@ namespace AesEncryptDirectory
             //CreateXML();
 
             //CreateKey("c:\\tmp\\aes_key\\key");
-            LoadKey("c:\\tmp\\aes_key\\key");
+            //LoadKey("c:\\tmp\\aes_key\\key");
             InitializeFileSystem("c:\\tmp\\infiles");
             //GetDir("c:\\tmp\\fs\\ROOT");
            //XmlNode node = GetFile("c:\\tmp\\fs\\ROOT", "Chrysanthemum.jpg");
@@ -179,6 +179,7 @@ namespace AesEncryptDirectory
             foreach (FileInfo file in in_files)
             {
                 XmlElement file_node = doc.CreateElement(string.Empty, "file", string.Empty);
+
                 XmlNode name = file_node.AppendChild(doc.CreateElement(string.Empty, "name", string.Empty));
                 name.InnerText = Path.GetFileName(file.FullName);
                 root.AppendChild(file_node);
@@ -216,16 +217,16 @@ namespace AesEncryptDirectory
             doc.Save("c:\\tmp\\root.xml");
             
             //  get file & encrypt
-            byte[] data2 = File.ReadAllBytes("c:\\tmp\\root.xml");
-            string test = ASCIIEncoding.ASCII.GetString(data2);
-            byte[] crypt2 = Utility.CryptoFunctions.EncryptAES(key, data2, iv);
-            // save encryptede contents as ROOT 
-            File.WriteAllBytes("c:\\tmp\\fs\\ROOT", crypt2);
+            //byte[] data2 = File.ReadAllBytes("c:\\tmp\\root.xml");
+            //string test = ASCIIEncoding.ASCII.GetString(data2);
+            //byte[] crypt2 = Utility.CryptoFunctions.EncryptAES(key, data2, iv);
+            //// save encryptede contents as ROOT 
+            //File.WriteAllBytes("c:\\tmp\\fs\\ROOT", crypt2);
 
 
-            //testing
-            string s = GetHashSaltFileName("ROOT");
-            bool v = Utility.PasswordHash.ValidatePassword("ROOT", s);
+            ////testing
+            //string s = GetHashSaltFileName("ROOT");
+            //bool v = Utility.PasswordHash.ValidatePassword("ROOT", s);
         }
 
         public static string GetHashSaltFileName(string name)

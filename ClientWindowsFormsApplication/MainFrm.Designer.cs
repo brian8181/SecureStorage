@@ -10,7 +10,7 @@
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param path="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -145,7 +145,6 @@
             this.Name = "MainFrm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "CryptoCloud";
-            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

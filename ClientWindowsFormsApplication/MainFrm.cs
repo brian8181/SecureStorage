@@ -15,7 +15,8 @@ namespace ClientWindowsFormsApplication
 {
     public partial class MainFrm : Form
     {
-        Cloud cloud = new Cloud();
+        private Cloud cloud = new Cloud();
+
         public MainFrm()
         {
             InitializeComponent();
@@ -24,14 +25,21 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-            //InitializeFrm dlg = new InitializeFrm();
-            //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    cloud.InitializeFileSystem(dlg.dirBrowser.TextBox.Text);
-            //    Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
-            //    Properties.Settings.Default.Save();
-            //}
+            InitializeFrm dlg = new InitializeFrm();
+            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                //todo
+
+                Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+
+        private void btnCreateKey_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -61,7 +69,7 @@ namespace ClientWindowsFormsApplication
             // add to fileList
             foreach (XmlNode n in files)
             {
-                string name = n["name"].InnerText;
+                string name = n["name"].InnerText;  
                 fileList.Items.Add(name);
             }
         }
@@ -72,7 +80,7 @@ namespace ClientWindowsFormsApplication
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                cloud.Create(dlg.fileBrowser.TextBox.Text, data);
             }
         }
 
@@ -92,15 +100,8 @@ namespace ClientWindowsFormsApplication
         }
         
 
-        private void btnCreateKey_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void MainFrm_Load(object sender, EventArgs e)
-        {
-
-        }
+     
       
     }
 }
