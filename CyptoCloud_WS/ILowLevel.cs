@@ -48,5 +48,23 @@ namespace CyptoCloud_WS
         // src & dst can be same
         [OperationContract]
         void CopyData(string src, int src_idx, string dst, int dst_idx, int len);
+
+
+        //long GetUsage();
+
+        // get cout all files
+        //[OperationContract]
+        //int GetCount();
+        
+        //return subset of file list
+        //string[] GetFiles(int idx, int len);
+
+        // get list of all files in dir, used for 
+        //[OperationContract]
+        //string[] GetAll();
+
+        // get list of all files in dir, used for 
+        //[OperationContract]
+        //void DeleteAll();
     }
 }

@@ -44,6 +44,65 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
+        // todo initial svr directory directly
+        public void Initialize(string in_path, string out_path)
+        {
+            in_path = in_path.TrimEnd('\\');
+            out_path = out_path.TrimEnd('\\');
+
+            XmlDocument doc = new XmlDocument();
+
+            //xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlElement decel = doc.DocumentElement;
+            XmlNode node = doc.InsertBefore(xmlDeclaration, decel);
+
+            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
+            doc.AppendChild(root);
+
+            FileInfo[] in_files = DirectoryExt.GetFileInfos(in_path, "*");
+            foreach (FileInfo file in in_files)
+            {
+                byte[] data = File.ReadAllBytes(file.FullName);
+                //todo, write file to disk
+                string secure_name = GetSecureName(file.Name);
+                byte[] secure_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+                File.WriteAllBytes(out_path + "\\" + secure_name, secure_data);
+                                
+                XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
+
+                //APPEND path
+                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+                name_node.InnerText = file.Name;
+                file_node.AppendChild(name_node);
+
+                //APPEND signature
+                byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
+                XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
+                signature_node.InnerText = Convert.ToBase64String(sha256);
+                file_node.AppendChild(signature_node);
+
+                //APPEND dates
+                DateTime dt = DateTime.Now;
+
+                XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
+                created_node.InnerText = dt.ToFileTime().ToString();
+                file_node.AppendChild(created_node);
+
+                XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
+                modified_node.InnerText = dt.ToFileTime().ToString();
+                file_node.AppendChild(modified_node);
+
+                root.AppendChild(file_node);
+            }
+
+            doc.Save(@"ROOT.xml");
+
+            byte[] xml_file_data = File.ReadAllBytes("ROOT.xml");
+            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
+            File.WriteAllBytes(out_path + "\\" + "ROOT", encrypted_xml_file_data);
+        }
+
 
         public XmlNodeList GetDirectories()
         {
@@ -60,15 +119,26 @@ namespace ClientWindowsFormsApplication
             return nodes;
         }
 
+        private string GetSecureName(string name)
+        {
+            HMACSHA256 hmacsha256 = new HMACSHA256(key);
+            byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(name);
+            byte[] hash = hmacsha256.ComputeHash(path_bytes);
+            return CryptoFunctions.FromBytesToHex(hash);
+        }
+
         public void Create(string path, byte[] data)
         {
             byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-            byte[] md5 = CryptoFunctions.MD5(path);
-            // need a hash as file path
 
+            //HMACSHA256 hmacsha256 = new HMACSHA256(key);
+
+            //byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(path);
+            //byte[] hash = hmacsha256.ComputeHash(path_bytes);
+ 
             // the hash is insecure dictionay attack is possible, use HMAC 
-            string hash_name = CryptoFunctions.FromBytesToHex(md5);
-            cloud.Create(hash_name, data); 
+            string secure_name = GetSecureName(path);
+            cloud.Create(secure_name, data); 
 
             // add node to ROOT
 
@@ -124,8 +194,7 @@ namespace ClientWindowsFormsApplication
         public void Delete(string name)
         {
             // delete file 
-            byte[] md5 = CryptoFunctions.MD5(name);
-            string hash_name = CryptoFunctions.FromBytesToHex(md5);
+            string hash_name = GetSecureName(name);
             cloud.Delete(hash_name);
             
             // decrypt
@@ -151,8 +220,9 @@ namespace ClientWindowsFormsApplication
             cloud.Create("ROOT", crypt);
         }
 
-
-
+        public void Read(string path)
+        {
+        }
 
 
 

@@ -20,7 +20,8 @@ namespace XmlTesting
 
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
-            
+
+                       
             XmlElement file = doc.CreateElement(string.Empty, "file", string.Empty);
             XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
             file.AppendChild(name_node);

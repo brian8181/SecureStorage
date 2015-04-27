@@ -25,21 +25,24 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-            InitializeFrm dlg = new InitializeFrm();
-            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                //todo
+            //todo
+            cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
 
-                Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
-                Properties.Settings.Default.Save();
-            }
+            //InitializeFrm dlg = new InitializeFrm();
+            //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
+            //if (dlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    //todo
+            //    cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+
+            //    Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
+            //    Properties.Settings.Default.Save();
+            //}
         }
 
 
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -57,10 +60,10 @@ namespace ClientWindowsFormsApplication
 
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
-            GetDirs();
+            GetDirectories();
         }
 
-        public void GetDirs()
+        public void GetDirectories()
         {
             string dir = Properties.Settings.Default.working_dir;
             XmlNodeList files = cloud.GetDirectories();
@@ -81,12 +84,18 @@ namespace ClientWindowsFormsApplication
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
                 cloud.Create(dlg.fileBrowser.TextBox.Text, data);
+                GetDirectories();
             }
+            
         }
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-
+            string name = (string)fileList.SelectedItem;
+            if (name != null)
+            {
+                cloud.Read(name);
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -95,13 +104,8 @@ namespace ClientWindowsFormsApplication
             if(name != null)
             {
                 cloud.Delete(name);
-                GetDirs();
+                GetDirectories();
             }
         }
-        
-
-
-     
-      
-    }
+   }
 }
