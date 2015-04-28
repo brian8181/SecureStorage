@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E9EEEA72-B0AD-422A-90A1-5E8D7877AB87}"
 	ProjectSection(SolutionItems) = preProject
 		CloudInterface = CloudInterface
+		Paths.txt = Paths.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAS Tester", "RAS Tester\RAS Tester.csproj", "{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}"

@@ -80,6 +80,12 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILowLevel/CopyData", ReplyAction="http://tempuri.org/ILowLevel/CopyDataResponse")]
         System.Threading.Tasks.Task CopyDataAsync(string src, int src_idx, string dst, int dst_idx, int len);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILowLevel/GetCount", ReplyAction="http://tempuri.org/ILowLevel/GetCountResponse")]
+        int GetCount();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILowLevel/GetCount", ReplyAction="http://tempuri.org/ILowLevel/GetCountResponse")]
+        System.Threading.Tasks.Task<int> GetCountAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -195,6 +201,14 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         public System.Threading.Tasks.Task CopyDataAsync(string src, int src_idx, string dst, int dst_idx, int len) {
             return base.Channel.CopyDataAsync(src, src_idx, dst, dst_idx, len);
+        }
+        
+        public int GetCount() {
+            return base.Channel.GetCount();
+        }
+        
+        public System.Threading.Tasks.Task<int> GetCountAsync() {
+            return base.Channel.GetCountAsync();
         }
     }
 }

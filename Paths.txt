@@ -1,0 +1,15 @@
+FUTURE FEATURES
+
+example create
+
+a/b/c/test.jpg
+
+if not exsit create an a folder OR error
+
+
+create a a/b folder
+create a a/b/c folder
+create file a/b/b/test.jpg
+
+
+

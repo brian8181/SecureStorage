@@ -53,18 +53,17 @@ namespace CyptoCloud_WS
         //long GetUsage();
 
         // get cout all files
-        //[OperationContract]
-        //int GetCount();
+        [OperationContract]
+        int GetCount();
         
         //return subset of file list
-        //string[] GetFiles(int idx, int len);
+        string[] GetNames(int idx, int len);
 
+        //return subset of file list
+        string[] GetAllNames();
+               
         // get list of all files in dir, used for 
-        //[OperationContract]
-        //string[] GetAll();
-
-        // get list of all files in dir, used for 
-        //[OperationContract]
-        //void DeleteAll();
+        [OperationContract]
+        void DeleteAll();
     }
 }

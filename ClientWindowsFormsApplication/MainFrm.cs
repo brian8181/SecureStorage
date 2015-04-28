@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using Utility;
 
 namespace ClientWindowsFormsApplication
 {
@@ -20,13 +21,17 @@ namespace ClientWindowsFormsApplication
         public MainFrm()
         {
             InitializeComponent();
-            cloud.LoadKey(Properties.Settings.Default.key_path.TrimEnd('\\') + "\\key");
+            cloud.LoadKey("c:\\tmp\\aes_key\\key");
+
+            //test count
+            int c = cloud.GetCount();
         }
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             //todo
             cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            StdMsgBox.OK("Initialize Complete");
 
             //InitializeFrm dlg = new InitializeFrm();
             //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
@@ -39,10 +44,10 @@ namespace ClientWindowsFormsApplication
             //    Properties.Settings.Default.Save();
             //}
         }
-
-
+        
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
+
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -83,7 +88,7 @@ namespace ClientWindowsFormsApplication
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                cloud.Create(dlg.fileBrowser.TextBox.Text, data);
+                cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
                 GetDirectories();
             }
             
@@ -94,8 +99,10 @@ namespace ClientWindowsFormsApplication
             string name = (string)fileList.SelectedItem;
             if (name != null)
             {
-                cloud.Read(name);
+                byte[] data = cloud.Read(name);
+                File.WriteAllBytes("c:\\tmp\\client\\" + name, data);
             }
+            StdMsgBox.OK("Read Complete");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
