@@ -131,11 +131,6 @@ namespace ClientWindowsFormsApplication
         {
             byte[] crypt = Utility.CryptoFunctions.EncryptAES(key, data, iv);
 
-            //HMACSHA256 hmacsha256 = new HMACSHA256(key);
-
-            //byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(path);
-            //byte[] hash = hmacsha256.ComputeHash(path_bytes);
- 
             // the hash is insecure dictionay attack is possible, use HMAC 
             string secure_name = GetSecureName(path);
             cloud.Create(secure_name, data); 
