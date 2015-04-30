@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Paths.txt = Paths.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAS Tester", "RAS Tester\RAS Tester.csproj", "{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utility.extra", "..\utility\utility.extra\utility.extra.csproj", "{20FCCCAF-EF9B-48F8-9810-0365985AAEA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyptoCloud_WS", "CyptoCloud_WS\CyptoCloud_WS.csproj", "{E94DC9F5-FA03-4130-B3EE-D0239A2ED060}"
@@ -46,6 +44,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateAppendFile", "CreateAppendFile\CreateAppendFile.csproj", "{001EE342-A1D6-402C-9183-BE81BA8D316E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Create_N_LEN_File", "Create_N_LEN_File\Create_N_LEN_File.csproj", "{1494489E-F4F8-4744-BBBC-F089115E5F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSA Tester", "RSA Tester\RSA Tester.csproj", "{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,12 +78,6 @@ Global
 		{CEF42752-6B07-44B1-8773-E9393ADB11B6}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEF42752-6B07-44B1-8773-E9393ADB11B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEF42752-6B07-44B1-8773-E9393ADB11B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20FCCCAF-EF9B-48F8-9810-0365985AAEA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20FCCCAF-EF9B-48F8-9810-0365985AAEA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20FCCCAF-EF9B-48F8-9810-0365985AAEA2}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -156,6 +150,12 @@ Global
 		{1494489E-F4F8-4744-BBBC-F089115E5F9B}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1494489E-F4F8-4744-BBBC-F089115E5F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1494489E-F4F8-4744-BBBC-F089115E5F9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

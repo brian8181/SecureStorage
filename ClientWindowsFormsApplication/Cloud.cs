@@ -181,13 +181,13 @@ namespace ClientWindowsFormsApplication
             return CryptoFunctions.FromBytesToHex(hash);
         }
 
-        private long CHUNK_SIZE = 1000;
+        private int CHUNK_SIZE = 1000;
       
         /// <summary>
         /// create / or append to file (creates one file from all parts)
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="data"></param>
+        /// <param name="encrypted_data"></param>
         private void AppendData(string name, byte[] data)
         {
              // write chunks
@@ -282,7 +282,7 @@ namespace ClientWindowsFormsApplication
             string secure_name = GetSecureName(name);
             byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
 
-            // split data into chunks
+            // split encrypted_data into chunks
             cloud.Create(secure_name, encrypted_data); 
             
             // APPEND FILE NODE to ROOT
@@ -375,19 +375,49 @@ namespace ClientWindowsFormsApplication
             return CryptoFunctions.DecryptAES(key, encrypted_data, iv);
         }
 
-        public byte[] ReadData(string name)
+        public byte[] Read(string name, bool chunk)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
-            long len = cloud.GetLength(name);
+            string secure_name = GetSecureName(name);
+            int LEN = (int)cloud.GetLength(secure_name);
 
-            //todo read data in chunks
+            //todo read encrypted_data in chunks
+            // write chunks
+            //long LEN = encrypted_data.Length;
+            byte[] data_chunk = null;
+            byte[] encrypted_data = new byte[LEN];
 
+            int offset = 0; // reset index
+            while ((offset + CHUNK_SIZE) <= LEN)
+            {
+                data_chunk = cloud.ReadData(secure_name, offset, CHUNK_SIZE);
+                Array.Copy(data_chunk, 0, encrypted_data, offset, CHUNK_SIZE);
+                offset += CHUNK_SIZE;
+            }
+
+            int left_over = (LEN - offset);
+            if (left_over > 0)
+            {
+                data_chunk = cloud.ReadData(secure_name, offset, left_over);
+                Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
+            }
+
+            return CryptoFunctions.DecryptAES(key, encrypted_data, iv); ;
+        }
+
+        public byte[] ReadData(string name)
+        {
+           
             return null;
         }
 
-
+        public long GetLength(string name)
+        {
+            string secure_name = GetSecureName(name);
+            return cloud.GetLength(secure_name);
+        }
 
         public int GetCount()
         {

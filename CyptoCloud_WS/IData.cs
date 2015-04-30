@@ -43,6 +43,7 @@ namespace CyptoCloud_WS
         [OperationContract]
         byte[] ReadData(string name, int offset, int lenght);
 
+        // some other thoughts on function signatures
         //long ReadData(string name, int offset, int lenght, out byte[] buffer);
         //byte[] ReadData(string name, int offset, int lenght, out long read);
 
@@ -67,7 +68,7 @@ namespace CyptoCloud_WS
         [OperationContract]
         string[] GetNames(int idx, int len);
 
-        //return subset of file list
+        ////return subset of file list
         [OperationContract]
         string[] GetAllNames();
                

@@ -16,30 +16,33 @@ namespace ClientWindowsFormsApplication
 {
     public partial class MainFrm : Form
     {
-        private ClientCloud cleint_cloud = new ClientCloud();
-
+        private ClientCloud client_cloud = new ClientCloud();
+        private const int MAX_SIZE = 30000; //bytes
 
         public MainFrm()
         {
             InitializeComponent();
-            cleint_cloud.LoadKey("c:\\tmp\\aes_key\\key");
+            client_cloud.LoadKey("c:\\tmp\\aes_key\\key");
 
             //test count
-            int c = cleint_cloud.GetCount();
+            int c = client_cloud.GetCount();
         }
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             //todo
-            cleint_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            client_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
             StdMsgBox.OK("Initialize Complete");
+
+            //string[] files =  Directory.GetFiles("C:\\tmp\client");
+
 
             //InitializeFrm dlg = new InitializeFrm();
             //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
             //if (dlg.ShowDialog() == DialogResult.OK)
             //{
             //    //todo
-            //    cleint_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            //    client_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
 
             //    Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
             //    Properties.Settings.Default.Save();
@@ -57,9 +60,10 @@ namespace ClientWindowsFormsApplication
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 // load the key
-                cleint_cloud.LoadKey(dlg.dirBrowserKD.TextBox.Text.TrimEnd('\\') + "\\key");
-                Properties.Settings.Default.working_dir = dlg.dirBrowserWD.TextBox.Text;
-                Properties.Settings.Default.key_path = dlg.dirBrowserKD.TextBox.Text;
+                client_cloud.LoadKey(dlg.dirBrowserKeyDir.TextBox.Text.TrimEnd('\\') + "\\key");
+                Properties.Settings.Default.server_dir = dlg.dirBrowserServerDir.TextBox.Text;
+                Properties.Settings.Default.local_dir = dlg.dirBrowserLocalDir.TextBox.Text;
+                Properties.Settings.Default.key_path = dlg.dirBrowserKeyDir.TextBox.Text;
                 Properties.Settings.Default.Save();
             }
         }
@@ -71,15 +75,15 @@ namespace ClientWindowsFormsApplication
 
         public void GetDirectories()
         {
-            string dir = Properties.Settings.Default.working_dir;
-            XmlNodeList files = cleint_cloud.GetDirectories();
+            string dir = Properties.Settings.Default.server_dir;
+            XmlNodeList files = client_cloud.GetDirectories();
 
-            fileList.Items.Clear();
+            serverfileList.Items.Clear();
             // add to fileList
             foreach (XmlNode n in files)
             {
                 string name = n["name"].InnerText;  
-                fileList.Items.Add(name);
+                serverfileList.Items.Add(name);
             }
         }
 
@@ -92,14 +96,14 @@ namespace ClientWindowsFormsApplication
             {
                 
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                if (data.Length < max)
+                if (data.Length < MAX_SIZE)
                 {
-                    cleint_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                    client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
                     GetDirectories();
                 }
                 else
                 {
-                    cleint_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data, true);
+                    client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data, true);
                     GetDirectories();
 
                 }
@@ -109,11 +113,14 @@ namespace ClientWindowsFormsApplication
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-            string name = (string)fileList.SelectedItem;
+            string path = (string)serverfileList.SelectedItem;
+            string name = Path.GetFileName(path);
             
             if (name != null)
             {
-                byte[] data = cleint_cloud.Read(name);
+                byte[] data = null;
+               // int len = (int)client_cloud.GetLength(name);
+                data = client_cloud.Read(name, true);
                 File.WriteAllBytes("c:\\tmp\\client\\" + name, data);
             }
             StdMsgBox.OK("Read Complete");
@@ -121,12 +128,17 @@ namespace ClientWindowsFormsApplication
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            string name = (string)fileList.SelectedItem;
+            string name = (string)serverfileList.SelectedItem;
             if(name != null)
             {
-                cleint_cloud.Delete(name);
+                client_cloud.Delete(name);
                 GetDirectories();
             }
+        }
+
+        private void MainFrm_Load(object sender, EventArgs e)
+        {
+
         }
    }
 }

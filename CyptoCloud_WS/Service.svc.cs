@@ -119,14 +119,32 @@ namespace CyptoCloud_WS
         public long GetLength(string name)
         {
             // todo read len with reading all bytes (more effiencient)?
-            FileStream fs = new FileStream(working_dir + name, FileMode.Open);
-            return fs.Length;
+            using (FileStream fs = new FileStream(working_dir + name, FileMode.Open))
+            {
+                return fs.Length;
+            }
 
             //byte[] data = File.ReadAllBytes(working_dir + name);
             //return data.Length;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetAllNames()
+        {
+            DirectoryInfo di = new DirectoryInfo(working_dir);
+            FileSystemInfo[] fs_infos = di.GetFileSystemInfos();
+            return GetNames(0, fs_infos.Length);
+        }
 
+        /// <summary>
+        /// return subset of filename
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
         public string[] GetNames(int idx, int len)
         {
             DirectoryInfo di = new DirectoryInfo(working_dir);
@@ -139,14 +157,7 @@ namespace CyptoCloud_WS
 
             return names;
         }
-
-        //return subset of file list
-        public string[] GetAllNames()
-        {
-            DirectoryInfo di = new DirectoryInfo(working_dir);
-            FileSystemInfo[] fs_infos = di.GetFileSystemInfos();
-            return GetNames(0, fs_infos.Length);
-        }
+              
 
         public void DeleteAll()
         {

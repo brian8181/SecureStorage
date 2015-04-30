@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.fileList = new System.Windows.Forms.ListBox();
+            this.serverfileList = new System.Windows.Forms.ListBox();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnRead = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -37,19 +37,22 @@
             this.btnInitialize = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
+            this.localfileList = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // fileList
+            // serverfileList
             // 
-            this.fileList.FormattingEnabled = true;
-            this.fileList.Location = new System.Drawing.Point(3, 2);
-            this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(191, 355);
-            this.fileList.TabIndex = 0;
+            this.serverfileList.FormattingEnabled = true;
+            this.serverfileList.Location = new System.Drawing.Point(3, 35);
+            this.serverfileList.Name = "serverfileList";
+            this.serverfileList.Size = new System.Drawing.Size(191, 355);
+            this.serverfileList.TabIndex = 0;
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(200, 222);
+            this.btnCreate.Location = new System.Drawing.Point(426, 253);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -59,7 +62,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(200, 251);
+            this.btnRead.Location = new System.Drawing.Point(426, 282);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -69,7 +72,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(200, 280);
+            this.btnDelete.Location = new System.Drawing.Point(426, 311);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -79,7 +82,7 @@
             // 
             // btnCreateKey
             // 
-            this.btnCreateKey.Location = new System.Drawing.Point(200, 62);
+            this.btnCreateKey.Location = new System.Drawing.Point(426, 93);
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
@@ -90,7 +93,7 @@
             // cbSync
             // 
             this.cbSync.AutoSize = true;
-            this.cbSync.Location = new System.Drawing.Point(228, 329);
+            this.cbSync.Location = new System.Drawing.Point(454, 360);
             this.cbSync.Name = "cbSync";
             this.cbSync.Size = new System.Drawing.Size(62, 17);
             this.cbSync.TabIndex = 6;
@@ -99,7 +102,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(200, 33);
+            this.btnInitialize.Location = new System.Drawing.Point(426, 64);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 7;
@@ -109,7 +112,7 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(200, 4);
+            this.btnSettings.Location = new System.Drawing.Point(426, 35);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(102, 23);
             this.btnSettings.TabIndex = 8;
@@ -119,7 +122,7 @@
             // 
             // btnGetDirs
             // 
-            this.btnGetDirs.Location = new System.Drawing.Point(200, 193);
+            this.btnGetDirs.Location = new System.Drawing.Point(426, 224);
             this.btnGetDirs.Name = "btnGetDirs";
             this.btnGetDirs.Size = new System.Drawing.Size(102, 23);
             this.btnGetDirs.TabIndex = 5;
@@ -127,11 +130,42 @@
             this.btnGetDirs.UseVisualStyleBackColor = true;
             this.btnGetDirs.Click += new System.EventHandler(this.btnGetDirs_Click);
             // 
+            // localfileList
+            // 
+            this.localfileList.FormattingEnabled = true;
+            this.localfileList.Location = new System.Drawing.Point(200, 35);
+            this.localfileList.Name = "localfileList";
+            this.localfileList.Size = new System.Drawing.Size(191, 355);
+            this.localfileList.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(0, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Server";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(197, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Local";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 358);
+            this.ClientSize = new System.Drawing.Size(540, 393);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.localfileList);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnInitialize);
             this.Controls.Add(this.cbSync);
@@ -140,11 +174,12 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnRead);
             this.Controls.Add(this.btnCreate);
-            this.Controls.Add(this.fileList);
+            this.Controls.Add(this.serverfileList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainFrm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "CryptoCloud";
+            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,7 +187,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox fileList;
+        private System.Windows.Forms.ListBox serverfileList;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Button btnDelete;
@@ -161,6 +196,9 @@
         private System.Windows.Forms.Button btnInitialize;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnGetDirs;
+        private System.Windows.Forms.ListBox localfileList;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

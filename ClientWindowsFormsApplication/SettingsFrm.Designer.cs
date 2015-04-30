@@ -30,16 +30,17 @@
         {
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.dirBrowserWD = new Utility.GUI.DirBrowser();
-            this.dirBrowserKD = new Utility.GUI.DirBrowser();
+            this.dirBrowserServerDir = new Utility.GUI.DirBrowser();
+            this.dirBrowserKeyDir = new Utility.GUI.DirBrowser();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRootName = new System.Windows.Forms.TextBox();
+            this.dirBrowserLocalDir = new Utility.GUI.DirBrowser();
             this.SuspendLayout();
             // 
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOK.Location = new System.Drawing.Point(258, 149);
+            this.btnOK.Location = new System.Drawing.Point(261, 191);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
@@ -49,28 +50,28 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(177, 148);
+            this.btnCancel.Location = new System.Drawing.Point(180, 190);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // dirBrowserWD
+            // dirBrowserServerDir
             // 
-            this.dirBrowserWD.Label = "Directory";
-            this.dirBrowserWD.Location = new System.Drawing.Point(12, 68);
-            this.dirBrowserWD.Name = "dirBrowserWD";
-            this.dirBrowserWD.Size = new System.Drawing.Size(334, 34);
-            this.dirBrowserWD.TabIndex = 2;
+            this.dirBrowserServerDir.Label = "Directory";
+            this.dirBrowserServerDir.Location = new System.Drawing.Point(12, 111);
+            this.dirBrowserServerDir.Name = "dirBrowserServerDir";
+            this.dirBrowserServerDir.Size = new System.Drawing.Size(334, 34);
+            this.dirBrowserServerDir.TabIndex = 2;
             // 
-            // dirBrowserKD
+            // dirBrowserKeyDir
             // 
-            this.dirBrowserKD.Label = "Directory";
-            this.dirBrowserKD.Location = new System.Drawing.Point(12, 108);
-            this.dirBrowserKD.Name = "dirBrowserKD";
-            this.dirBrowserKD.Size = new System.Drawing.Size(334, 34);
-            this.dirBrowserKD.TabIndex = 3;
+            this.dirBrowserKeyDir.Label = "Directory";
+            this.dirBrowserKeyDir.Location = new System.Drawing.Point(12, 71);
+            this.dirBrowserKeyDir.Name = "dirBrowserKeyDir";
+            this.dirBrowserKeyDir.Size = new System.Drawing.Size(334, 34);
+            this.dirBrowserKeyDir.TabIndex = 3;
             // 
             // label1
             // 
@@ -88,21 +89,32 @@
             this.txtRootName.Size = new System.Drawing.Size(229, 20);
             this.txtRootName.TabIndex = 5;
             // 
+            // dirBrowserLocalDir
+            // 
+            this.dirBrowserLocalDir.Label = "Directory";
+            this.dirBrowserLocalDir.Location = new System.Drawing.Point(12, 151);
+            this.dirBrowserLocalDir.Name = "dirBrowserLocalDir";
+            this.dirBrowserLocalDir.Size = new System.Drawing.Size(334, 34);
+            this.dirBrowserLocalDir.TabIndex = 6;
+            this.dirBrowserLocalDir.Load += new System.EventHandler(this.dirBrowserLocalDir_Load);
+            // 
             // SettingsFrm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(394, 215);
+            this.ClientSize = new System.Drawing.Size(361, 235);
+            this.Controls.Add(this.dirBrowserLocalDir);
             this.Controls.Add(this.txtRootName);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dirBrowserKD);
-            this.Controls.Add(this.dirBrowserWD);
+            this.Controls.Add(this.dirBrowserKeyDir);
+            this.Controls.Add(this.dirBrowserServerDir);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Name = "SettingsFrm";
             this.Text = "SettingsFrmcs";
+            this.Load += new System.EventHandler(this.SettingsFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,9 +124,10 @@
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        public Utility.GUI.DirBrowser dirBrowserWD;
-        public Utility.GUI.DirBrowser dirBrowserKD;
+        public Utility.GUI.DirBrowser dirBrowserServerDir;
+        public Utility.GUI.DirBrowser dirBrowserKeyDir;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRootName;
+        public Utility.GUI.DirBrowser dirBrowserLocalDir;
     }
 }

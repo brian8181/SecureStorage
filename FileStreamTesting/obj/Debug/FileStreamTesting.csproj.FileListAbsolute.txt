@@ -1,0 +1,5 @@
+C:\Users\brian\Source\CryptoCloud\FileStreamTesting\bin\Debug\FileStreamTesting.exe.config
+C:\Users\brian\Source\CryptoCloud\FileStreamTesting\bin\Debug\FileStreamTesting.exe
+C:\Users\brian\Source\CryptoCloud\FileStreamTesting\bin\Debug\FileStreamTesting.pdb
+C:\Users\brian\Source\CryptoCloud\FileStreamTesting\obj\Debug\FileStreamTesting.exe
+C:\Users\brian\Source\CryptoCloud\FileStreamTesting\obj\Debug\FileStreamTesting.pdb

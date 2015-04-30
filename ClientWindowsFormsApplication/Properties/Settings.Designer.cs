@@ -26,12 +26,12 @@ namespace ClientWindowsFormsApplication.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string working_dir {
+        public string server_dir {
             get {
-                return ((string)(this["working_dir"]));
+                return ((string)(this["server_dir"]));
             }
             set {
-                this["working_dir"] = value;
+                this["server_dir"] = value;
             }
         }
         
@@ -68,6 +68,18 @@ namespace ClientWindowsFormsApplication.Properties {
             }
             set {
                 this["root_name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string local_dir {
+            get {
+                return ((string)(this["local_dir"]));
+            }
+            set {
+                this["local_dir"] = value;
             }
         }
     }

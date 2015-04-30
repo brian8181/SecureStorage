@@ -14,17 +14,29 @@ namespace ClientWindowsFormsApplication
     {
         public SettingsFrm()
         {
-           InitializeComponent();
+            InitializeComponent();
 
-           dirBrowserKD.Label = "Key";
-           dirBrowserWD.Label = "Work";
+            dirBrowserKeyDir.Label = "Key";
+            dirBrowserServerDir.Label = "Server";
+            dirBrowserLocalDir.Label = "Local";
 
 
-           txtRootName.Text = Properties.Settings.Default.root_name;     
-           dirBrowserWD.TextBox.Text = Properties.Settings.Default.working_dir;
-           dirBrowserKD.TextBox.Text = Properties.Settings.Default.key_path;
+            txtRootName.Text = Properties.Settings.Default.root_name;
+            dirBrowserServerDir.TextBox.Text = Properties.Settings.Default.server_dir;
+            dirBrowserLocalDir.TextBox.Text = Properties.Settings.Default.local_dir;
+            dirBrowserKeyDir.TextBox.Text = Properties.Settings.Default.key_path;
         }
 
-       
+        private void SettingsFrm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dirBrowserLocalDir_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
