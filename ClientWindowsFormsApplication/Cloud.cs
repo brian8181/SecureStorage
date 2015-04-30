@@ -1,29 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Utility;
 using Utility.IO;
 
 namespace ClientWindowsFormsApplication
 {
-    public class Cloud
+    public class ClientCloud
     {
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
-        XmlDocument root = new XmlDocument();
         private byte[] key = null;
         private byte[] iv  = null;
-
-
-        //public Cloud()
-        //{
-        //    //load key from tmp OR aes_key
-        //    LoadKey("C:\\tmp\\aes_key\\key");
-        //}
+        private const string TMP_FILE_NAME = "tmp.xml";
+        private const string ROOT_FILE_NAME = "ROOT.xml";
+                
+        public bool KeyLoaded
+        {
+            get
+            {
+                if(key == null || iv ==  null)
+                    return false;
+                return true;
+            }
+        }
 
         public void CreateKey(string path)
         {
@@ -39,6 +40,10 @@ namespace ClientWindowsFormsApplication
             File.WriteAllBytes(path, key);
         }
 
+        /// <summary>
+        /// loads key from file into variables (key & iv)
+        /// </summary>
+        /// <param name="path"></param>
         public void LoadKey(string path)
         {
             byte[] key_iv = File.ReadAllBytes(path);
@@ -53,6 +58,9 @@ namespace ClientWindowsFormsApplication
         // todo initial svr directory directly
         public void Initialize(string in_path, string out_path)
         {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             in_path = in_path.TrimEnd('\\');
             out_path = out_path.TrimEnd('\\');
 
@@ -88,6 +96,11 @@ namespace ClientWindowsFormsApplication
                 signature_node.InnerText = Convert.ToBase64String(sha256);
                 file_node.AppendChild(signature_node);
 
+                //APPEND salt / IV
+                //XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+                //name_node.InnerText = file.Name;
+                //file_node.AppendChild(name_node);
+
                 //APPEND dates
                 DateTime dt = DateTime.Now;
 
@@ -102,49 +115,180 @@ namespace ClientWindowsFormsApplication
                 root.AppendChild(file_node);
             }
 
-            doc.Save(@"ROOT.xml");
+            string sercure_named_root = GetSecureName(ROOT_FILE_NAME);
 
-            byte[] xml_file_data = File.ReadAllBytes("ROOT.xml");
+            doc.Save(ROOT_FILE_NAME);
+
+            byte[] xml_file_data = File.ReadAllBytes(ROOT_FILE_NAME);
             byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-            File.WriteAllBytes(out_path + "\\" + "ROOT", encrypted_xml_file_data);
-
-         
+            File.WriteAllBytes(out_path + "\\" + sercure_named_root, encrypted_xml_file_data);
+       
         }
-
-
+        
         public XmlNodeList GetDirectories()
         {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             // decrypt
-            byte[] bts = cloud.Read("ROOT");
-            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+            string secure_name = GetSecureName(ROOT_FILE_NAME);
+            byte[] encrypted_data = cloud.Read(secure_name);
+
+            byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
             File.WriteAllBytes("tmp.xml", data);
 
-            root = new XmlDocument();
+            XmlDocument doc = new XmlDocument();
             // BKP hack, could just load string but there is an issue here
-            root.Load("tmp.xml");
-            XmlNodeList nodes = root.SelectNodes("/root/file");
+            doc.Load("tmp.xml");
+            XmlNodeList nodes = doc.SelectNodes("/root/file");
 
             return nodes;
         }
 
+        //private string GetSecureName(string name, bool salted)
+        //{
+        //    if (KeyLoaded != true)
+        //        throw new Exception("key not loaded");
+
+        //    if (salted)
+        //    {
+        //        byte[] salt = CryptoFunctions.GenerateRandomBytes(4);
+
+        //        HMACSHA256 hmacsha256 = new HMACSHA256(key);
+        //        byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(name);
+        //        byte[] secure_bytes = new byte[path_bytes.Length + 4];
+
+        //        Array.Copy(salt, secure_bytes, 4);
+        //        Array.Copy(path_bytes, 0, secure_bytes, 4, path_bytes.Length);
+
+        //        byte[] hash = hmacsha256.ComputeHash(secure_bytes);
+
+        //        return CryptoFunctions.FromBytesToHex(hash);
+        //    }
+
+        //    return null;
+
+        //}
+
         private string GetSecureName(string name)
         {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             HMACSHA256 hmacsha256 = new HMACSHA256(key);
             byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(name);
             byte[] hash = hmacsha256.ComputeHash(path_bytes);
             return CryptoFunctions.FromBytesToHex(hash);
         }
 
-        public void Create(string name, byte[] data)
+        private long CHUNK_SIZE = 1000;
+      
+        /// <summary>
+        /// create / or append to file (creates one file from all parts)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        private void AppendData(string name, byte[] data)
         {
+             // write chunks
+            long LEN = data.Length;
+            byte[] data_chunk = null; 
+
+            long idx = 0; // reset index
+            while ((idx + CHUNK_SIZE) <= LEN)
+            {
+                data_chunk = new byte[CHUNK_SIZE];
+                Array.Copy(data, idx, data_chunk, 0, CHUNK_SIZE);
+
+                cloud.AppendData(name, data_chunk);
+                idx += CHUNK_SIZE;
+            }
+
+            long left_over = (LEN - idx);
+            if (left_over > 0)
+            {
+                data_chunk = new byte[left_over];
+                Array.Copy(data, idx, data_chunk, 0, left_over);
+
+                cloud.AppendData(name, data_chunk);
+            }
+        }
+                
+        public void Create(string name, byte[] data, bool chunk)
+        {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             // the hash is insecure dictionay attack is possible, use HMAC 
             string secure_name = GetSecureName(name);
             byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+
+            AppendData(secure_name, encrypted_data);
+           
+            // APPEND FILE NODE to ROOT
+            // decrypt
+            string secure_root_name = GetSecureName(ROOT_FILE_NAME);
+            byte[] bts = cloud.Read(secure_root_name);
+            data = CryptoFunctions.DecryptAES(key, bts, iv);
+            File.WriteAllBytes("tmp.xml", data);
+
+            // do not need a a member var
+            XmlDocument doc = new XmlDocument();
+            // BKP hack, could just load string but there is an issue here
+            doc.Load("tmp.xml");
+
+            XmlNode root = doc.DocumentElement;
+            XmlNode file = doc.CreateElement(string.Empty, "file", string.Empty);
+
+            // APPEND name
+            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+            name_node.InnerText = name;
+            file.AppendChild(name_node);
+
+            // APPEND signature
+            byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
+            XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
+            signature_node.InnerText = Convert.ToBase64String(sha256);
+            file.AppendChild(signature_node);
+
+            // APPEND dates
+            DateTime dt = DateTime.Now;
+            // created
+            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
+            created_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(created_node);
+            // modified
+            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
+            modified_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(modified_node);
+
+            root.AppendChild(file);
+            doc.Save("tmp.xml");
+
+            // delete old dir file
+            cloud.Delete(secure_root_name);
+            // create new ROOT/dir
+            data = File.ReadAllBytes("tmp.xml");
+            encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
+            cloud.Create(secure_root_name, encrypted_data);
+        }
+
+        public void Create(string name, byte[] data)
+        {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
+            // the hash is insecure dictionay attack is possible, use HMAC 
+            string secure_name = GetSecureName(name);
+            byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+
+            // split data into chunks
             cloud.Create(secure_name, encrypted_data); 
             
             // APPEND FILE NODE to ROOT
             // decrypt
-            byte[] bts = cloud.Read("ROOT");
+            string secure_root_name = GetSecureName(ROOT_FILE_NAME);
+            byte[] bts = cloud.Read(secure_root_name);
             data = CryptoFunctions.DecryptAES(key, bts, iv);
             File.WriteAllBytes("tmp.xml", data);
 
@@ -182,21 +326,25 @@ namespace ClientWindowsFormsApplication
             doc.Save("tmp.xml");
             
             // delete old dir file
-            cloud.Delete("ROOT");
+            cloud.Delete(secure_root_name);
             // create new ROOT/dir
             data = File.ReadAllBytes("tmp.xml");
             encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.Create("ROOT", encrypted_data);
+            cloud.Create(secure_root_name, encrypted_data);
         }
         
         public void Delete(string name)
         {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             // delete file 
             string hash_name = GetSecureName(name);
             cloud.Delete(hash_name);
             
             // decrypt
-            byte[] bts = cloud.Read("ROOT");
+            string secure_root_name = GetSecureName(ROOT_FILE_NAME);
+            byte[] bts = cloud.Read(secure_root_name);
             byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
             File.WriteAllBytes("tmp.xml", data);
 
@@ -210,63 +358,40 @@ namespace ClientWindowsFormsApplication
             root.Save("tmp.xml");
 
             // delete old dir file
-            cloud.Delete("ROOT");
+            cloud.Delete(secure_root_name);
             // create new ROOT/dir
             data = File.ReadAllBytes("tmp.xml");
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.Create("ROOT", crypt);
+            cloud.Create(secure_root_name, crypt);
         }
 
         public byte[] Read(string name)
         {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
             string secure_name = GetSecureName(name);
             byte[] encrypted_data = cloud.Read(secure_name);
             return CryptoFunctions.DecryptAES(key, encrypted_data, iv);
         }
+
+        public byte[] ReadData(string name)
+        {
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
+            long len = cloud.GetLength(name);
+
+            //todo read data in chunks
+
+            return null;
+        }
+
 
 
         public int GetCount()
         {
             return cloud.GetCount();
         }
-
-
-
-        ///// <summary>
-        ///// get all file nodes
-        ///// </summary>
-        ///// <param name="doc"></param>
-        ///// <returns></returns>
-        //public XmlNodeList GetFileNodes(out XmlDocument doc)
-        //{
-        //    // decrypt
-        //    byte[] bts = cloud.Read("ROOT");
-        //    byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-        //    File.WriteAllBytes("tmp.xml", data);
-
-        //    doc = new XmlDocument();
-        //    // BKP hack, could just load string but there is an issue here
-        //    doc.Load("tmp.xml");
-        //    return doc.SelectNodes("/root/file");
-        //}
-
-        ///// <summary>
-        ///// find a file node by name
-        ///// </summary>
-        ///// <param name="nodes"></param>
-        ///// <param name="name"></param>
-        ///// <returns></returns>
-        //public XmlNode FindFileNode(string name)
-        //{
-        //    // decrypt
-        //    byte[] bts = cloud.Read("ROOT");
-        //    byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-        //    File.WriteAllBytes("tmp.xml", data);
-
-        //    XmlDocument doc = new XmlDocument();
-        //    // BKP hack, could just load string but there is an issue here
-        //    doc.Load("tmp.xml");
-        //    return doc.SelectSingleNode("/root/file[name = \"" + name + "\"]");
-        //}
     }
 }

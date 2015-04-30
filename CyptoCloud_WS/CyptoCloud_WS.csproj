@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IHighLevel.cs" />
-    <Compile Include="ILowLevel.cs" />
+    <Compile Include="IData.cs" />
     <Compile Include="ITest.cs" />
     <Compile Include="Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>

@@ -19,13 +19,12 @@ namespace ClientWindowsFormsApplication
            dirBrowserKD.Label = "Key";
            dirBrowserWD.Label = "Work";
 
+
+           txtRootName.Text = Properties.Settings.Default.root_name;     
            dirBrowserWD.TextBox.Text = Properties.Settings.Default.working_dir;
            dirBrowserKD.TextBox.Text = Properties.Settings.Default.key_path;
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-           
-        }
+       
     }
 }

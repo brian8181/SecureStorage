@@ -53,12 +53,6 @@
     <Compile Include="CreateFrm.Designer.cs">
       <DependentUpon>CreateFrm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeleteFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DeleteFrm.Designer.cs">
-      <DependentUpon>DeleteFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="InitializeFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,12 +67,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReadFrm.Designer.cs">
-      <DependentUpon>ReadFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,9 +80,6 @@
     </Compile>
     <EmbeddedResource Include="CreateFrm.resx">
       <DependentUpon>CreateFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DeleteFrm.resx">
-      <DependentUpon>DeleteFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InitializeFrm.resx">
       <DependentUpon>InitializeFrm.cs</DependentUpon>
@@ -111,9 +96,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ReadFrm.resx">
-      <DependentUpon>ReadFrm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SettingsFrm.resx">
       <DependentUpon>SettingsFrm.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,9 +115,14 @@
     <None Include="Service References\ServiceReference\Service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ServiceReference\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\utility\utility.extra\utility.extra.csproj">

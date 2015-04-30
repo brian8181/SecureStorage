@@ -58,5 +58,17 @@ namespace ClientWindowsFormsApplication.Properties {
                 this["init_dir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ROOT")]
+        public string root_name {
+            get {
+                return ((string)(this["root_name"]));
+            }
+            set {
+                this["root_name"] = value;
+            }
+        }
     }
 }

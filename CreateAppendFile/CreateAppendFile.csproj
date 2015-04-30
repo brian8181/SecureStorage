@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B5E8BB5-C6A2-4887-8D7D-2B2EFA851B49}</ProjectGuid>
+    <ProjectGuid>{001EE342-A1D6-402C-9183-BE81BA8D316E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileStreamTesting</RootNamespace>
-    <AssemblyName>FileStreamTesting</AssemblyName>
+    <RootNamespace>CreateAppendFile</RootNamespace>
+    <AssemblyName>CreateAppendFile</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\utility\utility\utility.csproj">
+      <Project>{4dfc8774-e67d-4eff-9249-301c0d5eb158}</Project>
+      <Name>utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

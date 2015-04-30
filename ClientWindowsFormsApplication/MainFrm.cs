@@ -16,21 +16,22 @@ namespace ClientWindowsFormsApplication
 {
     public partial class MainFrm : Form
     {
-        private Cloud cloud = new Cloud();
+        private ClientCloud cleint_cloud = new ClientCloud();
+
 
         public MainFrm()
         {
             InitializeComponent();
-            cloud.LoadKey("c:\\tmp\\aes_key\\key");
+            cleint_cloud.LoadKey("c:\\tmp\\aes_key\\key");
 
             //test count
-            int c = cloud.GetCount();
+            int c = cleint_cloud.GetCount();
         }
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             //todo
-            cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            cleint_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
             StdMsgBox.OK("Initialize Complete");
 
             //InitializeFrm dlg = new InitializeFrm();
@@ -38,7 +39,7 @@ namespace ClientWindowsFormsApplication
             //if (dlg.ShowDialog() == DialogResult.OK)
             //{
             //    //todo
-            //    cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            //    cleint_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
 
             //    Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
             //    Properties.Settings.Default.Save();
@@ -56,7 +57,7 @@ namespace ClientWindowsFormsApplication
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 // load the key
-                cloud.LoadKey(dlg.dirBrowserKD.TextBox.Text.TrimEnd('\\') + "\\key");
+                cleint_cloud.LoadKey(dlg.dirBrowserKD.TextBox.Text.TrimEnd('\\') + "\\key");
                 Properties.Settings.Default.working_dir = dlg.dirBrowserWD.TextBox.Text;
                 Properties.Settings.Default.key_path = dlg.dirBrowserKD.TextBox.Text;
                 Properties.Settings.Default.Save();
@@ -71,7 +72,7 @@ namespace ClientWindowsFormsApplication
         public void GetDirectories()
         {
             string dir = Properties.Settings.Default.working_dir;
-            XmlNodeList files = cloud.GetDirectories();
+            XmlNodeList files = cleint_cloud.GetDirectories();
 
             fileList.Items.Clear();
             // add to fileList
@@ -84,12 +85,24 @@ namespace ClientWindowsFormsApplication
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
+            int max = (int)Math.Pow(2, 16); 
+
             CreateFrm dlg = new CreateFrm();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
+                
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
-                GetDirectories();
+                if (data.Length < max)
+                {
+                    cleint_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                    GetDirectories();
+                }
+                else
+                {
+                    cleint_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data, true);
+                    GetDirectories();
+
+                }
             }
             
         }
@@ -97,9 +110,10 @@ namespace ClientWindowsFormsApplication
         private void btnRead_Click(object sender, EventArgs e)
         {
             string name = (string)fileList.SelectedItem;
+            
             if (name != null)
             {
-                byte[] data = cloud.Read(name);
+                byte[] data = cleint_cloud.Read(name);
                 File.WriteAllBytes("c:\\tmp\\client\\" + name, data);
             }
             StdMsgBox.OK("Read Complete");
@@ -110,7 +124,7 @@ namespace ClientWindowsFormsApplication
             string name = (string)fileList.SelectedItem;
             if(name != null)
             {
-                cloud.Delete(name);
+                cleint_cloud.Delete(name);
                 GetDirectories();
             }
         }

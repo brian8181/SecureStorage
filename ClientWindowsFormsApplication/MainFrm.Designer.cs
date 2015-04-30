@@ -99,7 +99,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(200, 5);
+            this.btnInitialize.Location = new System.Drawing.Point(200, 33);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 7;
@@ -109,7 +109,7 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(200, 33);
+            this.btnSettings.Location = new System.Drawing.Point(200, 4);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(102, 23);
             this.btnSettings.TabIndex = 8;
