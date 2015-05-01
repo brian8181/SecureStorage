@@ -60,112 +60,38 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
-        // todo initial svr directory directly
-        //public void Initialize(string in_path, string out_path)
-        //{
-        //    if (KeyLoaded != true)
-        //        throw new Exception("key not loaded");
+        public void Initialize()
+        {
+            // create a file system on server
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
 
-        //    in_path = in_path.TrimEnd('\\');
-        //    out_path = out_path.TrimEnd('\\');
+            //in_path = in_path.TrimEnd('\\');
+            //out_path = out_path.TrimEnd('\\');
 
-        //    XmlDocument doc = new XmlDocument();
+            XmlDocument doc = new XmlDocument();
 
-        //    //xml declaration is recommended, but not mandatory
-        //    XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-        //    doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
+            //xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
 
-        //    XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
-        //    doc.AppendChild(root);
+            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
+            doc.AppendChild(root);
+            doc.Save(ROOT_FILE_NAME);
 
-        //    // create files
-        //    FileInfo[] in_files = DirectoryExt.GetFileInfos(in_path, "*");
-        //    foreach (FileInfo file in in_files)
-        //    {
-        //        byte[] data = File.ReadAllBytes(file.FullName);
-        //        //todo, write file to disk
-        //        string secure_name = GetSecureName(file.Name);
-        //        byte[] secure_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-        //        File.WriteAllBytes(out_path + "\\" + secure_name, secure_data);
-                                
-        //        // create a file node
-        //        XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
+            string secure_named_root = GetSecureName(ROOT_FILE_NAME);
+            byte[] xml_file_data = File.ReadAllBytes(ROOT_FILE_NAME);
+            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
+            cloud.CreateAppend(secure_named_root, encrypted_xml_file_data);
+        }
 
-        //        //APPEND name
-        //        XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-        //        name_node.InnerText = file.Name;
-        //        file_node.AppendChild(name_node);
 
-        //        //APPEND signature
-        //        byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
-        //        XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
-        //        signature_node.InnerText = Convert.ToBase64String(sha256);
-        //        file_node.AppendChild(signature_node);
-
-        //        //APPEND dates
-        //        DateTime dt = DateTime.Now;
-
-        //        XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-        //        created_node.InnerText = dt.ToFileTime().ToString();
-        //        file_node.AppendChild(created_node);
-
-        //        XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-        //        modified_node.InnerText = dt.ToFileTime().ToString();
-        //        file_node.AppendChild(modified_node);
-
-        //        root.AppendChild(file_node);
-        //    }
-                     
-        //    // create directories, TODO
-        //    string[] dirs = Directory.GetDirectories(in_path);
-        //    foreach (string dir in dirs)
-        //    {
-        //        string file_name = Path.GetFileName(dir) + "/";
-        //        string secure_dir_name = GetSecureName(file_name);
-
-        //        // create a file node
-        //        XmlNode file_node = doc.CreateElement(string.Empty, "directory", string.Empty);
-
-        //        //APPEND name
-        //        XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-        //        name_node.InnerText = file_name;
-        //        file_node.AppendChild(name_node);
-
-        //        //APPEND dates
-        //        DateTime dt = DateTime.Now;
-
-        //        XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-        //        created_node.InnerText = dt.ToFileTime().ToString();
-        //        file_node.AppendChild(created_node);
-
-        //        XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-        //        modified_node.InnerText = dt.ToFileTime().ToString();
-        //        file_node.AppendChild(modified_node);
-
-        //        root.AppendChild(file_node);
-
-        //        //todo.. create dir xml
-        //        XmlDocument sub_dir = new XmlDocument();
-        //        //xml declaration is recommended, but not mandatory
-        //        XmlDeclaration sub_decel = sub_dir.CreateXmlDeclaration("1.0", "UTF-8", null);
-        //        sub_dir.InsertBefore(sub_decel, sub_dir.DocumentElement);
-        //        sub_dir.AppendChild( sub_dir.CreateElement(string.Empty, "root", string.Empty) );
-        //        sub_dir.Save(secure_dir_name);
-                
-        //        //encrypt & write file
-        //        byte[] xml_sub_dir_data = File.ReadAllBytes(secure_dir_name);
-        //        byte[] encrypted_xml_sub_dir_data = CryptoFunctions.EncryptAES(key, xml_sub_dir_data, iv);
-        //        File.WriteAllBytes(out_path + "\\" + secure_dir_name, encrypted_xml_sub_dir_data);
-        //    }
-        //    doc.Save(ROOT_FILE_NAME);
-
-        //    string secure_named_root = GetSecureName(ROOT_FILE_NAME);
-        //    byte[] xml_file_data = File.ReadAllBytes(ROOT_FILE_NAME);
-        //    byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-        //    File.WriteAllBytes(out_path + "\\" + secure_named_root, encrypted_xml_file_data);
-        //}
-
-        public void InitRoot(string in_path, string out_path)
+        /// <summary>
+        /// initialize/create a directory based on input directory
+        /// </summary>
+        /// <param name="in_path"></param>
+        /// <param name="out_path"></param>
+        public void InitializeLocal(string in_path, string out_path)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
@@ -183,8 +109,7 @@ namespace ClientWindowsFormsApplication
             doc.AppendChild(root);
 
             DirectoryInfo di = new DirectoryInfo(in_path);
-            // 
-            Init(di, doc, root, out_path);
+            InitializeLocal(di, doc, root, out_path);
 
             doc.Save(ROOT_FILE_NAME);
 
@@ -194,7 +119,7 @@ namespace ClientWindowsFormsApplication
             File.WriteAllBytes(out_path + "\\" + secure_named_root, encrypted_xml_file_data);
         }
 
-        private void Init(DirectoryInfo dir, XmlDocument doc, XmlNode root, string out_path)
+        private void InitializeLocal(DirectoryInfo dir, XmlDocument doc, XmlNode root, string out_path)
         {
             out_path = out_path.TrimEnd('\\');
 
@@ -279,12 +204,11 @@ namespace ClientWindowsFormsApplication
                 File.WriteAllBytes(out_path + "\\" + secure_dir_name, encrypted_xml_sub_dir_data);
 
                 //// add to xmldoc
-                Init(di, sub_dir_doc, new_root_node, out_path);
+                InitializeLocal(di, sub_dir_doc, new_root_node, out_path);
 
                 // save all
                 sub_dir_doc.Save(secure_dir_name);
             }
-
         }
 
         /// <summary>
@@ -300,29 +224,19 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// get files in encrypted directory
+        /// get files in encrypted directory (ROOT)
         /// </summary>
-        /// <returns></returns>
+        /// <returns>files as xml</returns>
         public XmlNodeList GetFiles()
         {
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
-            // decrypt
-            string secure_name = GetSecureName(ROOT_FILE_NAME);
-            byte[] encrypted_data = cloud.Read(secure_name, 0, 0);
-
-            byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
-            File.WriteAllBytes("tmp.xml", data);
-
-            XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
-            XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
-
-            return nodes;
+            return GetFiles(ROOT_FILE_NAME);
         }
 
+        /// <summary>
+        /// get file in encrypted directory
+        /// </summary>
+        /// <param name="dir_name">directory name</param>
+        /// <returns>files as xml</returns>
         public XmlNodeList GetFiles(string dir_name)
         {
             if (KeyLoaded != true)
@@ -331,13 +245,17 @@ namespace ClientWindowsFormsApplication
             // decrypt
             string secure_name = GetSecureName(dir_name);
             byte[] encrypted_data = cloud.Read(secure_name, 0, 0);
-
             byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
-            File.WriteAllBytes("tmp.xml", data);
 
             XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
+            // encode to string & remove: byte order mark (BOM)
+            string xml = UTF8Encoding.UTF8.GetString(data);
+            string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+            if (xml.StartsWith(_byteOrderMarkUtf8))
+                xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
+            // save doc
+            doc.LoadXml(xml);
+
             XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
 
             return nodes;

@@ -34,7 +34,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreateKey = new System.Windows.Forms.Button();
             this.cbSync = new System.Windows.Forms.CheckBox();
-            this.btnInitialize = new System.Windows.Forms.Button();
+            this.btnInitializeLocal = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
             this.localfileList = new System.Windows.Forms.ListBox();
@@ -42,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnCreateEmpty = new System.Windows.Forms.Button();
             this.btnSync = new System.Windows.Forms.Button();
+            this.btnUpDirectory = new System.Windows.Forms.Button();
+            this.btnInitialize = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serverfileList
@@ -102,15 +104,15 @@
             this.cbSync.Text = "syncing";
             this.cbSync.UseVisualStyleBackColor = true;
             // 
-            // btnInitialize
+            // btnInitializeLocal
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(397, 63);
-            this.btnInitialize.Name = "btnInitialize";
-            this.btnInitialize.Size = new System.Drawing.Size(102, 23);
-            this.btnInitialize.TabIndex = 7;
-            this.btnInitialize.Text = "(Re)Initialize";
-            this.btnInitialize.UseVisualStyleBackColor = true;
-            this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click);
+            this.btnInitializeLocal.Location = new System.Drawing.Point(397, 63);
+            this.btnInitializeLocal.Name = "btnInitializeLocal";
+            this.btnInitializeLocal.Size = new System.Drawing.Size(102, 23);
+            this.btnInitializeLocal.TabIndex = 7;
+            this.btnInitializeLocal.Text = "(Re)InitializeLocal";
+            this.btnInitializeLocal.UseVisualStyleBackColor = true;
+            this.btnInitializeLocal.Click += new System.EventHandler(this.btnInitialize_Click);
             // 
             // btnSettings
             // 
@@ -180,18 +182,42 @@
             this.btnSync.UseVisualStyleBackColor = true;
             this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
+            // btnUpDirectory
+            // 
+            this.btnUpDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpDirectory.Location = new System.Drawing.Point(153, 4);
+            this.btnUpDirectory.Name = "btnUpDirectory";
+            this.btnUpDirectory.Size = new System.Drawing.Size(41, 23);
+            this.btnUpDirectory.TabIndex = 14;
+            this.btnUpDirectory.Text = "^";
+            this.btnUpDirectory.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnUpDirectory.UseVisualStyleBackColor = true;
+            this.btnUpDirectory.Click += new System.EventHandler(this.btnUpDirectory_Click);
+            // 
+            // btnInitialize
+            // 
+            this.btnInitialize.Location = new System.Drawing.Point(397, 165);
+            this.btnInitialize.Name = "btnInitialize";
+            this.btnInitialize.Size = new System.Drawing.Size(102, 23);
+            this.btnInitialize.TabIndex = 15;
+            this.btnInitialize.Text = "(Re)Initialize";
+            this.btnInitialize.UseVisualStyleBackColor = true;
+            this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click_1);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 393);
+            this.ClientSize = new System.Drawing.Size(576, 395);
+            this.Controls.Add(this.btnInitialize);
+            this.Controls.Add(this.btnUpDirectory);
             this.Controls.Add(this.btnSync);
             this.Controls.Add(this.btnCreateEmpty);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localfileList);
             this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.btnInitialize);
+            this.Controls.Add(this.btnInitializeLocal);
             this.Controls.Add(this.cbSync);
             this.Controls.Add(this.btnGetDirs);
             this.Controls.Add(this.btnCreateKey);
@@ -216,7 +242,7 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreateKey;
         private System.Windows.Forms.CheckBox cbSync;
-        private System.Windows.Forms.Button btnInitialize;
+        private System.Windows.Forms.Button btnInitializeLocal;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnGetDirs;
         private System.Windows.Forms.ListBox localfileList;
@@ -224,6 +250,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCreateEmpty;
         private System.Windows.Forms.Button btnSync;
+        private System.Windows.Forms.Button btnUpDirectory;
+        private System.Windows.Forms.Button btnInitialize;
     }
 }
 

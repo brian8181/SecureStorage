@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,15 +45,14 @@ namespace ClientWindowsFormsApplication
                 
                 // intitialize to server mirror dir
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-                //client_cloud.Initialize(initial_input_dir, server_dir);
-                client_cloud.InitRoot(initial_input_dir, server_dir);
+                client_cloud.InitializeLocal(initial_input_dir, server_dir);
                 
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;
                 Properties.Settings.Default.Save();
             }
 
-            StdMsgBox.OK("Initialize Complete");
+            StdMsgBox.OK("InitializeLocal Complete");
         }
         
         private void btnCreateKey_Click(object sender, EventArgs e)
@@ -159,5 +157,28 @@ namespace ClientWindowsFormsApplication
         {
             StdMsgBox.OK("not implemented");
         }
+
+        string current_dir = "/";
+        private void btnUpDirectory_Click(object sender, EventArgs e)
+        {
+            //testing
+            current_dir = "/A/";
+            StringBuilder sb = new StringBuilder();
+            if (current_dir != "/")
+            {
+                string[] dirs = current_dir.Split('/');
+                for (int i = 0; i < (dirs.Length - 2); ++i)
+                {
+                    sb.Append(dirs[i] + "/");
+                }
+                current_dir = sb.ToString();
+            }
+        }
+
+        private void btnInitialize_Click_1(object sender, EventArgs e)
+        {
+            client_cloud.Initialize();
+        }
+   
    }
 }
