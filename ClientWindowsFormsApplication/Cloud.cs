@@ -14,7 +14,7 @@ namespace ClientWindowsFormsApplication
         private byte[] key = null;
         private byte[] iv  = null;
         private const string TMP_FILE_NAME = "tmp.xml";
-        private const string ROOT_FILE_NAME = "ROOT.xml";
+        private const string ROOT_FILE_NAME = "/";
         private const int CHUNK_SIZE = 1000;
                                
         public bool KeyLoaded
@@ -60,29 +60,36 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
-        public void Initialize()
+        /// <summary>
+        /// inititalize/create an empty root attempt to send / store
+        /// </summary>
+        /// <returns>returns true if successful, otherwise false</returns>
+        public bool Initialize()
         {
             // create a file system on server
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
-            //in_path = in_path.TrimEnd('\\');
-            //out_path = out_path.TrimEnd('\\');
-
+            // create xml file for root directory
             XmlDocument doc = new XmlDocument();
-
-            //xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
-
+            XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            doc.InsertBefore(decel, doc.DocumentElement);
+            // create empty root 
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
-            doc.Save(ROOT_FILE_NAME);
 
             string secure_named_root = GetSecureName(ROOT_FILE_NAME);
-            byte[] xml_file_data = File.ReadAllBytes(ROOT_FILE_NAME);
+            doc.Save(secure_named_root);
+
+            // encrypt xml file
+            byte[] xml_file_data = File.ReadAllBytes(secure_named_root);
             byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-            cloud.CreateAppend(secure_named_root, encrypted_xml_file_data);
+
+            // send/store it using secure name
+            if (cloud.Exists(secure_named_root) != true)
+                return cloud.CreateAppend(secure_named_root, encrypted_xml_file_data);
+
+            return false;
         }
 
 
@@ -110,11 +117,11 @@ namespace ClientWindowsFormsApplication
 
             DirectoryInfo di = new DirectoryInfo(in_path);
             InitializeLocal(di, doc, root, out_path);
-
-            doc.Save(ROOT_FILE_NAME);
-
             string secure_named_root = GetSecureName(ROOT_FILE_NAME);
-            byte[] xml_file_data = File.ReadAllBytes(ROOT_FILE_NAME);
+            doc.Save(secure_named_root);
+
+
+            byte[] xml_file_data = File.ReadAllBytes(secure_named_root);
             byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
             File.WriteAllBytes(out_path + "\\" + secure_named_root, encrypted_xml_file_data);
         }
@@ -261,22 +268,31 @@ namespace ClientWindowsFormsApplication
             return nodes;
         }
 
+        private const int SALT_LEN = 32;
         /// <summary>
         /// get a secure name
         /// </summary>
         /// <param name="name">orginal name</param>
         /// <returns>secure name based off original</returns>
+        //private string GetSecureName(string name, out byte[] salt)
         private string GetSecureName(string name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
             HMACSHA256 hmacsha256 = new HMACSHA256(key);
-            byte[] path_bytes = ASCIIEncoding.ASCII.GetBytes(name);
-            byte[] hash = hmacsha256.ComputeHash(path_bytes);
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
+
+            // Future salted data name, how return salt
+            //byte[] salt = CryptoFunctions.GenerateRandomBytes(SALT_LEN);
+            //byte[] salted_data = new byte[salt.Length + data.Length];
+            //Array.Copy(salt, salted_data, SALT_LEN);
+            //Array.Copy(data, 0, salted_data, SALT_LEN, data.Length); 
+            
+            byte[] hash = hmacsha256.ComputeHash(data);
             return CryptoFunctions.FromBytesToHex(hash);
         }
-
+        
         /// <summary>
         /// create / or append to file (creates one file from all parts)
         /// </summary>
@@ -408,21 +424,6 @@ namespace ClientWindowsFormsApplication
             data = File.ReadAllBytes("tmp.xml");
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_root_name, crypt);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public byte[] Read(string name)
-        {
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
-            string secure_name = GetSecureName(name);
-            byte[] encrypted_data = cloud.Read(secure_name, 0, 0);
-            return CryptoFunctions.DecryptAES(key, encrypted_data, iv);
         }
 
         /// <summary>
