@@ -10,60 +10,34 @@ namespace CyptoCloud_WS
         [OperationContract]
         void CreateEmpty(string name, int len, bool random = false);
 
-        [Obsolete("Use AppendData to create files")]
-        [OperationContract]
-        void Create(string name, byte[] data);
-
-        //void Create(string name, byte[] data, bool dir);
-
-        [OperationContract]
-        byte[] Read(string name);
-     
-        [OperationContract]
-        void Delete(string name);
-          
-
-        // move file
-        [OperationContract]
-        void Move(string src, string dst);
-
-        //  copy file
-        [OperationContract]
-        void Copy(string src, string dst);
-
-        // ramdom access functions
-        
-        [OperationContract]
-        void WriteData(string name, int offset, byte[] data);
+        //[Obsolete("Use AppendData to create files")]
+        //[OperationContract]
+        //void Create(string name, byte[] data);
 
         //// allow to break data into samller pieces to transfer
         [OperationContract]
-        void AppendData(string name, byte[] data);
+        bool CreateAppend(string name, byte[] data);
 
         [OperationContract]
-        byte[] ReadData(string name, int offset, int lenght);
+        byte[] Read(string name, int offset, int lenght);
+     
+        [OperationContract]
+        void Delete(string name);
 
-        // some other thoughts on function signatures
-        //long ReadData(string name, int offset, int lenght, out byte[] buffer);
-        //byte[] ReadData(string name, int offset, int lenght, out long read);
-
-        //// src & dst can be same
         //[OperationContract]
-        //void MoveData(string src, int src_idx, string dst, int dst_idx, int len);
+        //void Write(string name, int offset, byte[] data);
 
-        //// src & dst can be same
-        //[OperationContract]
-        //void CopyData(string src, int src_idx, string dst, int dst_idx, int len);
-
-
-        //long GetUsage();
+        //get len of file
         [OperationContract]
         long GetLength(string name);
 
-        // get cout all files
+        // get count all files
         [OperationContract]
         int GetCount();
-        
+
+        [OperationContract]
+        bool Exists(string name);
+
         //return subset of file list
         [OperationContract]
         string[] GetNames(int idx, int len);
@@ -76,7 +50,9 @@ namespace CyptoCloud_WS
         [OperationContract]
         void DeleteAll();
 
+        //get sha256 of file data
         [OperationContract]
         byte[] SHA256(string name);
+      
     }
 }

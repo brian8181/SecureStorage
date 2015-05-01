@@ -40,6 +40,8 @@
             this.localfileList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnCreateEmpty = new System.Windows.Forms.Button();
+            this.btnSync = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serverfileList
@@ -52,7 +54,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(426, 253);
+            this.btnCreate.Location = new System.Drawing.Point(397, 252);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -62,7 +64,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(426, 282);
+            this.btnRead.Location = new System.Drawing.Point(397, 281);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -72,7 +74,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(426, 311);
+            this.btnDelete.Location = new System.Drawing.Point(397, 310);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             // btnCreateKey
             // 
-            this.btnCreateKey.Location = new System.Drawing.Point(426, 93);
+            this.btnCreateKey.Location = new System.Drawing.Point(397, 92);
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
@@ -93,7 +95,7 @@
             // cbSync
             // 
             this.cbSync.AutoSize = true;
-            this.cbSync.Location = new System.Drawing.Point(454, 360);
+            this.cbSync.Location = new System.Drawing.Point(397, 339);
             this.cbSync.Name = "cbSync";
             this.cbSync.Size = new System.Drawing.Size(62, 17);
             this.cbSync.TabIndex = 6;
@@ -102,17 +104,17 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(426, 64);
+            this.btnInitialize.Location = new System.Drawing.Point(397, 63);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 7;
-            this.btnInitialize.Text = "Initialize";
+            this.btnInitialize.Text = "(Re)Initialize";
             this.btnInitialize.UseVisualStyleBackColor = true;
             this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click);
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(426, 35);
+            this.btnSettings.Location = new System.Drawing.Point(397, 34);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(102, 23);
             this.btnSettings.TabIndex = 8;
@@ -122,11 +124,11 @@
             // 
             // btnGetDirs
             // 
-            this.btnGetDirs.Location = new System.Drawing.Point(426, 224);
+            this.btnGetDirs.Location = new System.Drawing.Point(397, 223);
             this.btnGetDirs.Name = "btnGetDirs";
             this.btnGetDirs.Size = new System.Drawing.Size(102, 23);
             this.btnGetDirs.TabIndex = 5;
-            this.btnGetDirs.Text = "Get Directories";
+            this.btnGetDirs.Text = "Get Files List";
             this.btnGetDirs.UseVisualStyleBackColor = true;
             this.btnGetDirs.Click += new System.EventHandler(this.btnGetDirs_Click);
             // 
@@ -158,11 +160,33 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "Local";
             // 
+            // btnCreateEmpty
+            // 
+            this.btnCreateEmpty.Location = new System.Drawing.Point(397, 121);
+            this.btnCreateEmpty.Name = "btnCreateEmpty";
+            this.btnCreateEmpty.Size = new System.Drawing.Size(102, 23);
+            this.btnCreateEmpty.TabIndex = 12;
+            this.btnCreateEmpty.Text = "Create Empty";
+            this.btnCreateEmpty.UseVisualStyleBackColor = true;
+            this.btnCreateEmpty.Click += new System.EventHandler(this.btnCreateEmpty_Click);
+            // 
+            // btnSync
+            // 
+            this.btnSync.Location = new System.Drawing.Point(397, 194);
+            this.btnSync.Name = "btnSync";
+            this.btnSync.Size = new System.Drawing.Size(102, 23);
+            this.btnSync.TabIndex = 13;
+            this.btnSync.Text = "Sync";
+            this.btnSync.UseVisualStyleBackColor = true;
+            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 393);
+            this.ClientSize = new System.Drawing.Size(576, 393);
+            this.Controls.Add(this.btnSync);
+            this.Controls.Add(this.btnCreateEmpty);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localfileList);
@@ -179,7 +203,6 @@
             this.Name = "MainFrm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "CryptoCloud";
-            this.Load += new System.EventHandler(this.MainFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,6 +222,8 @@
         private System.Windows.Forms.ListBox localfileList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnCreateEmpty;
+        private System.Windows.Forms.Button btnSync;
     }
 }
 

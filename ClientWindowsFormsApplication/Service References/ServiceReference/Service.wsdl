@@ -13,11 +13,11 @@
   <wsdl:message name="IService_CreateEmpty_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateEmptyResponse" />
   </wsdl:message>
-  <wsdl:message name="IService_Create_InputMessage">
-    <wsdl:part name="parameters" element="tns:Create" />
+  <wsdl:message name="IService_CreateAppend_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAppend" />
   </wsdl:message>
-  <wsdl:message name="IService_Create_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CreateResponse" />
+  <wsdl:message name="IService_CreateAppend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAppendResponse" />
   </wsdl:message>
   <wsdl:message name="IService_Read_InputMessage">
     <wsdl:part name="parameters" element="tns:Read" />
@@ -31,36 +31,6 @@
   <wsdl:message name="IService_Delete_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteResponse" />
   </wsdl:message>
-  <wsdl:message name="IService_Move_InputMessage">
-    <wsdl:part name="parameters" element="tns:Move" />
-  </wsdl:message>
-  <wsdl:message name="IService_Move_OutputMessage">
-    <wsdl:part name="parameters" element="tns:MoveResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService_Copy_InputMessage">
-    <wsdl:part name="parameters" element="tns:Copy" />
-  </wsdl:message>
-  <wsdl:message name="IService_Copy_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CopyResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService_WriteData_InputMessage">
-    <wsdl:part name="parameters" element="tns:WriteData" />
-  </wsdl:message>
-  <wsdl:message name="IService_WriteData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:WriteDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService_AppendData_InputMessage">
-    <wsdl:part name="parameters" element="tns:AppendData" />
-  </wsdl:message>
-  <wsdl:message name="IService_AppendData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AppendDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="IService_ReadData_InputMessage">
-    <wsdl:part name="parameters" element="tns:ReadData" />
-  </wsdl:message>
-  <wsdl:message name="IService_ReadData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ReadDataResponse" />
-  </wsdl:message>
   <wsdl:message name="IService_GetLength_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLength" />
   </wsdl:message>
@@ -72,6 +42,12 @@
   </wsdl:message>
   <wsdl:message name="IService_GetCount_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Exists_InputMessage">
+    <wsdl:part name="parameters" element="tns:Exists" />
+  </wsdl:message>
+  <wsdl:message name="IService_Exists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsResponse" />
   </wsdl:message>
   <wsdl:message name="IService_GetNames_InputMessage">
     <wsdl:part name="parameters" element="tns:GetNames" />
@@ -102,9 +78,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IData/CreateEmpty" message="tns:IService_CreateEmpty_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateEmptyResponse" message="tns:IService_CreateEmpty_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Create">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/Create" message="tns:IService_Create_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateResponse" message="tns:IService_Create_OutputMessage" />
+    <wsdl:operation name="CreateAppend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CreateAppend" message="tns:IService_CreateAppend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateAppendResponse" message="tns:IService_CreateAppend_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Read">
       <wsdl:input wsaw:Action="http://tempuri.org/IData/Read" message="tns:IService_Read_InputMessage" />
@@ -114,26 +90,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IData/Delete" message="tns:IService_Delete_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/DeleteResponse" message="tns:IService_Delete_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Move">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/Move" message="tns:IService_Move_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/MoveResponse" message="tns:IService_Move_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Copy">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/Copy" message="tns:IService_Copy_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/CopyResponse" message="tns:IService_Copy_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="WriteData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/WriteData" message="tns:IService_WriteData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/WriteDataResponse" message="tns:IService_WriteData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AppendData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/AppendData" message="tns:IService_AppendData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/AppendDataResponse" message="tns:IService_AppendData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ReadData">
-      <wsdl:input wsaw:Action="http://tempuri.org/IData/ReadData" message="tns:IService_ReadData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IData/ReadDataResponse" message="tns:IService_ReadData_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetLength">
       <wsdl:input wsaw:Action="http://tempuri.org/IData/GetLength" message="tns:IService_GetLength_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/GetLengthResponse" message="tns:IService_GetLength_OutputMessage" />
@@ -141,6 +97,10 @@
     <wsdl:operation name="GetCount">
       <wsdl:input wsaw:Action="http://tempuri.org/IData/GetCount" message="tns:IService_GetCount_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/GetCountResponse" message="tns:IService_GetCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Exists" message="tns:IService_Exists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ExistsResponse" message="tns:IService_Exists_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetNames">
       <wsdl:input wsaw:Action="http://tempuri.org/IData/GetNames" message="tns:IService_GetNames_InputMessage" />
@@ -170,8 +130,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Create">
-      <soap:operation soapAction="http://tempuri.org/IData/Create" style="document" />
+    <wsdl:operation name="CreateAppend">
+      <soap:operation soapAction="http://tempuri.org/IData/CreateAppend" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -197,51 +157,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Move">
-      <soap:operation soapAction="http://tempuri.org/IData/Move" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Copy">
-      <soap:operation soapAction="http://tempuri.org/IData/Copy" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="WriteData">
-      <soap:operation soapAction="http://tempuri.org/IData/WriteData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AppendData">
-      <soap:operation soapAction="http://tempuri.org/IData/AppendData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ReadData">
-      <soap:operation soapAction="http://tempuri.org/IData/ReadData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetLength">
       <soap:operation soapAction="http://tempuri.org/IData/GetLength" style="document" />
       <wsdl:input>
@@ -253,6 +168,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetCount">
       <soap:operation soapAction="http://tempuri.org/IData/GetCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <soap:operation soapAction="http://tempuri.org/IData/Exists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

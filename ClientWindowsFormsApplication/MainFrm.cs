@@ -16,13 +16,17 @@ namespace ClientWindowsFormsApplication
 {
     public partial class MainFrm : Form
     {
-        private ClientCloud client_cloud = new ClientCloud();
+        private ClientCloud client_cloud = null;
         private const int MAX_SIZE = 30000; //bytes
+        private const string LOCAL_PATH = "c:\\tmp\\client\\";
+        private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
 
         public MainFrm()
         {
             InitializeComponent();
-            client_cloud.LoadKey("c:\\tmp\\aes_key\\key");
+
+            client_cloud = new ClientCloud();
+            client_cloud.LoadKey(KEY_PATH);
 
             //test count
             int c = client_cloud.GetCount();
@@ -30,28 +34,32 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-            //todo
-            client_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
+            InitializeFrm dlg = new InitializeFrm();
+            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string server_dir = Properties.Settings.Default.server_dir;
+
+                //delete all file server directory
+                Directory.Delete(server_dir, true);
+                Directory.CreateDirectory(server_dir);
+                
+                // intitialize to server mirror dir
+                string initial_input_dir = dlg.dirBrowser.TextBox.Text;
+                //client_cloud.Initialize(initial_input_dir, server_dir);
+                client_cloud.InitRoot(initial_input_dir, server_dir);
+                
+                // save setting for next time
+                Properties.Settings.Default.init_input_dir = initial_input_dir;
+                Properties.Settings.Default.Save();
+            }
+
             StdMsgBox.OK("Initialize Complete");
-
-            //string[] files =  Directory.GetFiles("C:\\tmp\client");
-
-
-            //InitializeFrm dlg = new InitializeFrm();
-            //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_dir;
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    //todo
-            //    client_cloud.Initialize(@"c:\tmp\infiles", @"c:\tmp\outfiles");
-
-            //    Properties.Settings.Default.init_dir = dlg.dirBrowser.TextBox.Text;
-            //    Properties.Settings.Default.Save();
-            //}
         }
         
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-
+            StdMsgBox.OK("not implemented");
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -68,45 +76,48 @@ namespace ClientWindowsFormsApplication
             }
         }
 
-        private void btnGetDirs_Click(object sender, EventArgs e)
+        public void RefreshFileList()
         {
-            GetDirectories();
-        }
-
-        public void GetDirectories()
-        {
-            string dir = Properties.Settings.Default.server_dir;
-            XmlNodeList files = client_cloud.GetDirectories();
+            //string seerver_dir = Properties.Settings.Default.server_dir;
+            XmlNodeList files = client_cloud.GetFiles();
 
             serverfileList.Items.Clear();
             // add to fileList
             foreach (XmlNode n in files)
             {
-                string name = n["name"].InnerText;  
+                string name = n["name"].InnerText;
                 serverfileList.Items.Add(name);
             }
+
+            // get local files
+            localfileList.Items.Clear();
+            string[] local_dirs = Directory.GetDirectories(Properties.Settings.Default.local_dir);
+            foreach (string dir in local_dirs)
+            {
+                this.localfileList.Items.Add(Path.GetFileName(dir) + "/");
+            }
+            string[] local_files = Directory.GetFiles(Properties.Settings.Default.local_dir);
+            foreach (string file in local_files)
+            {
+                this.localfileList.Items.Add(Path.GetFileName(file));
+            }
+        }
+
+        private void btnGetDirs_Click(object sender, EventArgs e)
+        {
+            RefreshFileList();
+
+           
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            int max = (int)Math.Pow(2, 16); 
-
-            CreateFrm dlg = new CreateFrm();
+             CreateFrm dlg = new CreateFrm();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                if (data.Length < MAX_SIZE)
-                {
-                    client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
-                    GetDirectories();
-                }
-                else
-                {
-                    client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data, true);
-                    GetDirectories();
-
-                }
+                client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                RefreshFileList();
             }
             
         }
@@ -121,8 +132,10 @@ namespace ClientWindowsFormsApplication
                 byte[] data = null;
                // int len = (int)client_cloud.GetLength(name);
                 data = client_cloud.Read(name, true);
-                File.WriteAllBytes("c:\\tmp\\client\\" + name, data);
+                File.WriteAllBytes(LOCAL_PATH + name, data);
             }
+
+            RefreshFileList();
             StdMsgBox.OK("Read Complete");
         }
 
@@ -132,13 +145,19 @@ namespace ClientWindowsFormsApplication
             if(name != null)
             {
                 client_cloud.Delete(name);
-                GetDirectories();
+                RefreshFileList();
             }
         }
 
-        private void MainFrm_Load(object sender, EventArgs e)
+        private void btnCreateEmpty_Click(object sender, EventArgs e)
         {
 
+            client_cloud.CreateEmptyFile("EMPTY", 1000, true);
+        }
+
+        private void btnSync_Click(object sender, EventArgs e)
+        {
+            StdMsgBox.OK("not implemented");
         }
    }
 }

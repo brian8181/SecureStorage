@@ -18,10 +18,10 @@ namespace CyptoCloud_WS
 
         #region IData Members
 
-        public void Create(string name, byte[] data)
-        {
-            File.WriteAllBytes(working_dir + name, data);
-        }
+        //public void Create(string name, byte[] data)
+        //{
+        //    File.WriteAllBytes(working_dir + name, data);
+        //}
 
         public void CreateEmpty(string name, int len, bool random = false)
         {
@@ -39,40 +39,29 @@ namespace CyptoCloud_WS
             }
         }
 
-        public byte[] Read(string name)
-        {
-            //long len = Length(name);
-            //ReadData(name, 0, 
-            return File.ReadAllBytes(working_dir + name);
-        }
-        
         public void Delete(string name)
         {
             File.Delete(working_dir + name);
         }
-            
 
-        public void Move(string src, string dst)
+        public bool Exists(string name)
         {
-            throw new NotImplementedException();
+            FileInfo fi = new FileInfo(working_dir + name);
+            return fi.Exists;
         }
 
-        public void Copy(string src, string dst)
-        {
-            throw new NotImplementedException();
-        }
-        
         /// <summary>
         /// write date to end of file
         /// </summary>
         /// <param name="name"></param>
         /// <param name="data"></param>
-        public void AppendData(string name, byte[] data)
+        public bool CreateAppend(string name, byte[] data)
         {
             using (FileStream fs = new FileStream(working_dir + name , FileMode.Create | FileMode.Append))
             {
                 fs.Write(data, 0, data.Length);
             }
+            return true;
         }
 
         /// <summary>
@@ -80,10 +69,13 @@ namespace CyptoCloud_WS
         /// </summary>
         /// <param name="name">file by name</param>
         /// <param name="offset">offset to read into file</param>
-        /// <param name="len">len of data to read</param>
+        /// <param name="len">len of data to read, 0 read all</param>
         /// <returns>the data read</returns>
-        public byte[] ReadData(string name, int offset, int len)
+        public byte[] Read(string name, int offset, int len)
         {
+            if (len <= 0)
+                len = (int)GetLength(name);
+
             using (FileStream fs = new FileStream(working_dir + name, FileMode.Open))
             {
                 byte[] data = new byte[len];
@@ -95,21 +87,6 @@ namespace CyptoCloud_WS
             }
         }
 
-        public void WriteData(string name, int offeset, byte[] data)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public void MoveData(string src, int src_idx, string dst, int dst_idx, int len)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void CopyData(string src, int src_idx, string dst, int dst_idx, int len)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public int GetCount()
         {
             DirectoryInfo di = new DirectoryInfo(working_dir);
@@ -118,14 +95,8 @@ namespace CyptoCloud_WS
 
         public long GetLength(string name)
         {
-            // todo read len with reading all bytes (more effiencient)?
-            using (FileStream fs = new FileStream(working_dir + name, FileMode.Open))
-            {
-                return fs.Length;
-            }
-
-            //byte[] data = File.ReadAllBytes(working_dir + name);
-            //return data.Length;
+            FileInfo fi = new FileInfo(working_dir + name);
+            return fi.Length;
         }
 
         /// <summary>
@@ -158,7 +129,9 @@ namespace CyptoCloud_WS
             return names;
         }
               
-
+        /// <summary>
+        /// delete all files
+        /// </summary>
         public void DeleteAll()
         {
             DirectoryInfo di = new DirectoryInfo(working_dir);
@@ -169,6 +142,11 @@ namespace CyptoCloud_WS
             }
         }
 
+        /// <summary>
+        /// get sha256 of file data
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public byte[] SHA256(string name)
         {
             byte[] data = File.ReadAllBytes(working_dir + name);

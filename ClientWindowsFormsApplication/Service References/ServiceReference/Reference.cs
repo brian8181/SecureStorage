@@ -21,53 +21,23 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateEmpty", ReplyAction="http://tempuri.org/IData/CreateEmptyResponse")]
         System.Threading.Tasks.Task CreateEmptyAsync(string name, int len, bool random);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Create", ReplyAction="http://tempuri.org/IData/CreateResponse")]
-        void Create(string name, byte[] data);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateAppend", ReplyAction="http://tempuri.org/IData/CreateAppendResponse")]
+        bool CreateAppend(string name, byte[] data);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Create", ReplyAction="http://tempuri.org/IData/CreateResponse")]
-        System.Threading.Tasks.Task CreateAsync(string name, byte[] data);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Read", ReplyAction="http://tempuri.org/IData/ReadResponse")]
-        byte[] Read(string name);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateAppend", ReplyAction="http://tempuri.org/IData/CreateAppendResponse")]
+        System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Read", ReplyAction="http://tempuri.org/IData/ReadResponse")]
-        System.Threading.Tasks.Task<byte[]> ReadAsync(string name);
+        byte[] Read(string name, int offset, int lenght);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Read", ReplyAction="http://tempuri.org/IData/ReadResponse")]
+        System.Threading.Tasks.Task<byte[]> ReadAsync(string name, int offset, int lenght);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Delete", ReplyAction="http://tempuri.org/IData/DeleteResponse")]
         void Delete(string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Delete", ReplyAction="http://tempuri.org/IData/DeleteResponse")]
         System.Threading.Tasks.Task DeleteAsync(string name);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Move", ReplyAction="http://tempuri.org/IData/MoveResponse")]
-        void Move(string src, string dst);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Move", ReplyAction="http://tempuri.org/IData/MoveResponse")]
-        System.Threading.Tasks.Task MoveAsync(string src, string dst);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Copy", ReplyAction="http://tempuri.org/IData/CopyResponse")]
-        void Copy(string src, string dst);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Copy", ReplyAction="http://tempuri.org/IData/CopyResponse")]
-        System.Threading.Tasks.Task CopyAsync(string src, string dst);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/WriteData", ReplyAction="http://tempuri.org/IData/WriteDataResponse")]
-        void WriteData(string name, int offset, byte[] data);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/WriteData", ReplyAction="http://tempuri.org/IData/WriteDataResponse")]
-        System.Threading.Tasks.Task WriteDataAsync(string name, int offset, byte[] data);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/AppendData", ReplyAction="http://tempuri.org/IData/AppendDataResponse")]
-        void AppendData(string name, byte[] data);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/AppendData", ReplyAction="http://tempuri.org/IData/AppendDataResponse")]
-        System.Threading.Tasks.Task AppendDataAsync(string name, byte[] data);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/ReadData", ReplyAction="http://tempuri.org/IData/ReadDataResponse")]
-        byte[] ReadData(string name, int offset, int lenght);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/ReadData", ReplyAction="http://tempuri.org/IData/ReadDataResponse")]
-        System.Threading.Tasks.Task<byte[]> ReadDataAsync(string name, int offset, int lenght);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/GetLength", ReplyAction="http://tempuri.org/IData/GetLengthResponse")]
         long GetLength(string name);
@@ -80,6 +50,12 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/GetCount", ReplyAction="http://tempuri.org/IData/GetCountResponse")]
         System.Threading.Tasks.Task<int> GetCountAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Exists", ReplyAction="http://tempuri.org/IData/ExistsResponse")]
+        bool Exists(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Exists", ReplyAction="http://tempuri.org/IData/ExistsResponse")]
+        System.Threading.Tasks.Task<bool> ExistsAsync(string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/GetNames", ReplyAction="http://tempuri.org/IData/GetNamesResponse")]
         string[] GetNames(int idx, int len);
@@ -141,20 +117,20 @@ namespace ClientWindowsFormsApplication.ServiceReference {
             return base.Channel.CreateEmptyAsync(name, len, random);
         }
         
-        public void Create(string name, byte[] data) {
-            base.Channel.Create(name, data);
+        public bool CreateAppend(string name, byte[] data) {
+            return base.Channel.CreateAppend(name, data);
         }
         
-        public System.Threading.Tasks.Task CreateAsync(string name, byte[] data) {
-            return base.Channel.CreateAsync(name, data);
+        public System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data) {
+            return base.Channel.CreateAppendAsync(name, data);
         }
         
-        public byte[] Read(string name) {
-            return base.Channel.Read(name);
+        public byte[] Read(string name, int offset, int lenght) {
+            return base.Channel.Read(name, offset, lenght);
         }
         
-        public System.Threading.Tasks.Task<byte[]> ReadAsync(string name) {
-            return base.Channel.ReadAsync(name);
+        public System.Threading.Tasks.Task<byte[]> ReadAsync(string name, int offset, int lenght) {
+            return base.Channel.ReadAsync(name, offset, lenght);
         }
         
         public void Delete(string name) {
@@ -163,46 +139,6 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         public System.Threading.Tasks.Task DeleteAsync(string name) {
             return base.Channel.DeleteAsync(name);
-        }
-        
-        public void Move(string src, string dst) {
-            base.Channel.Move(src, dst);
-        }
-        
-        public System.Threading.Tasks.Task MoveAsync(string src, string dst) {
-            return base.Channel.MoveAsync(src, dst);
-        }
-        
-        public void Copy(string src, string dst) {
-            base.Channel.Copy(src, dst);
-        }
-        
-        public System.Threading.Tasks.Task CopyAsync(string src, string dst) {
-            return base.Channel.CopyAsync(src, dst);
-        }
-        
-        public void WriteData(string name, int offset, byte[] data) {
-            base.Channel.WriteData(name, offset, data);
-        }
-        
-        public System.Threading.Tasks.Task WriteDataAsync(string name, int offset, byte[] data) {
-            return base.Channel.WriteDataAsync(name, offset, data);
-        }
-        
-        public void AppendData(string name, byte[] data) {
-            base.Channel.AppendData(name, data);
-        }
-        
-        public System.Threading.Tasks.Task AppendDataAsync(string name, byte[] data) {
-            return base.Channel.AppendDataAsync(name, data);
-        }
-        
-        public byte[] ReadData(string name, int offset, int lenght) {
-            return base.Channel.ReadData(name, offset, lenght);
-        }
-        
-        public System.Threading.Tasks.Task<byte[]> ReadDataAsync(string name, int offset, int lenght) {
-            return base.Channel.ReadDataAsync(name, offset, lenght);
         }
         
         public long GetLength(string name) {
@@ -219,6 +155,14 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         public System.Threading.Tasks.Task<int> GetCountAsync() {
             return base.Channel.GetCountAsync();
+        }
+        
+        public bool Exists(string name) {
+            return base.Channel.Exists(name);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ExistsAsync(string name) {
+            return base.Channel.ExistsAsync(name);
         }
         
         public string[] GetNames(int idx, int len) {

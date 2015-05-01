@@ -1,0 +1,2 @@
+﻿* figure out how to load xml from string, I am saving to tm.xml as work around
+* implement a sync function, details not finalized!

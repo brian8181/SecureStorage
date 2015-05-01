@@ -50,12 +50,12 @@ namespace ClientWindowsFormsApplication.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string init_dir {
+        public string init_input_dir {
             get {
-                return ((string)(this["init_dir"]));
+                return ((string)(this["init_input_dir"]));
             }
             set {
-                this["init_dir"] = value;
+                this["init_input_dir"] = value;
             }
         }
         
