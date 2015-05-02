@@ -10,6 +10,9 @@ namespace ConsolePOCs
     {
         static void Main(string[] args)
         {
+            string s2 = "/a/b/c/text.txt";
+            string dir = Path.GetDirectoryName(s2);
+
             //// gen keys
             //QuickRSA.KeyPair keys = QuickRSA.GenerateKeyPair();
             //// save keys
