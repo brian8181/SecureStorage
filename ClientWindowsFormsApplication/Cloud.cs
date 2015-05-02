@@ -16,7 +16,10 @@ namespace ClientWindowsFormsApplication
         private const string TMP_FILE_NAME = "tmp.xml";
         private const string ROOT_FILE_NAME = "/";
         private const int CHUNK_SIZE = 1000;
-                               
+        
+        /// <summary>
+        /// true if key has been loaded, otherwise false
+        /// </summary>
         public bool KeyLoaded
         {
             get
@@ -126,8 +129,20 @@ namespace ClientWindowsFormsApplication
             File.WriteAllBytes(out_path + "\\" + secure_named_root, encrypted_xml_file_data);
         }
 
+        private string GetCloudPath(string path) 
+        {
+            string local = Properties.Settings.Default.init_input_dir;
+            path = path.Remove(0, local.Length);
+            path = path.Replace('\\', '/');
+            //path.TrimStart('/'); // may trim start ?
+            return path + "/";
+        }
+
         private void InitializeLocal(DirectoryInfo dir, XmlDocument doc, XmlNode root, string out_path)
         {
+
+            string directory_name = GetCloudPath(dir.FullName);
+
             out_path = out_path.TrimEnd('\\');
 
             // get all files
@@ -216,6 +231,75 @@ namespace ClientWindowsFormsApplication
                 // save all
                 sub_dir_doc.Save(secure_dir_name);
             }
+
+            //doc.Save
+        }
+
+        public void InitializeLocal_(string input_dir, string output_dir)
+        {
+            DirectoryInfo di = new DirectoryInfo(input_dir);
+            InitializeSub_(di, output_dir);
+        }
+
+        private void InitializeSub_(DirectoryInfo dir, string output_dir)
+        {
+            string cloud_dir_name = GetCloudPath(dir.FullName);
+            string secure_dir_name = GetSecureName(cloud_dir_name);
+
+            XmlDocument doc = new XmlDocument();
+            //xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
+
+            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
+            doc.AppendChild(root);
+            
+            //todo
+
+            FileInfo[] fis = dir.GetFiles();
+            foreach (FileInfo file in fis)
+            {
+                // todo write file to output
+                string full_name = cloud_dir_name + file.Name; //??
+
+                // create a file node
+                XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
+                //APPEND name
+                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+                name_node.InnerText = full_name;
+                file_node.AppendChild(name_node);
+
+                //todo
+
+                root.AppendChild(file_node);
+            }
+
+            DirectoryInfo[] dis = dir.GetDirectories();
+            foreach (DirectoryInfo sub_dir in dis)
+            {
+                string sub_dir_name = GetCloudPath(sub_dir.FullName);
+                
+                // create a file node
+                XmlNode dir_node = doc.CreateElement(string.Empty, "directory", string.Empty);
+                //APPEND name
+                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+                name_node.InnerText = sub_dir_name;
+                dir_node.AppendChild(name_node);
+
+                //todo
+
+                root.AppendChild(dir_node);
+
+                InitializeSub_(sub_dir, output_dir);
+            }
+
+
+            doc.Save(secure_dir_name);
+
+            // write directory file to output
+            //byte[] xml_file_data = File.ReadAllBytes(secure_dir_name);
+            //byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
+            //File.WriteAllBytes(output_dir + "\\" + secure_dir_name, encrypted_xml_file_data);
         }
 
         /// <summary>
@@ -231,6 +315,20 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
+        /// utility removes byte order mark from xml strings
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        private string RemoveByteOrderMark(byte[] xml)
+        {
+            string xml_string = UTF8Encoding.UTF8.GetString(xml);
+            string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+            if (xml_string.StartsWith(_byteOrderMarkUtf8))
+                xml_string = xml_string.Remove(0, _byteOrderMarkUtf8.Length);
+            return xml_string;
+        }
+
+        /// <summary>
         /// get files in encrypted directory (ROOT)
         /// </summary>
         /// <returns>files as xml</returns>
@@ -242,9 +340,9 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// get file in encrypted directory
         /// </summary>
-        /// <param name="dir_name">directory name</param>
+        /// <param name="sub_dir_name">directory name</param>
         /// <returns>files as xml</returns>
-        public XmlNodeList GetFiles(string dir_name)
+        public XmlNodeList  GetFiles(string dir_name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
@@ -256,10 +354,7 @@ namespace ClientWindowsFormsApplication
 
             XmlDocument doc = new XmlDocument();
             // encode to string & remove: byte order mark (BOM)
-            string xml = UTF8Encoding.UTF8.GetString(data);
-            string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml.StartsWith(_byteOrderMarkUtf8))
-                xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
+            string xml = RemoveByteOrderMark(data);
             // save doc
             doc.LoadXml(xml);
 
@@ -274,7 +369,6 @@ namespace ClientWindowsFormsApplication
         /// </summary>
         /// <param name="name">orginal name</param>
         /// <returns>secure name based off original</returns>
-        //private string GetSecureName(string name, out byte[] salt)
         private string GetSecureName(string name)
         {
             if (KeyLoaded != true)
@@ -282,13 +376,6 @@ namespace ClientWindowsFormsApplication
 
             HMACSHA256 hmacsha256 = new HMACSHA256(key);
             byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
-
-            // Future salted data name, how return salt
-            //byte[] salt = CryptoFunctions.GenerateRandomBytes(SALT_LEN);
-            //byte[] salted_data = new byte[salt.Length + data.Length];
-            //Array.Copy(salt, salted_data, SALT_LEN);
-            //Array.Copy(data, 0, salted_data, SALT_LEN, data.Length); 
-            
             byte[] hash = hmacsha256.ComputeHash(data);
             return CryptoFunctions.FromBytesToHex(hash);
         }
@@ -427,7 +514,7 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// 
+        /// read / download / copy file to client directory
         /// </summary>
         /// <param name="name"></param>
         /// <param name="chunk"></param>

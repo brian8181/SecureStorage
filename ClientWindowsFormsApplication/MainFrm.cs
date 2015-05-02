@@ -29,28 +29,31 @@ namespace ClientWindowsFormsApplication
 
             //test count
             int c = client_cloud.GetCount();
+            lblSever.Text = current_dir;
         }
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-            InitializeFrm dlg = new InitializeFrm();
-            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                string server_dir = Properties.Settings.Default.server_dir;
+            //InitializeFrm dlg = new InitializeFrm();
+            //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
+            //if (dlg.ShowDialog() == DialogResult.OK)
+            //{
+            //    string server_dir = Properties.Settings.Default.server_dir;
 
-                //delete all file server directory
-                Directory.Delete(server_dir, true);
-                Directory.CreateDirectory(server_dir);
+            //    //delete all file server directory
+            //    Directory.Delete(server_dir, true);
+            //    Directory.CreateDirectory(server_dir);
                 
-                // intitialize to server mirror dir
-                string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-                client_cloud.InitializeLocal(initial_input_dir, server_dir);
+            //    // intitialize to server mirror dir
+            //    string initial_input_dir = dlg.dirBrowser.TextBox.Text;
+            //    client_cloud.InitializeLocal(initial_input_dir, server_dir);
                 
-                // save setting for next time
-                Properties.Settings.Default.init_input_dir = initial_input_dir;
-                Properties.Settings.Default.Save();
-            }
+            //    // save setting for next time
+            //    Properties.Settings.Default.init_input_dir = initial_input_dir;
+            //    Properties.Settings.Default.Save();
+            //}
+
+            client_cloud.InitializeLocal_("c:\\tmp\\infiles", "c:\\tmp\\outfiles");
 
             StdMsgBox.OK("InitializeLocal Complete");
         }
@@ -74,10 +77,12 @@ namespace ClientWindowsFormsApplication
             }
         }
 
-        public void RefreshFileList()
+       
+
+        public void RefreshFileList(string path)
         {
             //string seerver_dir = Properties.Settings.Default.server_dir;
-            XmlNodeList files = client_cloud.GetFiles();
+            XmlNodeList files = client_cloud.GetFiles(path);
 
             serverfileList.Items.Clear();
             // add to fileList
@@ -103,7 +108,7 @@ namespace ClientWindowsFormsApplication
 
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
-            RefreshFileList();
+            RefreshFileList("/");
 
            
         }
@@ -115,7 +120,7 @@ namespace ClientWindowsFormsApplication
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
                 client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
-                RefreshFileList();
+                RefreshFileList("/");
             }
             
         }
@@ -133,7 +138,7 @@ namespace ClientWindowsFormsApplication
                 File.WriteAllBytes(LOCAL_PATH + name, data);
             }
 
-            RefreshFileList();
+            RefreshFileList("/");
             StdMsgBox.OK("Read Complete");
         }
 
@@ -143,7 +148,7 @@ namespace ClientWindowsFormsApplication
             if(name != null)
             {
                 client_cloud.Delete(name);
-                RefreshFileList();
+                RefreshFileList("/");
             }
         }
 
@@ -161,9 +166,9 @@ namespace ClientWindowsFormsApplication
         string current_dir = "/";
         private void btnUpDirectory_Click(object sender, EventArgs e)
         {
-            //testing
-            current_dir = "/A/";
+            string dir = current_dir.TrimStart('/');
             StringBuilder sb = new StringBuilder();
+
             if (current_dir != "/")
             {
                 string[] dirs = current_dir.Split('/');
@@ -177,7 +182,31 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click_1(object sender, EventArgs e)
         {
-            client_cloud.Initialize();
+            if (client_cloud.Initialize())
+            {
+                StdMsgBox.OK("Initialized.");
+            }
+            else
+            {
+                StdMsgBox.Error("Unknown error.");
+            }
+        }
+
+        private void serverfileList_DoubleClick(object sender, EventArgs e)
+        {
+            if (serverfileList.SelectedItem != null)
+            {
+               string s = serverfileList.SelectedItem.ToString();
+
+                if(s != "/")
+                    s.TrimStart('/');
+
+                if (s.EndsWith("/"))
+                {
+                    RefreshFileList(s);
+                }
+            }
+
         }
    
    }

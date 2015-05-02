@@ -38,7 +38,7 @@
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
             this.localfileList = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblSever = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCreateEmpty = new System.Windows.Forms.Button();
             this.btnSync = new System.Windows.Forms.Button();
@@ -53,6 +53,7 @@
             this.serverfileList.Name = "serverfileList";
             this.serverfileList.Size = new System.Drawing.Size(191, 355);
             this.serverfileList.TabIndex = 0;
+            this.serverfileList.DoubleClick += new System.EventHandler(this.serverfileList_DoubleClick);
             // 
             // btnCreate
             // 
@@ -142,15 +143,15 @@
             this.localfileList.Size = new System.Drawing.Size(191, 355);
             this.localfileList.TabIndex = 9;
             // 
-            // label1
+            // lblSever
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Server";
+            this.lblSever.AutoSize = true;
+            this.lblSever.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSever.Location = new System.Drawing.Point(0, 8);
+            this.lblSever.Name = "lblSever";
+            this.lblSever.Size = new System.Drawing.Size(44, 13);
+            this.lblSever.TabIndex = 10;
+            this.lblSever.Text = "Server";
             // 
             // label2
             // 
@@ -214,7 +215,7 @@
             this.Controls.Add(this.btnSync);
             this.Controls.Add(this.btnCreateEmpty);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblSever);
             this.Controls.Add(this.localfileList);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.btnInitializeLocal);
@@ -246,7 +247,7 @@
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnGetDirs;
         private System.Windows.Forms.ListBox localfileList;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblSever;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCreateEmpty;
         private System.Windows.Forms.Button btnSync;

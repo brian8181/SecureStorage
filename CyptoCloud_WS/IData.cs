@@ -53,6 +53,5 @@ namespace CyptoCloud_WS
         //get sha256 of file data
         [OperationContract]
         byte[] SHA256(string name);
-      
     }
 }
