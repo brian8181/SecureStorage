@@ -8,7 +8,7 @@ using Utility.IO;
 
 namespace ClientWindowsFormsApplication
 {
-    public class ClientCloud
+    public class ClientCloud : IRemoteData
     {
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
         private byte[] key = null;
@@ -67,7 +67,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// gets name / path used for cloud, aka removes local root & adjust slashes
         /// </summary>
-        /// <param name="path">name / ptah to convert</param>
+        /// <param name="path">name / path to convert</param>
         /// <returns>cloud name / path</returns>
         private string GetCloudPath(string path)
         {
@@ -281,7 +281,6 @@ namespace ClientWindowsFormsApplication
             return nodes;
         }
 
-        private const int SALT_LEN = 32;
         /// <summary>
         /// get a secure name
         /// </summary>
