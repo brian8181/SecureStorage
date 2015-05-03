@@ -34,27 +34,28 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click(object sender, EventArgs e)
         {
-            //InitializeFrm dlg = new InitializeFrm();
-            //dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    string server_dir = Properties.Settings.Default.server_dir;
+            InitializeFrm dlg = new InitializeFrm();
+            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string output_dir = Properties.Settings.Default.server_mirror_dir;
 
-            //    //delete all file server directory
-            //    Directory.Delete(server_dir, true);
-            //    Directory.CreateDirectory(server_dir);
+                //delete all file server directory
+                Directory.Delete(output_dir, true);
+                Directory.CreateDirectory(output_dir);
+
+                // intitialize to server mirror dir
+                string initial_input_dir = dlg.dirBrowser.TextBox.Text;
                 
-            //    // intitialize to server mirror dir
-            //    string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-            //    client_cloud.InitializeLocal(initial_input_dir, server_dir);
-                
-            //    // save setting for next time
-            //    Properties.Settings.Default.init_input_dir = initial_input_dir;
-            //    Properties.Settings.Default.Save();
-            //}
 
-            client_cloud.InitializeLocal_("c:\\tmp\\infiles", "c:\\tmp\\outfiles");
+                client_cloud.InitializeLocal(initial_input_dir, output_dir);
 
+                // save setting for next time
+                Properties.Settings.Default.init_input_dir = initial_input_dir;
+                Properties.Settings.Default.Save();
+            }
+
+           
             StdMsgBox.OK("InitializeLocal Complete");
         }
         
@@ -70,7 +71,7 @@ namespace ClientWindowsFormsApplication
             {
                 // load the key
                 client_cloud.LoadKey(dlg.dirBrowserKeyDir.TextBox.Text.TrimEnd('\\') + "\\key");
-                Properties.Settings.Default.server_dir = dlg.dirBrowserServerDir.TextBox.Text;
+                Properties.Settings.Default.server_mirror_dir = dlg.dirBrowserServerDir.TextBox.Text;
                 Properties.Settings.Default.local_dir = dlg.dirBrowserLocalDir.TextBox.Text;
                 Properties.Settings.Default.key_path = dlg.dirBrowserKeyDir.TextBox.Text;
                 Properties.Settings.Default.Save();
@@ -81,7 +82,7 @@ namespace ClientWindowsFormsApplication
 
         public void RefreshFileList(string path)
         {
-            //string seerver_dir = Properties.Settings.Default.server_dir;
+            //string seerver_dir = Properties.Settings.Default.output_dir;
             XmlNodeList files = client_cloud.GetFiles(path);
 
             serverfileList.Items.Clear();
@@ -208,6 +209,16 @@ namespace ClientWindowsFormsApplication
             }
 
         }
-   
+
+        private void btnCreateDir_Click(object sender, EventArgs e)
+        {
+            CreateDirectoryFrm frm = new CreateDirectoryFrm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                //client_cloud.CreateDirectory("");
+            }
+        }
+
+     
    }
 }

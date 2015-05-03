@@ -22,7 +22,7 @@ namespace ClientWindowsFormsApplication
 
 
             txtRootName.Text = Properties.Settings.Default.root_name;
-            dirBrowserServerDir.TextBox.Text = Properties.Settings.Default.server_dir;
+            dirBrowserServerDir.TextBox.Text = Properties.Settings.Default.server_mirror_dir;
             dirBrowserLocalDir.TextBox.Text = Properties.Settings.Default.local_dir;
             dirBrowserKeyDir.TextBox.Text = Properties.Settings.Default.key_path;
         }

@@ -26,12 +26,12 @@ namespace ClientWindowsFormsApplication.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string server_dir {
+        public string server_mirror_dir {
             get {
-                return ((string)(this["server_dir"]));
+                return ((string)(this["server_mirror_dir"]));
             }
             set {
-                this["server_dir"] = value;
+                this["server_mirror_dir"] = value;
             }
         }
         

@@ -44,6 +44,7 @@
             this.btnSync = new System.Windows.Forms.Button();
             this.btnUpDirectory = new System.Windows.Forms.Button();
             this.btnInitialize = new System.Windows.Forms.Button();
+            this.btnCreateDir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serverfileList
@@ -57,7 +58,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(397, 252);
+            this.btnCreate.Location = new System.Drawing.Point(397, 284);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -67,7 +68,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(397, 281);
+            this.btnRead.Location = new System.Drawing.Point(397, 313);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -77,7 +78,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(397, 310);
+            this.btnDelete.Location = new System.Drawing.Point(397, 342);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -98,7 +99,7 @@
             // cbSync
             // 
             this.cbSync.AutoSize = true;
-            this.cbSync.Location = new System.Drawing.Point(397, 339);
+            this.cbSync.Location = new System.Drawing.Point(397, 371);
             this.cbSync.Name = "cbSync";
             this.cbSync.Size = new System.Drawing.Size(62, 17);
             this.cbSync.TabIndex = 6;
@@ -127,7 +128,7 @@
             // 
             // btnGetDirs
             // 
-            this.btnGetDirs.Location = new System.Drawing.Point(397, 223);
+            this.btnGetDirs.Location = new System.Drawing.Point(397, 226);
             this.btnGetDirs.Name = "btnGetDirs";
             this.btnGetDirs.Size = new System.Drawing.Size(102, 23);
             this.btnGetDirs.TabIndex = 5;
@@ -175,7 +176,7 @@
             // 
             // btnSync
             // 
-            this.btnSync.Location = new System.Drawing.Point(397, 194);
+            this.btnSync.Location = new System.Drawing.Point(397, 197);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(102, 23);
             this.btnSync.TabIndex = 13;
@@ -197,7 +198,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(397, 165);
+            this.btnInitialize.Location = new System.Drawing.Point(397, 168);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 15;
@@ -205,11 +206,22 @@
             this.btnInitialize.UseVisualStyleBackColor = true;
             this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click_1);
             // 
+            // btnCreateDir
+            // 
+            this.btnCreateDir.Location = new System.Drawing.Point(397, 255);
+            this.btnCreateDir.Name = "btnCreateDir";
+            this.btnCreateDir.Size = new System.Drawing.Size(102, 23);
+            this.btnCreateDir.TabIndex = 16;
+            this.btnCreateDir.Text = "Create Directory";
+            this.btnCreateDir.UseVisualStyleBackColor = true;
+            this.btnCreateDir.Click += new System.EventHandler(this.btnCreateDir_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(576, 395);
+            this.Controls.Add(this.btnCreateDir);
             this.Controls.Add(this.btnInitialize);
             this.Controls.Add(this.btnUpDirectory);
             this.Controls.Add(this.btnSync);
@@ -253,6 +265,7 @@
         private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnUpDirectory;
         private System.Windows.Forms.Button btnInitialize;
+        private System.Windows.Forms.Button btnCreateDir;
     }
 }
 

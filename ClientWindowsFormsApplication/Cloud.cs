@@ -63,13 +63,39 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
+        //TODO move to GUI, all path should be in cloud format in first place
+        /// <summary>
+        /// gets name / path used for cloud, aka removes local root & adjust slashes
+        /// </summary>
+        /// <param name="path">name / ptah to convert</param>
+        /// <returns>cloud name / path</returns>
+        private string GetCloudPath(string path)
+        {
+            string local = Properties.Settings.Default.init_input_dir;
+            path = path.Remove(0, local.Length);
+            path = path.Replace('\\', '/');
+            path = path.TrimStart('/'); // may trim start ?
+            return path + "/";
+        }
+
+
         /// <summary>
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
         public bool Initialize()
         {
-            // create a file system on server
+            return CreateDirectoryByPath(ROOT_FILE_NAME);
+        }
+
+        /// <summary>
+        /// internal function, abstarcts Creating direcoties at specified path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool CreateDirectoryByPath(string path)
+        {
+            // create a file system on serverw
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
@@ -81,7 +107,7 @@ namespace ClientWindowsFormsApplication
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            string secure_named_root = GetSecureName(ROOT_FILE_NAME);
+            string secure_named_root = GetSecureName(path);
             doc.Save(secure_named_root);
 
             // encrypt xml file
@@ -94,73 +120,48 @@ namespace ClientWindowsFormsApplication
 
             return false;
         }
-
-
+        
         /// <summary>
         /// initialize/create a directory based on input directory
         /// </summary>
         /// <param name="in_path"></param>
         /// <param name="out_path"></param>
-        public void InitializeLocal(string in_path, string out_path)
+        public void InitializeLocal(string input_dir, string output_dir)
         {
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
+            DirectoryInfo di = new DirectoryInfo(input_dir);
+            InitializeSub_(di, output_dir);
+        }
 
-            in_path = in_path.TrimEnd('\\');
-            out_path = out_path.TrimEnd('\\');
+        private void InitializeSub_(DirectoryInfo dir, string output_dir)
+        {
+            string cloud_dir_name = GetCloudPath(dir.FullName);
+            string secure_dir_name = GetSecureName(cloud_dir_name);
 
             XmlDocument doc = new XmlDocument();
-
             //xml declaration is recommended, but not mandatory
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
-
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
-
-            DirectoryInfo di = new DirectoryInfo(in_path);
-            InitializeLocal(di, doc, root, out_path);
-            string secure_named_root = GetSecureName(ROOT_FILE_NAME);
-            doc.Save(secure_named_root);
-
-
-            byte[] xml_file_data = File.ReadAllBytes(secure_named_root);
-            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-            File.WriteAllBytes(out_path + "\\" + secure_named_root, encrypted_xml_file_data);
-        }
-
-        private string GetCloudPath(string path) 
-        {
-            string local = Properties.Settings.Default.init_input_dir;
-            path = path.Remove(0, local.Length);
-            path = path.Replace('\\', '/');
-            //path.TrimStart('/'); // may trim start ?
-            return path + "/";
-        }
-
-        private void InitializeLocal(DirectoryInfo dir, XmlDocument doc, XmlNode root, string out_path)
-        {
-
-            string directory_name = GetCloudPath(dir.FullName);
-
-            out_path = out_path.TrimEnd('\\');
-
-            // get all files
+            
             FileInfo[] fis = dir.GetFiles();
             foreach (FileInfo file in fis)
             {
+                // todo write file to output
+                string full_name = cloud_dir_name + file.Name; //??
+                full_name = full_name.TrimStart('/');
+
                 byte[] data = File.ReadAllBytes(file.FullName);
                 //todo, write file to disk
                 string secure_name = GetSecureName(file.Name);
                 byte[] secure_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-                File.WriteAllBytes(out_path + "\\" + secure_name, secure_data);
+                File.WriteAllBytes(output_dir + "\\" + secure_name, secure_data);
 
                 // create a file node
                 XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
-
                 //APPEND name
                 XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = file.Name;
+                name_node.InnerText = full_name;
                 file_node.AppendChild(name_node);
 
                 //APPEND signature
@@ -182,20 +183,17 @@ namespace ClientWindowsFormsApplication
 
                 root.AppendChild(file_node);
             }
-            
-            //// get all dirs
-            DirectoryInfo[] dis = dir.GetDirectories();
-            foreach (DirectoryInfo di in dis)
-            {
-                string dir_name = Path.GetFileName(di.FullName) + "/";
-                string secure_dir_name = GetSecureName(dir_name);
 
+            DirectoryInfo[] dis = dir.GetDirectories();
+            foreach (DirectoryInfo sub_dir in dis)
+            {
+                string sub_dir_name = GetCloudPath(sub_dir.FullName);
+                
                 // create a file node
                 XmlNode dir_node = doc.CreateElement(string.Empty, "directory", string.Empty);
-
                 //APPEND name
                 XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = dir_name;
+                name_node.InnerText = sub_dir_name;
                 dir_node.AppendChild(name_node);
 
                 //APPEND dates
@@ -211,95 +209,15 @@ namespace ClientWindowsFormsApplication
 
                 root.AppendChild(dir_node);
 
-                //todo.. create dir xml
-                XmlDocument sub_dir_doc = new XmlDocument();
-                //xml declaration is recommended, but not mandatory
-                XmlDeclaration sub_decel = sub_dir_doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-                sub_dir_doc.InsertBefore(sub_decel, sub_dir_doc.DocumentElement);
-                XmlNode new_root_node = sub_dir_doc.AppendChild(sub_dir_doc.CreateElement(string.Empty, "root", string.Empty));
-                // save tmp
-                sub_dir_doc.Save(secure_dir_name);
-
-                ////encrypt & write file
-                byte[] xml_sub_dir_data = File.ReadAllBytes(secure_dir_name);
-                byte[] encrypted_xml_sub_dir_data = CryptoFunctions.EncryptAES(key, xml_sub_dir_data, iv);
-                File.WriteAllBytes(out_path + "\\" + secure_dir_name, encrypted_xml_sub_dir_data);
-
-                //// add to xmldoc
-                InitializeLocal(di, sub_dir_doc, new_root_node, out_path);
-
-                // save all
-                sub_dir_doc.Save(secure_dir_name);
-            }
-
-            //doc.Save
-        }
-
-        public void InitializeLocal_(string input_dir, string output_dir)
-        {
-            DirectoryInfo di = new DirectoryInfo(input_dir);
-            InitializeSub_(di, output_dir);
-        }
-
-        private void InitializeSub_(DirectoryInfo dir, string output_dir)
-        {
-            string cloud_dir_name = GetCloudPath(dir.FullName);
-            string secure_dir_name = GetSecureName(cloud_dir_name);
-
-            XmlDocument doc = new XmlDocument();
-            //xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
-
-            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
-            doc.AppendChild(root);
-            
-            //todo
-
-            FileInfo[] fis = dir.GetFiles();
-            foreach (FileInfo file in fis)
-            {
-                // todo write file to output
-                string full_name = cloud_dir_name + file.Name; //??
-
-                // create a file node
-                XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
-                //APPEND name
-                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = full_name;
-                file_node.AppendChild(name_node);
-
-                //todo
-
-                root.AppendChild(file_node);
-            }
-
-            DirectoryInfo[] dis = dir.GetDirectories();
-            foreach (DirectoryInfo sub_dir in dis)
-            {
-                string sub_dir_name = GetCloudPath(sub_dir.FullName);
-                
-                // create a file node
-                XmlNode dir_node = doc.CreateElement(string.Empty, "directory", string.Empty);
-                //APPEND name
-                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = sub_dir_name;
-                dir_node.AppendChild(name_node);
-
-                //todo
-
-                root.AppendChild(dir_node);
-
                 InitializeSub_(sub_dir, output_dir);
             }
-
-
+            
             doc.Save(secure_dir_name);
 
             // write directory file to output
-            //byte[] xml_file_data = File.ReadAllBytes(secure_dir_name);
-            //byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-            //File.WriteAllBytes(output_dir + "\\" + secure_dir_name, encrypted_xml_file_data);
+            byte[] xml_file_data = File.ReadAllBytes(secure_dir_name);
+            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
+            File.WriteAllBytes(output_dir + "\\" + secure_dir_name, encrypted_xml_file_data);
         }
 
         /// <summary>
@@ -340,7 +258,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// get file in encrypted directory
         /// </summary>
-        /// <param name="sub_dir_name">directory name</param>
+        /// <param name="dir_name">directory name</param>
         /// <returns>files as xml</returns>
         public XmlNodeList  GetFiles(string dir_name)
         {
@@ -479,6 +397,83 @@ namespace ClientWindowsFormsApplication
             data = File.ReadAllBytes("tmp.xml");
             encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_root_name, encrypted_data);
+        }
+
+        public void AppendDirectoryNode(string name)
+        {
+            //steps
+            //1. check dir exsist
+            //2. add to dir_node to dir file
+            //3. create this dir file (empty for now)
+
+            // if key not loaded
+            if (KeyLoaded != true)
+                throw new Exception("key not loaded");
+
+            // if already exists
+            string cloud_name = name = GetCloudPath(name);
+            if (cloud.Exists(cloud_name) != true)
+                throw new Exception("Error creating file. (file exists)");
+            
+            // if sub dir not exists
+            string sub_dir_name = CloudPath.GetDirectory("a/b/");
+            if (cloud.Exists(sub_dir_name) != true)
+                throw new Exception("Directory does not exists.");
+
+            bool isDirectory = cloud_name.EndsWith("/");
+
+            // add dir to dir
+
+            // create dir file
+            XmlDocument doc = new XmlDocument();
+            //xml declaration is recommended, but not mandatory
+            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
+            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
+            doc.AppendChild(root);
+
+            XmlNode type_node = null;
+
+            if (isDirectory != true)
+            {
+                type_node = doc.CreateElement(string.Empty, "file", string.Empty);
+            }
+            else
+            {
+                // create a file node
+                type_node = doc.CreateElement(string.Empty, "directory", string.Empty);
+            }
+
+            //APPEND name
+            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+            name_node.InnerText = cloud_name;
+            type_node.AppendChild(name_node);
+
+            //APPEND dates
+            DateTime dt = DateTime.Now;
+            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
+            created_node.InnerText = dt.ToFileTime().ToString();
+            type_node.AppendChild(created_node);
+
+            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
+            modified_node.InnerText = dt.ToFileTime().ToString();
+            type_node.AppendChild(modified_node);
+
+            root.AppendChild(type_node);
+            doc.Save("tmp.xml");
+            
+
+            // delete old dir file
+            //cloud.Delete(secure_root_name);
+            //// create new ROOT/dir
+            //data = File.ReadAllBytes("tmp.xml");
+            //encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
+            //cloud.CreateAppend(secure_root_name, encrypted_data);
+
+            if (isDirectory == true)
+            {
+                // crate this dir file
+            }
         }
 
         public void Delete(string name)
