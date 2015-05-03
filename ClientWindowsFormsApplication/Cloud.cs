@@ -31,9 +31,9 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// create a key and write it to specified path
+        /// create a key and write it to specified name
         /// </summary>
-        /// <param name="path">path to write the key</param>
+        /// <param name="name">name to write the key</param>
         public void CreateKey(string path)
         {
             AesManaged aes = new AesManaged();
@@ -51,7 +51,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// loads key from file into variables (key & iv)
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="name"></param>
         public void LoadKey(string path)
         {
             byte[] key_iv = File.ReadAllBytes(path);
@@ -63,12 +63,12 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
-        //TODO move to GUI, all path should be in cloud format in first place
+        //TODO move to GUI, all name should be in cloud format in first place
         /// <summary>
-        /// gets name / path used for cloud, aka removes local root & adjust slashes
+        /// gets name / name used for cloud, aka removes local root & adjust slashes
         /// </summary>
-        /// <param name="path">name / path to convert</param>
-        /// <returns>cloud name / path</returns>
+        /// <param name="name">name / name to convert</param>
+        /// <returns>cloud name / name</returns>
         private string GetCloudPath(string path)
         {
             string local = Properties.Settings.Default.init_input_dir;
@@ -85,17 +85,18 @@ namespace ClientWindowsFormsApplication
         /// <returns>returns true if successful, otherwise false</returns>
         public bool Initialize()
         {
-            return CreateDirectoryByPath(ROOT_FILE_NAME);
+            cloud.DeleteAll();
+            return CreateDirectoryXml(ROOT_FILE_NAME);
         }
 
         /// <summary>
-        /// internal function, abstarcts Creating direcoties at specified path
+        /// internal function, abstarcts Creating direcoties at specified name
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        private bool CreateDirectoryByPath(string path)
+        private bool CreateDirectoryXml(string name)
         {
-            // create a file system on serverw
+            // create a file system on server
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
@@ -107,16 +108,16 @@ namespace ClientWindowsFormsApplication
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            string secure_named_root = GetSecureName(path);
-            doc.Save(secure_named_root);
+            string secure_named_dir = GetSecureName(name);
+            doc.Save(secure_named_dir);
 
             // encrypt xml file
-            byte[] xml_file_data = File.ReadAllBytes(secure_named_root);
+            byte[] xml_file_data = File.ReadAllBytes(secure_named_dir);
             byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
 
             // send/store it using secure name
-            if (cloud.Exists(secure_named_root) != true)
-                return cloud.CreateAppend(secure_named_root, encrypted_xml_file_data);
+            if (cloud.Exists(secure_named_dir) != true)
+                return cloud.CreateAppend(secure_named_dir, encrypted_xml_file_data);
 
             return false;
         }
@@ -304,7 +305,7 @@ namespace ClientWindowsFormsApplication
         /// <param name="encrypted_data"></param>
         private void CreateAppendFragment(string name, byte[] data)
         {
-             // write chunks
+            // write all fragments
             long LEN = data.Length;
             byte[] data_chunk = null; 
 
@@ -337,12 +338,12 @@ namespace ClientWindowsFormsApplication
             if (KeyLoaded != true)
                 throw new CloudException("Key not loaded.");
 
-            // assert path/file/dir/name does not exists
+            // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
             if (cloud.Exists(name) != false)
                 throw new CloudException("Error creating file. (file exists");
 
-            // assert path/directory exists
+            // assert name/directory exists
             string sub_dir_name = CloudPath.GetDirectory(name);
             string secure_sub_dir_name = GetSecureName(sub_dir_name);
             if (cloud.Exists(secure_sub_dir_name) != true)
@@ -391,21 +392,24 @@ namespace ClientWindowsFormsApplication
             cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
 
             // create new directory file 
-            CreateDirectoryByPath(name);
+            CreateDirectoryXml(name);
         }
 
         public void CreateFile(string name, byte[] data)
         {
+            // trim root slash from name
+            name = name.TrimStart('/');
+
             // assert key is loaded
             if (KeyLoaded != true)
                 throw new CloudException("Key not loaded.");
 
-            // assert path/file/dir/name does not exists
+            // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
             if (cloud.Exists(name) != false)
                 throw new CloudException("Error creating file. (file exists");
 
-            // assert path/directory exists
+            // assert name/directory exists
             string sub_dir_name = CloudPath.GetDirectory(name);
             string secure_sub_dir_name = GetSecureName(sub_dir_name);
             if (cloud.Exists(secure_sub_dir_name) != true)

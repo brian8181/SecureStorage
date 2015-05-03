@@ -9,7 +9,7 @@ namespace ClientWindowsFormsApplication
     // function on local sources, bridge between local an remote sources
     interface ILocalData
     {
-        //string GetCloudName(string name);
-        void Initialize(string input_dir, string output_dir);
+        string GetCloudPath(string name);
+        void InitializeLocalRoot(string input_dir, string output_dir);
     }
 }

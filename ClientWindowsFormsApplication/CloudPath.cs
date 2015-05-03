@@ -6,6 +6,22 @@ namespace ClientWindowsFormsApplication
     public static class CloudPath
     {
         public static char PathSeperator = '/';
+        //string local = Properties.Settings.Default.init_input_dir;
+
+        /// <summary>
+        /// gets name / name used for cloud, aka removes local root & adjust slashes
+        /// </summary>
+        /// <param name="name">name / name to convert</param>
+        /// <returns>cloud name / name</returns>
+        //private static string GetCloudPath(string name)
+        //{
+        //    string local = Properties.Settings.Default.init_input_dir;
+        //    name = name.Remove(0, local.Length);
+        //    name = name.Replace('\\', '/');
+        //    name = name.TrimStart('/'); // may trim start ?
+        //    return name + "/";
+        //}
+
 
         public static string[] GetSubDirectories(string path)
         {

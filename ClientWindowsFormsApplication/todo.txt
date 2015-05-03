@@ -1,5 +1,5 @@
 ﻿*Todo
-		
+		* clean tmp.xml & tmp file creation in general
 		* implement a sync function, details not finalized!
 		* add salt to secure name function, 32 bytes store in xml dir file
 
@@ -21,7 +21,6 @@
 		let name = "a/b/c/"
 		let directory = "a/b/"
 		* this is a directory (ends with '/'), append to dir "a/b/", create directory "a/b/c/"
-
 
 
 *Done

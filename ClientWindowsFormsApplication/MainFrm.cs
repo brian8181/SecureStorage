@@ -224,6 +224,8 @@ namespace ClientWindowsFormsApplication
             {
                 StdMsgBox.Error("Unknown error.");
             }
+
+            RefreshFileList();
         }
 
         private void serverfileList_DoubleClick(object sender, EventArgs e)

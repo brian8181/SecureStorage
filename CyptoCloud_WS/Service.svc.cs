@@ -65,6 +65,20 @@ namespace CyptoCloud_WS
         }
 
         /// <summary>
+        /// write date to end of file
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
+        public bool CreateReplace(string name, byte[] data)
+        {
+            using (FileStream fs = new FileStream(working_dir + name, FileMode.Create))
+            {
+                fs.Write(data, 0, data.Length);
+            }
+            return true;
+        }
+
+        /// <summary>
         /// read file @ offset for len bytes
         /// </summary>
         /// <param name="name">file by name</param>

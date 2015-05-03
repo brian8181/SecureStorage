@@ -14,9 +14,13 @@ namespace CyptoCloud_WS
         //[OperationContract]
         //void Create(string name, byte[] data);
 
-        //// allow to break data into smaller pieces to transfer
+        // allow to break data into smaller pieces to transfer
         [OperationContract]
         bool CreateAppend(string name, byte[] data);
+
+        // allow to break data into smaller pieces to transfer
+        [OperationContract]
+        bool CreateReplace(string name, byte[] data);
 
         [OperationContract]
         byte[] Read(string name, int offset, int lenght);

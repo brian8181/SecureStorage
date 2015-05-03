@@ -28,7 +28,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// create a file at name
         /// </summary>
-        /// <param name="name">name including path</param>
+        /// <param name="name">name including name</param>
         /// <param name="data">file data</param>
         void CreateFile(string name, byte[] data);
 
@@ -36,7 +36,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// create a directory at name
         /// </summary>
-        /// <param name="name">name including path</param>
+        /// <param name="name">name including name</param>
         void CreateDirectory(string name);
 
         /// <summary>
