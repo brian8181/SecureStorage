@@ -391,10 +391,8 @@ namespace ClientWindowsFormsApplication
             byte[] encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
 
-            //..
-            // craete new directory file 
+            // create new directory file 
             CreateDirectoryByPath(name);
-
         }
 
         public void CreateFile(string name, byte[] data)
@@ -414,9 +412,6 @@ namespace ClientWindowsFormsApplication
             if (cloud.Exists(secure_sub_dir_name) != true)
                 throw new CloudException("Directory does not exists.");
             
-
-
-
             // encrypt file to upload
             byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
 
@@ -477,80 +472,6 @@ namespace ClientWindowsFormsApplication
         //combine - CreateFile & CreateDirectory
         public void CreateName(string name, byte[] data)
         {
-            //steps
-            //1. check dir exsist
-            //2. add to dir_node to dir file
-            //3. create this dir file (empty for now)
-            //* data is null if it is a directory
-
-            // if key not loaded
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
-            // if already exists
-            string cloud_name = name = GetCloudPath(name);
-            if (cloud.Exists(cloud_name) != true)
-                throw new Exception("Error creating file. (file exists)");
-            
-            // if sub dir not exists
-            string sub_dir_name = CloudPath.GetDirectory("a/b/");
-            if (cloud.Exists(sub_dir_name) != true)
-                throw new Exception("Directory does not exists.");
-
-            bool isDirectory = cloud_name.EndsWith("/");
-
-            // add dir to dir
-
-            // create dir file
-            XmlDocument doc = new XmlDocument();
-            //xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
-            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
-            doc.AppendChild(root);
-
-            XmlNode type_node = null;
-
-            if (isDirectory != true)
-            {
-                type_node = doc.CreateElement(string.Empty, "file", string.Empty);
-            }
-            else
-            {
-                // create a file node
-                type_node = doc.CreateElement(string.Empty, "directory", string.Empty);
-            }
-
-            //APPEND name
-            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-            name_node.InnerText = cloud_name;
-            type_node.AppendChild(name_node);
-
-            //APPEND dates
-            DateTime dt = DateTime.Now;
-            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-            created_node.InnerText = dt.ToFileTime().ToString();
-            type_node.AppendChild(created_node);
-
-            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-            modified_node.InnerText = dt.ToFileTime().ToString();
-            type_node.AppendChild(modified_node);
-
-            root.AppendChild(type_node);
-            doc.Save("tmp.xml");
-            
-
-            // delete old dir file
-            //cloud.Delete(secure_root_name);
-            //// create new ROOT/dir
-            //data = File.ReadAllBytes("tmp.xml");
-            //encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
-            //cloud.CreateAppend(secure_root_name, encrypted_data);
-
-            if (isDirectory == true)
-            {
-                // create this dir file
-            }
         }
 
         public void Delete(string name)
@@ -563,8 +484,9 @@ namespace ClientWindowsFormsApplication
             cloud.Delete(hash_name);
             
             // decrypt root dir file
-            string secure_root_name = GetSecureName(ROOT_FILE_NAME);
-            byte[] bts = cloud.Read(secure_root_name, 0, 0);
+            string dir_name = CloudPath.GetDirectory(name);
+            string secure_dir_name = GetSecureName(dir_name);
+            byte[] bts = cloud.Read(secure_dir_name, 0, 0);
             byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
             File.WriteAllBytes("tmp.xml", data);
 
@@ -578,11 +500,11 @@ namespace ClientWindowsFormsApplication
             root.Save("tmp.xml");
 
             // delete old dir file
-            cloud.Delete(secure_root_name);
+            cloud.Delete(secure_dir_name);
             // create new ROOT/dir
             data = File.ReadAllBytes("tmp.xml");
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.CreateAppend(secure_root_name, crypt);
+            cloud.CreateAppend(secure_dir_name, crypt);
         }
 
         /// <summary>
@@ -591,7 +513,7 @@ namespace ClientWindowsFormsApplication
         /// <param name="name"></param>
         /// <param name="chunk"></param>
         /// <returns></returns>
-        public byte[] Read(string name, bool chunk)
+        public byte[] Read(string name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");

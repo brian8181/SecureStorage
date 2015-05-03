@@ -17,7 +17,7 @@ namespace ClientWindowsFormsApplication
     {
         private ClientCloud client_cloud = null;
         private const int MAX_SIZE = 30000; //bytes
-        private const string LOCAL_PATH = "c:\\tmp\\client\\";
+        //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
         string current_dir = "/";
 
@@ -31,6 +31,8 @@ namespace ClientWindowsFormsApplication
             //test count
             int c = client_cloud.GetCount();
             lblSever.Text = current_dir;
+
+            //RefreshFileList();
         }
 
         private string CurrentDirectory
@@ -147,20 +149,23 @@ namespace ClientWindowsFormsApplication
                 client_cloud.CreateFile(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
                 RefreshFileList();
             }
-            
+  
         }
 
         private void btnRead_Click(object sender, EventArgs e)
         {
-            string path = (string)serverfileList.SelectedItem;
-            string name = Path.GetFileName(path);
-            
+            string name = (string)serverfileList.SelectedItem;
             if (name != null)
             {
                 byte[] data = null;
-               // int len = (int)client_cloud.GetLength(name);
-                data = client_cloud.Read(name, true);
-                File.WriteAllBytes(LOCAL_PATH + name, data);
+                // int len = (int)client_cloud.GetLength(name);
+                data = client_cloud.Read(name);
+                string dir_name = Path.GetDirectoryName(name);
+
+                DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.local_dir  + "\\" + dir_name);
+                if (di.Exists != true)
+                    di.Create();
+                File.WriteAllBytes(di.FullName + "\\" + Path.GetFileName(name), data);
             }
 
             RefreshFileList();
