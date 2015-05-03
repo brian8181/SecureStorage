@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cloud.cs" />
+    <Compile Include="CloudException.cs" />
     <Compile Include="CloudPath.cs" />
     <Compile Include="CreateDirectoryFrm.cs">
       <SubType>Form</SubType>

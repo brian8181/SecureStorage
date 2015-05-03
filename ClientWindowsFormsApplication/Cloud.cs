@@ -126,13 +126,13 @@ namespace ClientWindowsFormsApplication
         /// </summary>
         /// <param name="in_path"></param>
         /// <param name="out_path"></param>
-        public void InitializeLocal(string input_dir, string output_dir)
+        public void InitializeLocalRoot(string input_dir, string output_dir)
         {
             DirectoryInfo di = new DirectoryInfo(input_dir);
-            InitializeSub_(di, output_dir);
+            InitializeLocal(di, output_dir);
         }
 
-        private void InitializeSub_(DirectoryInfo dir, string output_dir)
+        private void InitializeLocal(DirectoryInfo dir, string output_dir)
         {
             string cloud_dir_name = GetCloudPath(dir.FullName);
             string secure_dir_name = GetSecureName(cloud_dir_name);
@@ -209,7 +209,7 @@ namespace ClientWindowsFormsApplication
 
                 root.AppendChild(dir_node);
 
-                InitializeSub_(sub_dir, output_dir);
+                InitializeLocal(sub_dir, output_dir);
             }
             
             doc.Save(secure_dir_name);
@@ -328,22 +328,94 @@ namespace ClientWindowsFormsApplication
                 cloud.CreateAppend(name, data_chunk);
             }
         }
-                
-        public void Create(string name, byte[] data)
+        
+        public void CreateDirectory(string name)
         {
-            if (KeyLoaded != true)
-            {
-                StdMsgBox.Error("Key not loaded.");
-                return;
-            }
+            // trim root slash from name
+            name = name.TrimStart('/');
 
-            // the hash is insecure dictionay attack is possible, use HMAC 
+            // assert key is loaded
+            if (KeyLoaded != true)
+                throw new CloudException("Key not loaded.");
+
+            // assert path/file/dir/name does not exists
             string secure_name = GetSecureName(name);
             if (cloud.Exists(name) != false)
-            {
-                StdMsgBox.Error("Error creating file. (file exists)");
-                return;
-            }
+                throw new CloudException("Error creating file. (file exists");
+
+            // assert path/directory exists
+            string sub_dir_name = CloudPath.GetDirectory(name);
+            string secure_sub_dir_name = GetSecureName(sub_dir_name);
+            if (cloud.Exists(secure_sub_dir_name) != true)
+                throw new CloudException("Directory does not exists.");
+
+            // decrypt, directory file, write to tmp
+            byte[] bts = cloud.Read(secure_sub_dir_name, 0, 0);
+            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
+            // BKP hack, could just load string but there is an issue here
+            File.WriteAllBytes("tmp.xml", data);
+
+            // do not need a a member var
+            XmlDocument doc = new XmlDocument();
+            // BKP hack, could just load string but there is an issue here
+            doc.Load("tmp.xml");
+
+            XmlNode root = doc.DocumentElement;
+            XmlNode file = doc.CreateElement(string.Empty, "directory", string.Empty);
+
+            // APPEND name
+            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
+            name_node.InnerText = name;
+            file.AppendChild(name_node);
+
+            // APPEND dates
+            DateTime dt = DateTime.Now;
+            // created
+            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
+            created_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(created_node);
+            // modified
+            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
+            modified_node.InnerText = dt.ToFileTime().ToString();
+            file.AppendChild(modified_node);
+
+            root.AppendChild(file);
+            // BKP hack, could just load string but there is an issue here
+            doc.Save("tmp.xml");
+
+            // delete old dir file
+            cloud.Delete(secure_sub_dir_name);
+            // create new ROOT/dir
+            // BKP hack, could just load string but there is an issue here
+            data = File.ReadAllBytes("tmp.xml");
+            byte[] encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
+            cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
+
+            //..
+            // craete new directory file 
+            CreateDirectoryByPath(name);
+
+        }
+
+        public void CreateFile(string name, byte[] data)
+        {
+            // assert key is loaded
+            if (KeyLoaded != true)
+                throw new CloudException("Key not loaded.");
+
+            // assert path/file/dir/name does not exists
+            string secure_name = GetSecureName(name);
+            if (cloud.Exists(name) != false)
+                throw new CloudException("Error creating file. (file exists");
+
+            // assert path/directory exists
+            string sub_dir_name = CloudPath.GetDirectory(name);
+            string secure_sub_dir_name = GetSecureName(sub_dir_name);
+            if (cloud.Exists(secure_sub_dir_name) != true)
+                throw new CloudException("Directory does not exists.");
+            
+
+
 
             // encrypt file to upload
             byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
@@ -351,11 +423,12 @@ namespace ClientWindowsFormsApplication
             // upload file
             CreateAppendFragment(secure_name, encrypted_data);
            
-            // APPEND FILE NODE to ROOT
-            // decrypt
-            string secure_root_name = GetSecureName(ROOT_FILE_NAME);
-            byte[] bts = cloud.Read(secure_root_name, 0, 0);
+            // create/append xml file node to xml directory node
+            
+            // decrypt, directory file, write to tmp
+            byte[] bts = cloud.Read(secure_sub_dir_name, 0, 0);
             data = CryptoFunctions.DecryptAES(key, bts, iv);
+            // BKP hack, could just load string but there is an issue here
             File.WriteAllBytes("tmp.xml", data);
 
             // do not need a a member var
@@ -389,22 +462,26 @@ namespace ClientWindowsFormsApplication
             file.AppendChild(modified_node);
 
             root.AppendChild(file);
+            // BKP hack, could just load string but there is an issue here
             doc.Save("tmp.xml");
 
             // delete old dir file
-            cloud.Delete(secure_root_name);
+            cloud.Delete(secure_sub_dir_name);
             // create new ROOT/dir
+            // BKP hack, could just load string but there is an issue here
             data = File.ReadAllBytes("tmp.xml");
             encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.CreateAppend(secure_root_name, encrypted_data);
+            cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
         }
 
-        public void AppendDirectoryNode(string name)
+        //combine - CreateFile & CreateDirectory
+        public void CreateName(string name, byte[] data)
         {
             //steps
             //1. check dir exsist
             //2. add to dir_node to dir file
             //3. create this dir file (empty for now)
+            //* data is null if it is a directory
 
             // if key not loaded
             if (KeyLoaded != true)
@@ -472,7 +549,7 @@ namespace ClientWindowsFormsApplication
 
             if (isDirectory == true)
             {
-                // crate this dir file
+                // create this dir file
             }
         }
 

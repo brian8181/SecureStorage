@@ -19,6 +19,7 @@ namespace ClientWindowsFormsApplication
         private const int MAX_SIZE = 30000; //bytes
         private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
+        string current_dir = "/";
 
         public MainFrm()
         {
@@ -30,6 +31,19 @@ namespace ClientWindowsFormsApplication
             //test count
             int c = client_cloud.GetCount();
             lblSever.Text = current_dir;
+        }
+
+        private string CurrentDirectory
+        {
+            get
+            {
+                return current_dir;
+            }
+            set
+            {
+                current_dir = value;
+                lblSever.Text = value;
+            }
         }
 
         private void btnInitialize_Click(object sender, EventArgs e)
@@ -48,7 +62,7 @@ namespace ClientWindowsFormsApplication
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
                 
 
-                client_cloud.InitializeLocal(initial_input_dir, output_dir);
+                client_cloud.InitializeLocalRoot(initial_input_dir, output_dir);
 
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;
@@ -56,7 +70,7 @@ namespace ClientWindowsFormsApplication
             }
 
            
-            StdMsgBox.OK("InitializeLocal Complete");
+            StdMsgBox.OK("InitializeLocalRoot Complete");
         }
         
         private void btnCreateKey_Click(object sender, EventArgs e)
@@ -80,10 +94,10 @@ namespace ClientWindowsFormsApplication
 
        
 
-        public void RefreshFileList(string path)
+        public void RefreshFileList()
         {
             //string seerver_dir = Properties.Settings.Default.output_dir;
-            XmlNodeList files = client_cloud.GetFiles(path);
+            XmlNodeList files = client_cloud.GetFiles(CurrentDirectory);
 
             serverfileList.Items.Clear();
             // add to fileList
@@ -109,19 +123,29 @@ namespace ClientWindowsFormsApplication
 
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
-            RefreshFileList("/");
+            RefreshFileList();
+        }
 
-           
+        private void btnCreateDir_Click(object sender, EventArgs e)
+        {
+            CreateDirectoryFrm dlg = new CreateDirectoryFrm();
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                string name = dlg.txtName.Text;
+                name = name.EndsWith("/") ? name : name + "/";
+                client_cloud.CreateDirectory(CurrentDirectory + name);
+                RefreshFileList();
+            }
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-             CreateFrm dlg = new CreateFrm();
+            CreateFrm dlg = new CreateFrm();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                client_cloud.Create(Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
-                RefreshFileList("/");
+                client_cloud.CreateFile(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                RefreshFileList();
             }
             
         }
@@ -139,7 +163,7 @@ namespace ClientWindowsFormsApplication
                 File.WriteAllBytes(LOCAL_PATH + name, data);
             }
 
-            RefreshFileList("/");
+            RefreshFileList();
             StdMsgBox.OK("Read Complete");
         }
 
@@ -149,7 +173,7 @@ namespace ClientWindowsFormsApplication
             if(name != null)
             {
                 client_cloud.Delete(name);
-                RefreshFileList("/");
+                RefreshFileList();
             }
         }
 
@@ -164,20 +188,24 @@ namespace ClientWindowsFormsApplication
             StdMsgBox.OK("not implemented");
         }
 
-        string current_dir = "/";
         private void btnUpDirectory_Click(object sender, EventArgs e)
         {
-            string dir = current_dir.TrimStart('/');
+            string dir = current_dir.Trim('/');
             StringBuilder sb = new StringBuilder();
 
             if (current_dir != "/")
             {
-                string[] dirs = current_dir.Split('/');
-                for (int i = 0; i < (dirs.Length - 2); ++i)
+                string[] dirs = dir.Split('/');
+                for (int i = 0; i < (dirs.Length - 1); ++i)
                 {
                     sb.Append(dirs[i] + "/");
                 }
-                current_dir = sb.ToString();
+
+                CurrentDirectory = sb.ToString();
+                if(string.IsNullOrWhiteSpace(current_dir))
+                    CurrentDirectory = "/"; // nothing equals root
+
+                RefreshFileList();
             }
         }
 
@@ -204,20 +232,14 @@ namespace ClientWindowsFormsApplication
 
                 if (s.EndsWith("/"))
                 {
-                    RefreshFileList(s);
+                    CurrentDirectory = s;
+                    RefreshFileList();
                 }
             }
 
         }
 
-        private void btnCreateDir_Click(object sender, EventArgs e)
-        {
-            CreateDirectoryFrm frm = new CreateDirectoryFrm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                //client_cloud.CreateDirectory("");
-            }
-        }
+       
 
      
    }

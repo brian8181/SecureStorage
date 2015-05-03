@@ -62,7 +62,7 @@
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
-            this.btnCreate.Text = "Create/Upload";
+            this.btnCreate.Text = "CreateFile/Upload";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
             // 
@@ -92,7 +92,7 @@
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
-            this.btnCreateKey.Text = "Create Key";
+            this.btnCreateKey.Text = "CreateFile Key";
             this.btnCreateKey.UseVisualStyleBackColor = true;
             this.btnCreateKey.Click += new System.EventHandler(this.btnCreateKey_Click);
             // 
@@ -112,7 +112,7 @@
             this.btnInitializeLocal.Name = "btnInitializeLocal";
             this.btnInitializeLocal.Size = new System.Drawing.Size(102, 23);
             this.btnInitializeLocal.TabIndex = 7;
-            this.btnInitializeLocal.Text = "(Re)InitializeLocal";
+            this.btnInitializeLocal.Text = "(Re)InitializeLocalRoot";
             this.btnInitializeLocal.UseVisualStyleBackColor = true;
             this.btnInitializeLocal.Click += new System.EventHandler(this.btnInitialize_Click);
             // 
@@ -170,7 +170,7 @@
             this.btnCreateEmpty.Name = "btnCreateEmpty";
             this.btnCreateEmpty.Size = new System.Drawing.Size(102, 23);
             this.btnCreateEmpty.TabIndex = 12;
-            this.btnCreateEmpty.Text = "Create Empty";
+            this.btnCreateEmpty.Text = "CreateFile Empty";
             this.btnCreateEmpty.UseVisualStyleBackColor = true;
             this.btnCreateEmpty.Click += new System.EventHandler(this.btnCreateEmpty_Click);
             // 
@@ -212,7 +212,7 @@
             this.btnCreateDir.Name = "btnCreateDir";
             this.btnCreateDir.Size = new System.Drawing.Size(102, 23);
             this.btnCreateDir.TabIndex = 16;
-            this.btnCreateDir.Text = "Create Directory";
+            this.btnCreateDir.Text = "CreateDir";
             this.btnCreateDir.UseVisualStyleBackColor = true;
             this.btnCreateDir.Click += new System.EventHandler(this.btnCreateDir_Click);
             // 

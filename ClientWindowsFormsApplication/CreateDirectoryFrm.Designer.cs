@@ -94,6 +94,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtName;
+        public System.Windows.Forms.TextBox txtName;
     }
 }

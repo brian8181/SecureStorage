@@ -42,10 +42,11 @@ namespace ClientWindowsFormsApplication
                 sb.Append(splits[i] + PathSeperator.ToString());
             }
 
-            return sb.ToString();
+            string ret = sb.ToString();
+            return ret != string.Empty ? ret : "/";
        }
 
-        public static string GetName(string path)
+        public static string GetShortName(string path)
         {
             // get file or dir name
             string[] splits = path.Split(CloudPath.PathSeperator);
@@ -63,5 +64,7 @@ namespace ClientWindowsFormsApplication
 
             return splits[splits.Length - 1];
         }
+
+    
     }
 }
