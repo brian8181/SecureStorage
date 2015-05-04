@@ -1,9 +1,7 @@
 ﻿*Todo
 		
 		* clean tmp.xml & tmp file creation in general
-		* implement a sync function, details not finalized!
-		* add salt to secure name function, 32 bytes store in xml dir file
-
+	
 *Notes
 	
 	*CreateName
@@ -43,8 +41,7 @@
 *Done
 		
 		* exception initialize remote while not a root in GUI
-		* NO! (this would break random access to file by path!) look into a diffent naming schema
-			* a guid for each file instead of HMAC, to ease move operations
+		
 		* deleting directories not working correctly, FIX attempt to delete a non empty directory throw exception (no cascade)
 			* deleting dose not cascade, deleting directory only deletes the dir file & not all the files & sub dirs
 		* Test Read function
@@ -52,3 +49,8 @@
 		* create directory a spefified path
 		* create file at specified path 
 		* figure out how to load xml from string, I am saving to tm.xml as work around
+Not Done:
+
+		* add salt to secure name function, 32 bytes store in xml dir file
+		* NO! (this would break random access to file by path!) look into a diffent naming schema
+					* a guid for each file instead of HMAC, to ease move operations

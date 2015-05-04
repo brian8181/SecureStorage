@@ -8,7 +8,7 @@ using Utility.IO;
 
 namespace ClientWindowsFormsApplication
 {
-    public class ClientCloud : IRemoteData
+    public class ClientCloud //: IRemoteData
     {
         //BKP to remove direct reference to service
         IStorage remote_store = null;
@@ -330,7 +330,12 @@ namespace ClientWindowsFormsApplication
             }
         }
         
-        public void CreateDirectory(string name)
+        /// <summary>
+        /// create a file or directory
+        /// </summary>
+        /// <param name="name">name of object</param>
+        /// <param name="data">file data, is null if directory</param>
+        public void CreateName(string name, byte[] data)
         {
             // trim root slash from name
             name = name.TrimStart('/');
@@ -350,83 +355,45 @@ namespace ClientWindowsFormsApplication
             if (cloud.Exists(secure_sub_dir_name) != true)
                 throw new CloudException("Directory does not exists.");
 
-            XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
-            XmlNode root = doc.DocumentElement;
-            XmlNode file = doc.CreateElement(string.Empty, "directory", string.Empty);
+            // BKP todo think about this
+            bool is_directory = name.EndsWith("/") && data == null;
 
-            // APPEND name
-            XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-            name_node.InnerText = name;
-            file.AppendChild(name_node);
+            byte[] encrypted_data = null;
+            if (is_directory != true)
+            {
+                // encrypt file to upload
+                encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+                // upload file
+                CreateAppendFragment(secure_name, encrypted_data);
+            }
 
-            // APPEND dates
-            DateTime dt = DateTime.Now;
-            // created
-            XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-            created_node.InnerText = dt.ToFileTime().ToString();
-            file.AppendChild(created_node);
-            // modified
-            XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-            modified_node.InnerText = dt.ToFileTime().ToString();
-            file.AppendChild(modified_node);
-
-            root.AppendChild(file);
-            // BKP hack, could just load string but there is an issue here
-            doc.Save("tmp.xml");
-
-            // delete old dir file
-            cloud.Delete(secure_sub_dir_name);
-            // create new ROOT/dir
-            // BKP hack, could just load string but there is an issue here
-            byte[] data = File.ReadAllBytes("tmp.xml");
-            byte[] encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
-
-            // create new directory file 
-            CreateDirectoryXml(name);
-        }
-
-        public void CreateFile(string name, byte[] data)
-        {
-            // trim root slash from name
-            name = name.TrimStart('/');
-
-            // assert key is loaded
-            if (KeyLoaded != true)
-                throw new CloudException("Key not loaded.");
-
-            // assert name/file/dir/name does not exists
-            string secure_name = GetSecureName(name);
-            if (cloud.Exists(name) != false)
-                throw new CloudException("Error creating file. (file exists");
-
-            // assert name/directory exists
-            string sub_dir_name = CloudPath.GetDirectory(name);
-            string secure_sub_dir_name = GetSecureName(sub_dir_name);
-            if (cloud.Exists(secure_sub_dir_name) != true)
-                throw new CloudException("Directory does not exists.");
-            
-            // encrypt file to upload
-            byte[] encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-
-            // upload file
-            CreateAppendFragment(secure_name, encrypted_data);
-           
             // create/append xml file node to xml directory node
             XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
             XmlNode root = doc.DocumentElement;
-            XmlNode file = doc.CreateElement(string.Empty, "file", string.Empty);
+
+            XmlNode file = null;
+            if (is_directory != true)
+            {
+                file = doc.CreateElement(string.Empty, "file", string.Empty);
+            }
+            else
+            {
+                file = doc.CreateElement(string.Empty, "directory", string.Empty);
+            }
 
             // APPEND name
             XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
             name_node.InnerText = name;
             file.AppendChild(name_node);
 
-            // APPEND signature
-            byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
-            XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
-            signature_node.InnerText = Convert.ToBase64String(sha256);
-            file.AppendChild(signature_node);
+            if (is_directory != true)
+            {
+                // APPEND signature
+                byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
+                XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
+                signature_node.InnerText = Convert.ToBase64String(sha256);
+                file.AppendChild(signature_node);
+            }
 
             // APPEND dates
             DateTime dt = DateTime.Now;
@@ -450,11 +417,12 @@ namespace ClientWindowsFormsApplication
             data = File.ReadAllBytes("tmp.xml");
             encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
-        }
 
-        //combine - CreateFile & CreateDirectory
-        public void CreateName(string name, byte[] data)
-        {
+            if (is_directory == true)
+            {
+                // create new directory file 
+                CreateDirectoryXml(name);
+            }
         }
 
         public XmlDocument GetDirectoryDocument(string name)
@@ -513,13 +481,17 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// read / download / copy file to client directory
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="chunk"></param>
+        /// <param name="name">name of object (file)</param>
         /// <returns></returns>
         public byte[] Read(string name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
+
+            //BKP todo
+            bool is_directory = name.EndsWith("/");
+            if(is_directory)
+                throw new CloudException("Error, object a directory.");
 
             string secure_name = GetSecureName(name);
             int LEN = (int)cloud.GetLength(secure_name);
@@ -546,10 +518,10 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// 
+        /// get the length of an object
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="name">the object name</param>
+        /// <returns>length in bytes</returns>
         public long GetLength(string name)
         {
             string secure_name = GetSecureName(name);
@@ -557,7 +529,7 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// 
+        /// get count of all file on server
         /// </summary>
         /// <returns></returns>
         public int GetCount()
