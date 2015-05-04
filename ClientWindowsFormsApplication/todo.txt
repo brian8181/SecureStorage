@@ -1,7 +1,5 @@
 ﻿*Todo
-		* exception initialize remote while not a root in GUI
-		* deleting directories not working correctly
-			* deleting dose not cascade, deleting directory onlu deletes the dir file & not all the files & sub dirs
+		
 		* clean tmp.xml & tmp file creation in general
 		* implement a sync function, details not finalized!
 		* add salt to secure name function, 32 bytes store in xml dir file
@@ -27,7 +25,7 @@
 	
 	*CreateLock
 
-		*Update a file Sequence
+		*Update a file Sequence: 
 
 			*Lock dir file
 			*Lock file
@@ -44,6 +42,11 @@
 
 *Done
 		
+		* exception initialize remote while not a root in GUI
+		* NO! (this would break random access to file by path!) look into a diffent naming schema
+			* a guid for each file instead of HMAC, to ease move operations
+		* deleting directories not working correctly, FIX attempt to delete a non empty directory throw exception (no cascade)
+			* deleting dose not cascade, deleting directory only deletes the dir file & not all the files & sub dirs
 		* Test Read function
 		* Delete form specified path
 		* create directory a spefified path

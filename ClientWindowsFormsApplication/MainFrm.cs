@@ -225,6 +225,8 @@ namespace ClientWindowsFormsApplication
                 StdMsgBox.Error("Unknown error.");
             }
 
+            CurrentDirectory = "/";
+
             RefreshFileList();
         }
 

@@ -79,8 +79,7 @@ namespace ClientWindowsFormsApplication
             path = path.TrimStart('/'); // may trim start ?
             return path + "/";
         }
-
-
+        
         /// <summary>
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
@@ -142,8 +141,8 @@ namespace ClientWindowsFormsApplication
 
             XmlDocument doc = new XmlDocument();
             //xml declaration is recommended, but not mandatory
-            XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            doc.InsertBefore(xmlDeclaration, doc.DocumentElement);
+            XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            doc.InsertBefore(decel, doc.DocumentElement);
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
             
@@ -460,13 +459,14 @@ namespace ClientWindowsFormsApplication
 
         public XmlDocument GetDirectoryDocument(string name)
         {
-            //string secure_name = GetSecureName(name);
             byte[] encrypted_data = cloud.Read(name, 0, 0);
             byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
-            File.WriteAllBytes("tmp.xml", data);
+            
+            string xml = Encoding.UTF8.GetString(data);
+            xml = RemoveByteOrderMarkUTF8(xml);
+
             XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
+            doc.LoadXml(xml);
             return doc;
         }
 
@@ -499,12 +499,13 @@ namespace ClientWindowsFormsApplication
             string xpath = string.Format("/root/file[name = \"{0}\"] | /root/directory[name = \"{0}\"]", name);
             XmlNode n = doc.SelectSingleNode(xpath);
             n.ParentNode.RemoveChild(n);
-            doc.Save("tmp.xml");
 
             // delete old dir file
             cloud.Delete(secure_dir_name);
-            // create new ROOT/dir
-            byte[] data = File.ReadAllBytes("tmp.xml");
+
+            // create new dir file
+            string xml = doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_dir_name, crypt);
         }
