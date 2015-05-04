@@ -1,6 +1,7 @@
 ﻿*Todo
 		
 		* clean tmp.xml & tmp file creation in general
+		* file locking / syncronization: this has not been touched
 	
 *Notes
 	
