@@ -1,4 +1,7 @@
 ﻿*Todo
+		* exception initialize remote while not a root in GUI
+		* deleting directories not working correctly
+			* deleting dose not cascade, deleting directory onlu deletes the dir file & not all the files & sub dirs
 		* clean tmp.xml & tmp file creation in general
 		* implement a sync function, details not finalized!
 		* add salt to secure name function, 32 bytes store in xml dir file

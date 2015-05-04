@@ -8,8 +8,11 @@ namespace ConsolePOCs
 {
     class Program
     {
+     
+
         static void Main(string[] args)
         {
+            byte[] bts = Encoding.UTF8.GetPreamble();
             string s2 = "/a/b/c/text.txt";
             string dir = Path.GetDirectoryName(s2);
 

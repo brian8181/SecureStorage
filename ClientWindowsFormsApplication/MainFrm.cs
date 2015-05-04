@@ -109,18 +109,18 @@ namespace ClientWindowsFormsApplication
                 serverfileList.Items.Add(name);
             }
 
-            // get local files
-            localfileList.Items.Clear();
-            string[] local_dirs = Directory.GetDirectories(Properties.Settings.Default.local_dir);
-            foreach (string dir in local_dirs)
-            {
-                this.localfileList.Items.Add(Path.GetFileName(dir) + "/");
-            }
-            string[] local_files = Directory.GetFiles(Properties.Settings.Default.local_dir);
-            foreach (string file in local_files)
-            {
-                this.localfileList.Items.Add(Path.GetFileName(file));
-            }
+            //// get local files
+            //localfileList.Items.Clear();
+            //string[] local_dirs = Directory.GetDirectories(Properties.Settings.Default.local_dir);
+            //foreach (string dir in local_dirs)
+            //{
+            //    this.localfileList.Items.Add(Path.GetFileName(dir) + "/");
+            //}
+            //string[] local_files = Directory.GetFiles(Properties.Settings.Default.local_dir);
+            //foreach (string file in local_files)
+            //{
+            //    this.localfileList.Items.Add(Path.GetFileName(file));
+            //}
         }
 
         private void btnGetDirs_Click(object sender, EventArgs e)

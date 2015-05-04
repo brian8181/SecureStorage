@@ -106,7 +106,7 @@ namespace ClientWindowsFormsApplication
             XmlDocument doc = new XmlDocument();
             XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.InsertBefore(decel, doc.DocumentElement);
-            // create empty root 
+            // create empty doc 
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
@@ -236,17 +236,16 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// utility removes byte order mark from xml strings
+        /// utility removes UTF-8 byte order mark from xml string
         /// </summary>
-        /// <param name="xml"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        private string RemoveByteOrderMark(byte[] xml)
+        private string RemoveByteOrderMarkUTF8(string xml)
         {
-            string xml_string = UTF8Encoding.UTF8.GetString(xml);
-            string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml_string.StartsWith(_byteOrderMarkUtf8))
-                xml_string = xml_string.Remove(0, _byteOrderMarkUtf8.Length);
-            return xml_string;
+            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+            if (xml.StartsWith(byte_order_mark))
+                xml = xml.Remove(0, byte_order_mark.Length);
+            return xml;
         }
 
         /// <summary>
@@ -275,7 +274,8 @@ namespace ClientWindowsFormsApplication
 
             XmlDocument doc = new XmlDocument();
             // encode to string & remove: byte order mark (BOM)
-            string xml = RemoveByteOrderMark(data);
+            string xml = UTF8Encoding.UTF8.GetString(data);
+            xml = RemoveByteOrderMarkUTF8(xml);
             // save doc
             doc.LoadXml(xml);
 
@@ -351,17 +351,7 @@ namespace ClientWindowsFormsApplication
             if (cloud.Exists(secure_sub_dir_name) != true)
                 throw new CloudException("Directory does not exists.");
 
-            // decrypt, directory file, write to tmp
-            byte[] bts = cloud.Read(secure_sub_dir_name, 0, 0);
-            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-            // BKP hack, could just load string but there is an issue here
-            File.WriteAllBytes("tmp.xml", data);
-
-            // do not need a a member var
-            XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
-
+            XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
             XmlNode root = doc.DocumentElement;
             XmlNode file = doc.CreateElement(string.Empty, "directory", string.Empty);
 
@@ -389,7 +379,7 @@ namespace ClientWindowsFormsApplication
             cloud.Delete(secure_sub_dir_name);
             // create new ROOT/dir
             // BKP hack, could just load string but there is an issue here
-            data = File.ReadAllBytes("tmp.xml");
+            byte[] data = File.ReadAllBytes("tmp.xml");
             byte[] encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
 
@@ -424,18 +414,7 @@ namespace ClientWindowsFormsApplication
             CreateAppendFragment(secure_name, encrypted_data);
            
             // create/append xml file node to xml directory node
-            
-            // decrypt, directory file, write to tmp
-            byte[] bts = cloud.Read(secure_sub_dir_name, 0, 0);
-            data = CryptoFunctions.DecryptAES(key, bts, iv);
-            // BKP hack, could just load string but there is an issue here
-            File.WriteAllBytes("tmp.xml", data);
-
-            // do not need a a member var
-            XmlDocument doc = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            doc.Load("tmp.xml");
-
+            XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
             XmlNode root = doc.DocumentElement;
             XmlNode file = doc.CreateElement(string.Empty, "file", string.Empty);
 
@@ -479,35 +458,53 @@ namespace ClientWindowsFormsApplication
         {
         }
 
+        public XmlDocument GetDirectoryDocument(string name)
+        {
+            //string secure_name = GetSecureName(name);
+            byte[] encrypted_data = cloud.Read(name, 0, 0);
+            byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
+            File.WriteAllBytes("tmp.xml", data);
+            XmlDocument doc = new XmlDocument();
+            // BKP hack, could just load string but there is an issue here
+            doc.Load("tmp.xml");
+            return doc;
+        }
+
         public void Delete(string name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
             // delete file 
-            string hash_name = GetSecureName(name);
-            cloud.Delete(hash_name);
+            string secure_name = GetSecureName(name);
+
+            //only delete id directory is empty
+            if (name.EndsWith("/"))
+            {
+                // is this dir empty
+                XmlDocument me_doc = GetDirectoryDocument(secure_name);
+                XmlNodeList me_node = me_doc.SelectNodes("/doc/file | /doc/directory");
+                if (me_node.Count > 0)
+                {
+                    throw new CloudException("Directory is not empty.");
+                }
+            }
             
-            // decrypt root dir file
+            cloud.Delete(secure_name);
+            // decrypt xml dir file
             string dir_name = CloudPath.GetDirectory(name);
             string secure_dir_name = GetSecureName(dir_name);
-            byte[] bts = cloud.Read(secure_dir_name, 0, 0);
-            byte[] data = CryptoFunctions.DecryptAES(key, bts, iv);
-            File.WriteAllBytes("tmp.xml", data);
+            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
 
-            // do not need a a member var
-            XmlDocument root = new XmlDocument();
-            // BKP hack, could just load string but there is an issue here
-            root.Load("tmp.xml");
-
-            XmlNode n = root.SelectSingleNode("/root/file[name = \"" + name + "\"]");
+            string xpath = string.Format("/root/file[name = \"{0}\"] | /root/directory[name = \"{0}\"]", name);
+            XmlNode n = doc.SelectSingleNode(xpath);
             n.ParentNode.RemoveChild(n);
-            root.Save("tmp.xml");
+            doc.Save("tmp.xml");
 
             // delete old dir file
             cloud.Delete(secure_dir_name);
             // create new ROOT/dir
-            data = File.ReadAllBytes("tmp.xml");
+            byte[] data = File.ReadAllBytes("tmp.xml");
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
             cloud.CreateAppend(secure_dir_name, crypt);
         }

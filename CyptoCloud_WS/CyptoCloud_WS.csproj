@@ -87,10 +87,6 @@
       <Project>{4dfc8774-e67d-4eff-9249-301c0d5eb158}</Project>
       <Name>utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CryptoCloudLib\CryptoCloudLib.csproj">
-      <Project>{d67c6c13-288d-4d00-837a-0f3417a0ac35}</Project>
-      <Name>CryptoCloudLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

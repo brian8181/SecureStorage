@@ -33,18 +33,18 @@
             this.btnRead = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreateKey = new System.Windows.Forms.Button();
-            this.cbSync = new System.Windows.Forms.CheckBox();
             this.btnInitializeLocal = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
-            this.localfileList = new System.Windows.Forms.ListBox();
             this.lblSever = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnCreateEmpty = new System.Windows.Forms.Button();
-            this.btnSync = new System.Windows.Forms.Button();
             this.btnUpDirectory = new System.Windows.Forms.Button();
             this.btnInitialize = new System.Windows.Forms.Button();
             this.btnCreateDir = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpLocal = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.grpLocal.SuspendLayout();
             this.SuspendLayout();
             // 
             // serverfileList
@@ -58,7 +58,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(397, 284);
+            this.btnCreate.Location = new System.Drawing.Point(6, 107);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -68,7 +68,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(397, 313);
+            this.btnRead.Location = new System.Drawing.Point(6, 136);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -78,7 +78,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(397, 342);
+            this.btnDelete.Location = new System.Drawing.Point(6, 165);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -88,7 +88,7 @@
             // 
             // btnCreateKey
             // 
-            this.btnCreateKey.Location = new System.Drawing.Point(397, 92);
+            this.btnCreateKey.Location = new System.Drawing.Point(6, 77);
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
@@ -96,19 +96,9 @@
             this.btnCreateKey.UseVisualStyleBackColor = true;
             this.btnCreateKey.Click += new System.EventHandler(this.btnCreateKey_Click);
             // 
-            // cbSync
-            // 
-            this.cbSync.AutoSize = true;
-            this.cbSync.Location = new System.Drawing.Point(397, 371);
-            this.cbSync.Name = "cbSync";
-            this.cbSync.Size = new System.Drawing.Size(62, 17);
-            this.cbSync.TabIndex = 6;
-            this.cbSync.Text = "syncing";
-            this.cbSync.UseVisualStyleBackColor = true;
-            // 
             // btnInitializeLocal
             // 
-            this.btnInitializeLocal.Location = new System.Drawing.Point(397, 63);
+            this.btnInitializeLocal.Location = new System.Drawing.Point(6, 48);
             this.btnInitializeLocal.Name = "btnInitializeLocal";
             this.btnInitializeLocal.Size = new System.Drawing.Size(102, 23);
             this.btnInitializeLocal.TabIndex = 7;
@@ -118,7 +108,7 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.Location = new System.Drawing.Point(397, 34);
+            this.btnSettings.Location = new System.Drawing.Point(6, 19);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new System.Drawing.Size(102, 23);
             this.btnSettings.TabIndex = 8;
@@ -128,21 +118,13 @@
             // 
             // btnGetDirs
             // 
-            this.btnGetDirs.Location = new System.Drawing.Point(397, 226);
+            this.btnGetDirs.Location = new System.Drawing.Point(6, 49);
             this.btnGetDirs.Name = "btnGetDirs";
             this.btnGetDirs.Size = new System.Drawing.Size(102, 23);
             this.btnGetDirs.TabIndex = 5;
-            this.btnGetDirs.Text = "Get Files List";
+            this.btnGetDirs.Text = "Get List";
             this.btnGetDirs.UseVisualStyleBackColor = true;
             this.btnGetDirs.Click += new System.EventHandler(this.btnGetDirs_Click);
-            // 
-            // localfileList
-            // 
-            this.localfileList.FormattingEnabled = true;
-            this.localfileList.Location = new System.Drawing.Point(200, 35);
-            this.localfileList.Name = "localfileList";
-            this.localfileList.Size = new System.Drawing.Size(191, 355);
-            this.localfileList.TabIndex = 9;
             // 
             // lblSever
             // 
@@ -154,35 +136,15 @@
             this.lblSever.TabIndex = 10;
             this.lblSever.Text = "Server";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(197, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Local";
-            // 
             // btnCreateEmpty
             // 
-            this.btnCreateEmpty.Location = new System.Drawing.Point(397, 121);
+            this.btnCreateEmpty.Location = new System.Drawing.Point(6, 106);
             this.btnCreateEmpty.Name = "btnCreateEmpty";
             this.btnCreateEmpty.Size = new System.Drawing.Size(102, 23);
             this.btnCreateEmpty.TabIndex = 12;
             this.btnCreateEmpty.Text = "CreateFile Empty";
             this.btnCreateEmpty.UseVisualStyleBackColor = true;
             this.btnCreateEmpty.Click += new System.EventHandler(this.btnCreateEmpty_Click);
-            // 
-            // btnSync
-            // 
-            this.btnSync.Location = new System.Drawing.Point(397, 197);
-            this.btnSync.Name = "btnSync";
-            this.btnSync.Size = new System.Drawing.Size(102, 23);
-            this.btnSync.TabIndex = 13;
-            this.btnSync.Text = "Sync";
-            this.btnSync.UseVisualStyleBackColor = true;
-            this.btnSync.Click += new System.EventHandler(this.btnSync_Click);
             // 
             // btnUpDirectory
             // 
@@ -198,7 +160,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(397, 168);
+            this.btnInitialize.Location = new System.Drawing.Point(6, 20);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 15;
@@ -208,7 +170,7 @@
             // 
             // btnCreateDir
             // 
-            this.btnCreateDir.Location = new System.Drawing.Point(397, 255);
+            this.btnCreateDir.Location = new System.Drawing.Point(6, 78);
             this.btnCreateDir.Name = "btnCreateDir";
             this.btnCreateDir.Size = new System.Drawing.Size(102, 23);
             this.btnCreateDir.TabIndex = 16;
@@ -216,32 +178,50 @@
             this.btnCreateDir.UseVisualStyleBackColor = true;
             this.btnCreateDir.Click += new System.EventHandler(this.btnCreateDir_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnCreate);
+            this.groupBox1.Controls.Add(this.btnCreateDir);
+            this.groupBox1.Controls.Add(this.btnRead);
+            this.groupBox1.Controls.Add(this.btnInitialize);
+            this.groupBox1.Controls.Add(this.btnDelete);
+            this.groupBox1.Controls.Add(this.btnGetDirs);
+            this.groupBox1.Location = new System.Drawing.Point(200, 193);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(118, 197);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Remote";
+            // 
+            // grpLocal
+            // 
+            this.grpLocal.Controls.Add(this.btnCreateEmpty);
+            this.grpLocal.Controls.Add(this.btnCreateKey);
+            this.grpLocal.Controls.Add(this.btnInitializeLocal);
+            this.grpLocal.Controls.Add(this.btnSettings);
+            this.grpLocal.Location = new System.Drawing.Point(200, 34);
+            this.grpLocal.Name = "grpLocal";
+            this.grpLocal.Size = new System.Drawing.Size(118, 138);
+            this.grpLocal.TabIndex = 18;
+            this.grpLocal.TabStop = false;
+            this.grpLocal.Text = "Local";
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 395);
-            this.Controls.Add(this.btnCreateDir);
-            this.Controls.Add(this.btnInitialize);
+            this.ClientSize = new System.Drawing.Size(327, 395);
+            this.Controls.Add(this.grpLocal);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnUpDirectory);
-            this.Controls.Add(this.btnSync);
-            this.Controls.Add(this.btnCreateEmpty);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSever);
-            this.Controls.Add(this.localfileList);
-            this.Controls.Add(this.btnSettings);
-            this.Controls.Add(this.btnInitializeLocal);
-            this.Controls.Add(this.cbSync);
-            this.Controls.Add(this.btnGetDirs);
-            this.Controls.Add(this.btnCreateKey);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnRead);
-            this.Controls.Add(this.btnCreate);
             this.Controls.Add(this.serverfileList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainFrm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "CryptoCloud";
+            this.Text = "CryptoCloud Tester";
+            this.groupBox1.ResumeLayout(false);
+            this.grpLocal.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,18 +234,16 @@
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreateKey;
-        private System.Windows.Forms.CheckBox cbSync;
         private System.Windows.Forms.Button btnInitializeLocal;
         private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnGetDirs;
-        private System.Windows.Forms.ListBox localfileList;
         private System.Windows.Forms.Label lblSever;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCreateEmpty;
-        private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Button btnUpDirectory;
         private System.Windows.Forms.Button btnInitialize;
         private System.Windows.Forms.Button btnCreateDir;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpLocal;
     }
 }
 
