@@ -69,6 +69,7 @@
       <DependentUpon>InitializeFrm.cs</DependentUpon>
     </Compile>
     <Compile Include="IRemoteData.cs" />
+    <Compile Include="IStorage.cs" />
     <Compile Include="KeyStore.cs" />
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>

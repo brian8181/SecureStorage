@@ -10,6 +10,8 @@ namespace ClientWindowsFormsApplication
 {
     public class ClientCloud : IRemoteData
     {
+        //BKP to remove direct reference to service
+        IStorage remote_store = null;
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
         private byte[] key = null;
         private byte[] iv  = null;

@@ -21,6 +21,22 @@
 		let name = "a/b/c/"
 		let directory = "a/b/"
 		* this is a directory (ends with '/'), append to dir "a/b/", create directory "a/b/c/"
+	
+	*CreateLock
+
+		*Update a file Sequence
+
+			*Lock dir file
+			*Lock file
+			*delete dir file
+			*create new dir file
+			*create new file
+			*unlock file
+			*unlock dir file
+
+				*Notes
+					* lock_sha526_expires
+					* lock request on expired lock deletes old lock
 
 
 *Done
@@ -28,5 +44,5 @@
 		* Test Read function
 		* Delete form specified path
 		* create directory a spefified path
-		* 5-3-2015: create file at specified path 
+		* create file at specified path 
 		* figure out how to load xml from string, I am saving to tm.xml as work around
