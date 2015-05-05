@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Cloud.cs" />
     <Compile Include="CloudException.cs" />
+    <Compile Include="CloudLockExcpetion.cs" />
     <Compile Include="CloudPath.cs" />
+    <Compile Include="CloudUtility.cs" />
     <Compile Include="CreateDirectoryFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +73,7 @@
     <Compile Include="IRemoteData.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="KeyStore.cs" />
+    <Compile Include="LocalStorage.cs" />
     <Compile Include="MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +82,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WCFStorage.cs" />
     <Compile Include="SecureData.cs" />
     <Compile Include="Service References\ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

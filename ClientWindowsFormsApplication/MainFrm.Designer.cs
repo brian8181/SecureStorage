@@ -58,7 +58,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(6, 107);
+            this.btnCreate.Location = new System.Drawing.Point(6, 106);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(102, 23);
             this.btnCreate.TabIndex = 1;
@@ -68,7 +68,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(6, 136);
+            this.btnRead.Location = new System.Drawing.Point(6, 164);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -78,7 +78,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(6, 165);
+            this.btnDelete.Location = new System.Drawing.Point(6, 193);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -118,7 +118,7 @@
             // 
             // btnGetDirs
             // 
-            this.btnGetDirs.Location = new System.Drawing.Point(6, 49);
+            this.btnGetDirs.Location = new System.Drawing.Point(6, 48);
             this.btnGetDirs.Name = "btnGetDirs";
             this.btnGetDirs.Size = new System.Drawing.Size(102, 23);
             this.btnGetDirs.TabIndex = 5;
@@ -138,7 +138,7 @@
             // 
             // btnCreateEmpty
             // 
-            this.btnCreateEmpty.Location = new System.Drawing.Point(6, 106);
+            this.btnCreateEmpty.Location = new System.Drawing.Point(6, 135);
             this.btnCreateEmpty.Name = "btnCreateEmpty";
             this.btnCreateEmpty.Size = new System.Drawing.Size(102, 23);
             this.btnCreateEmpty.TabIndex = 12;
@@ -160,7 +160,7 @@
             // 
             // btnInitialize
             // 
-            this.btnInitialize.Location = new System.Drawing.Point(6, 20);
+            this.btnInitialize.Location = new System.Drawing.Point(6, 19);
             this.btnInitialize.Name = "btnInitialize";
             this.btnInitialize.Size = new System.Drawing.Size(102, 23);
             this.btnInitialize.TabIndex = 15;
@@ -170,7 +170,7 @@
             // 
             // btnCreateDir
             // 
-            this.btnCreateDir.Location = new System.Drawing.Point(6, 78);
+            this.btnCreateDir.Location = new System.Drawing.Point(6, 77);
             this.btnCreateDir.Name = "btnCreateDir";
             this.btnCreateDir.Size = new System.Drawing.Size(102, 23);
             this.btnCreateDir.TabIndex = 16;
@@ -180,28 +180,28 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnCreateEmpty);
             this.groupBox1.Controls.Add(this.btnCreate);
             this.groupBox1.Controls.Add(this.btnCreateDir);
             this.groupBox1.Controls.Add(this.btnRead);
             this.groupBox1.Controls.Add(this.btnInitialize);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.btnGetDirs);
-            this.groupBox1.Location = new System.Drawing.Point(200, 193);
+            this.groupBox1.Location = new System.Drawing.Point(200, 165);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(118, 197);
+            this.groupBox1.Size = new System.Drawing.Size(118, 225);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
             // 
             // grpLocal
             // 
-            this.grpLocal.Controls.Add(this.btnCreateEmpty);
             this.grpLocal.Controls.Add(this.btnCreateKey);
             this.grpLocal.Controls.Add(this.btnInitializeLocal);
             this.grpLocal.Controls.Add(this.btnSettings);
             this.grpLocal.Location = new System.Drawing.Point(200, 34);
             this.grpLocal.Name = "grpLocal";
-            this.grpLocal.Size = new System.Drawing.Size(118, 138);
+            this.grpLocal.Size = new System.Drawing.Size(118, 109);
             this.grpLocal.TabIndex = 18;
             this.grpLocal.TabStop = false;
             this.grpLocal.Text = "Local";

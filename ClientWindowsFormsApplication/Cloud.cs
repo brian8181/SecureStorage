@@ -10,15 +10,18 @@ namespace ClientWindowsFormsApplication
 {
     public class ClientCloud //: IRemoteData
     {
-        //BKP to remove direct reference to service
-        IStorage remote_store = null;
-        private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
+        private IStorage store = null;
         private byte[] key = null;
         private byte[] iv  = null;
         private const string TMP_FILE_NAME = "tmp.xml";
         private const string ROOT_FILE_NAME = "/";
         private const int CHUNK_SIZE = 1000;
-        
+
+        public ClientCloud(IStorage store)
+        {
+            this.store = store;
+        }
+                
         /// <summary>
         /// true if key has been loaded, otherwise false
         /// </summary>
@@ -65,28 +68,13 @@ namespace ClientWindowsFormsApplication
             Array.Copy(key_iv, 32, iv, 0, 16);
         }
 
-        //TODO move to GUI, all name should be in cloud format in first place
-        /// <summary>
-        /// gets name / name used for cloud, aka removes local root & adjust slashes
-        /// </summary>
-        /// <param name="name">name / name to convert</param>
-        /// <returns>cloud name / name</returns>
-        private string GetCloudPath(string path)
-        {
-            string local = Properties.Settings.Default.init_input_dir;
-            path = path.Remove(0, local.Length);
-            path = path.Replace('\\', '/');
-            path = path.TrimStart('/'); // may trim start ?
-            return path + "/";
-        }
-        
         /// <summary>
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
         public bool Initialize()
         {
-            cloud.DeleteAll();
+            store.DeleteAll();
             return CreateDirectoryXml(ROOT_FILE_NAME);
         }
 
@@ -117,111 +105,12 @@ namespace ClientWindowsFormsApplication
             byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
 
             // send/store it using secure name
-            if (cloud.Exists(secure_named_dir) != true)
-                return cloud.CreateAppend(secure_named_dir, encrypted_xml_file_data);
+            if (store.Exists(secure_named_dir) != true)
+                return store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
 
             return false;
         }
-        
-        /// <summary>
-        /// initialize/create a directory based on input directory
-        /// </summary>
-        /// <param name="in_path"></param>
-        /// <param name="out_path"></param>
-        public void InitializeLocalRoot(string input_dir, string output_dir)
-        {
-            DirectoryInfo di = new DirectoryInfo(input_dir);
-            InitializeLocal(di, output_dir);
-        }
-
-        private void InitializeLocal(DirectoryInfo dir, string output_dir)
-        {
-            string cloud_dir_name = GetCloudPath(dir.FullName);
-            string secure_dir_name = GetSecureName(cloud_dir_name);
-
-            XmlDocument doc = new XmlDocument();
-            //xml declaration is recommended, but not mandatory
-            XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            doc.InsertBefore(decel, doc.DocumentElement);
-            XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
-            doc.AppendChild(root);
-            
-            FileInfo[] fis = dir.GetFiles();
-            foreach (FileInfo file in fis)
-            {
-                // todo write file to output
-                string full_name = cloud_dir_name + file.Name; //??
-                full_name = full_name.TrimStart('/');
-
-                byte[] data = File.ReadAllBytes(file.FullName);
-                //todo, write file to disk
-                string secure_name = GetSecureName(file.Name);
-                byte[] secure_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
-                File.WriteAllBytes(output_dir + "\\" + secure_name, secure_data);
-
-                // create a file node
-                XmlNode file_node = doc.CreateElement(string.Empty, "file", string.Empty);
-                //APPEND name
-                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = full_name;
-                file_node.AppendChild(name_node);
-
-                //APPEND signature
-                byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
-                XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
-                signature_node.InnerText = Convert.ToBase64String(sha256);
-                file_node.AppendChild(signature_node);
-
-                //APPEND dates
-                DateTime dt = DateTime.Now;
-
-                XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-                created_node.InnerText = dt.ToFileTime().ToString();
-                file_node.AppendChild(created_node);
-
-                XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-                modified_node.InnerText = dt.ToFileTime().ToString();
-                file_node.AppendChild(modified_node);
-
-                root.AppendChild(file_node);
-            }
-
-            DirectoryInfo[] dis = dir.GetDirectories();
-            foreach (DirectoryInfo sub_dir in dis)
-            {
-                string sub_dir_name = GetCloudPath(sub_dir.FullName);
-                
-                // create a file node
-                XmlNode dir_node = doc.CreateElement(string.Empty, "directory", string.Empty);
-                //APPEND name
-                XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
-                name_node.InnerText = sub_dir_name;
-                dir_node.AppendChild(name_node);
-
-                //APPEND dates
-                DateTime dt = DateTime.Now;
-
-                XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
-                created_node.InnerText = dt.ToFileTime().ToString();
-                dir_node.AppendChild(created_node);
-
-                XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
-                modified_node.InnerText = dt.ToFileTime().ToString();
-                dir_node.AppendChild(modified_node);
-
-                root.AppendChild(dir_node);
-
-                InitializeLocal(sub_dir, output_dir);
-            }
-            
-            doc.Save(secure_dir_name);
-
-            // write directory file to output
-            byte[] xml_file_data = File.ReadAllBytes(secure_dir_name);
-            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
-            File.WriteAllBytes(output_dir + "\\" + secure_dir_name, encrypted_xml_file_data);
-        }
-
+              
         /// <summary>
         /// create an empty file, fill with random or zeroed data
         /// </summary>
@@ -231,7 +120,7 @@ namespace ClientWindowsFormsApplication
         public void CreateEmptyFile(string name, int len, bool random = true)
         {
             string secure_name = GetSecureName(name);
-            cloud.CreateEmpty(secure_name, len, random);
+            store.CreateEmpty(secure_name, len, random);
         }
 
         /// <summary>
@@ -268,7 +157,7 @@ namespace ClientWindowsFormsApplication
 
             // decrypt
             string secure_name = GetSecureName(dir_name);
-            byte[] encrypted_data = cloud.Read(secure_name, 0, 0);
+            byte[] encrypted_data = store.Read(secure_name, 0, 0);
             byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
 
             XmlDocument doc = new XmlDocument();
@@ -316,7 +205,7 @@ namespace ClientWindowsFormsApplication
                 data_chunk = new byte[CHUNK_SIZE];
                 Array.Copy(data, idx, data_chunk, 0, CHUNK_SIZE);
 
-                cloud.CreateAppend(name, data_chunk);
+                store.Create(name, data_chunk, FileMode.Append);
                 idx += CHUNK_SIZE;
             }
 
@@ -326,7 +215,7 @@ namespace ClientWindowsFormsApplication
                 data_chunk = new byte[left_over];
                 Array.Copy(data, idx, data_chunk, 0, left_over);
 
-                cloud.CreateAppend(name, data_chunk);
+                store.Create(name, data_chunk, FileMode.Append);
             }
         }
         
@@ -346,13 +235,13 @@ namespace ClientWindowsFormsApplication
 
             // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
-            if (cloud.Exists(name) != false)
+            if (store.Exists(name) != false)
                 throw new CloudException("Error creating file. (file exists");
 
             // assert name/directory exists
             string sub_dir_name = CloudPath.GetDirectory(name);
             string secure_sub_dir_name = GetSecureName(sub_dir_name);
-            if (cloud.Exists(secure_sub_dir_name) != true)
+            if (store.Exists(secure_sub_dir_name) != true)
                 throw new CloudException("Directory does not exists.");
 
             // BKP todo think about this
@@ -411,12 +300,12 @@ namespace ClientWindowsFormsApplication
             doc.Save("tmp.xml");
 
             // delete old dir file
-            cloud.Delete(secure_sub_dir_name);
+            store.Delete(secure_sub_dir_name);
             // create new ROOT/dir
             // BKP hack, could just load string but there is an issue here
             data = File.ReadAllBytes("tmp.xml");
             encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.CreateAppend(secure_sub_dir_name, encrypted_data);
+            store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
 
             if (is_directory == true)
             {
@@ -427,7 +316,7 @@ namespace ClientWindowsFormsApplication
 
         public XmlDocument GetDirectoryDocument(string name)
         {
-            byte[] encrypted_data = cloud.Read(name, 0, 0);
+            byte[] encrypted_data = store.Read(name, 0, 0);
             byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
             
             string xml = Encoding.UTF8.GetString(data);
@@ -458,7 +347,7 @@ namespace ClientWindowsFormsApplication
                 }
             }
             
-            cloud.Delete(secure_name);
+            store.Delete(secure_name);
             // decrypt xml dir file
             string dir_name = CloudPath.GetDirectory(name);
             string secure_dir_name = GetSecureName(dir_name);
@@ -469,13 +358,13 @@ namespace ClientWindowsFormsApplication
             n.ParentNode.RemoveChild(n);
 
             // delete old dir file
-            cloud.Delete(secure_dir_name);
+            store.Delete(secure_dir_name);
 
             // create new dir file
             string xml = doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
-            cloud.CreateAppend(secure_dir_name, crypt);
+            store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>
@@ -494,7 +383,7 @@ namespace ClientWindowsFormsApplication
                 throw new CloudException("Error, object a directory.");
 
             string secure_name = GetSecureName(name);
-            int LEN = (int)cloud.GetLength(secure_name);
+            int LEN = (int)store.GetLength(secure_name);
 
             byte[] data_chunk = null;
             byte[] encrypted_data = new byte[LEN];
@@ -502,7 +391,7 @@ namespace ClientWindowsFormsApplication
             int offset = 0; 
             while ((offset + CHUNK_SIZE) <= LEN)
             {
-                data_chunk = cloud.Read(secure_name, offset, CHUNK_SIZE);
+                data_chunk = store.Read(secure_name, offset, CHUNK_SIZE);
                 Array.Copy(data_chunk, 0, encrypted_data, offset, CHUNK_SIZE);
                 offset += CHUNK_SIZE;
             }
@@ -510,7 +399,7 @@ namespace ClientWindowsFormsApplication
             int left_over = (LEN - offset);
             if (left_over > 0)
             {
-                data_chunk = cloud.Read(secure_name, offset, left_over);
+                data_chunk = store.Read(secure_name, offset, left_over);
                 Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
             }
 
@@ -525,16 +414,8 @@ namespace ClientWindowsFormsApplication
         public long GetLength(string name)
         {
             string secure_name = GetSecureName(name);
-            return cloud.GetLength(secure_name);
+            return store.GetLength(secure_name);
         }
 
-        /// <summary>
-        /// get count of all file on server
-        /// </summary>
-        /// <returns></returns>
-        public int GetCount()
-        {
-            return cloud.GetCount();
-        }
     }
 }

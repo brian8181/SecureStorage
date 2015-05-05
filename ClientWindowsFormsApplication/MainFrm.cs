@@ -25,11 +25,9 @@ namespace ClientWindowsFormsApplication
         {
             InitializeComponent();
 
-            client_cloud = new ClientCloud();
+            client_cloud = new ClientCloud(new WCFStorage());
             client_cloud.LoadKey(KEY_PATH);
 
-            //test count
-            int c = client_cloud.GetCount();
             lblSever.Text = current_dir;
 
             //RefreshFileList();
@@ -48,6 +46,7 @@ namespace ClientWindowsFormsApplication
             }
         }
 
+
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             InitializeFrm dlg = new InitializeFrm();
@@ -62,19 +61,19 @@ namespace ClientWindowsFormsApplication
 
                 // intitialize to server mirror dir
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-                
 
-                client_cloud.InitializeLocalRoot(initial_input_dir, output_dir);
+                CloudUtility utility = new CloudUtility();
+                utility.LoadKey(KEY_PATH);
+                utility.InitializeLocalRoot(initial_input_dir, output_dir);
 
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;
                 Properties.Settings.Default.Save();
             }
 
-           
             StdMsgBox.OK("InitializeLocalRoot Complete");
         }
-        
+
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
             StdMsgBox.OK("not implemented");
@@ -93,9 +92,7 @@ namespace ClientWindowsFormsApplication
                 Properties.Settings.Default.Save();
             }
         }
-
-       
-
+        
         public void RefreshFileList()
         {
             //string seerver_dir = Properties.Settings.Default.output_dir;
@@ -108,20 +105,7 @@ namespace ClientWindowsFormsApplication
                 string name = n["name"].InnerText;
                 serverfileList.Items.Add(name);
             }
-
-            //// get local files
-            //localfileList.Items.Clear();
-            //string[] local_dirs = Directory.GetDirectories(Properties.Settings.Default.local_dir);
-            //foreach (string dir in local_dirs)
-            //{
-            //    this.localfileList.Items.Add(Path.GetFileName(dir) + "/");
-            //}
-            //string[] local_files = Directory.GetFiles(Properties.Settings.Default.local_dir);
-            //foreach (string file in local_files)
-            //{
-            //    this.localfileList.Items.Add(Path.GetFileName(file));
-            //}
-        }
+       }
 
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
@@ -149,7 +133,7 @@ namespace ClientWindowsFormsApplication
                 client_cloud.CreateName(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
                 RefreshFileList();
             }
-  
+
         }
 
         private void btnRead_Click(object sender, EventArgs e)
@@ -162,7 +146,7 @@ namespace ClientWindowsFormsApplication
                 data = client_cloud.Read(name);
                 string dir_name = Path.GetDirectoryName(name);
 
-                DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.local_dir  + "\\" + dir_name);
+                DirectoryInfo di = new DirectoryInfo(Properties.Settings.Default.local_dir + "\\" + dir_name);
                 if (di.Exists != true)
                     di.Create();
                 File.WriteAllBytes(di.FullName + "\\" + Path.GetFileName(name), data);
@@ -175,7 +159,7 @@ namespace ClientWindowsFormsApplication
         private void btnDelete_Click(object sender, EventArgs e)
         {
             string name = (string)serverfileList.SelectedItem;
-            if(name != null)
+            if (name != null)
             {
                 client_cloud.Delete(name);
                 RefreshFileList();
@@ -184,7 +168,6 @@ namespace ClientWindowsFormsApplication
 
         private void btnCreateEmpty_Click(object sender, EventArgs e)
         {
-
             client_cloud.CreateEmptyFile("EMPTY", 1000, true);
         }
 
@@ -207,7 +190,7 @@ namespace ClientWindowsFormsApplication
                 }
 
                 CurrentDirectory = sb.ToString();
-                if(string.IsNullOrWhiteSpace(current_dir))
+                if (string.IsNullOrWhiteSpace(current_dir))
                     CurrentDirectory = "/"; // nothing equals root
 
                 RefreshFileList();
@@ -234,9 +217,9 @@ namespace ClientWindowsFormsApplication
         {
             if (serverfileList.SelectedItem != null)
             {
-               string s = serverfileList.SelectedItem.ToString();
+                string s = serverfileList.SelectedItem.ToString();
 
-                if(s != "/")
+                if (s != "/")
                     s.TrimStart('/');
 
                 if (s.EndsWith("/"))
@@ -245,11 +228,6 @@ namespace ClientWindowsFormsApplication
                     RefreshFileList();
                 }
             }
-
         }
-
-       
-
-     
-   }
+    }
 }

@@ -1,7 +1,10 @@
 ﻿*Todo
-		
+		* use consisent numeric types, long vs int, uint ?
+		* handle error consistenlly, only create returna boolean?
 		* clean tmp.xml & tmp file creation in general
 		* file locking / syncronization: this has not been touched
+		* add move / copy operations
+		* default block algorithm
 	
 *Notes
 	
@@ -37,6 +40,13 @@
 				*Notes
 					* lock_sha526_expires
 					* lock request on expired lock deletes old lock
+
+			*locking strategy
+				* create lock
+				* test lock exsits, overkill?
+				* test no other lock exsits
+					* Delete LOCK, wait try again 
+				* LOCK OBTAINED
 
 
 *Done
