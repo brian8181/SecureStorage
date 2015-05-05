@@ -13,13 +13,15 @@ namespace ClientWindowsFormsApplication
         private IStorage store = null;
         private byte[] key = null;
         private byte[] iv  = null;
-        private const string TMP_FILE_NAME = "tmp.xml";
         private const string ROOT_FILE_NAME = "/";
-        private const int CHUNK_SIZE = 1000;
-
-        public ClientCloud(IStorage store)
+        //BKP change to readonly
+        private const int FRAGMENT_SIZE = 1000;
+        
+        public ClientCloud(IStorage store, byte[] key, byte[] iv)
         {
             this.store = store;
+            this.key = key;
+            this.iv = iv;
         }
                 
         /// <summary>
@@ -36,39 +38,6 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
-        /// create a key and write it to specified name
-        /// </summary>
-        /// <param name="name">name to write the key</param>
-        public void CreateKey(string path)
-        {
-            AesManaged aes = new AesManaged();
-            aes.GenerateKey();
-            aes.GenerateIV();
-
-            byte[] key = new byte[aes.Key.Length + aes.IV.Length];
-
-            Array.Copy(aes.Key, key, aes.Key.Length);
-            Array.Copy(aes.IV, 0, key, aes.Key.Length, aes.IV.Length);
-
-            File.WriteAllBytes(path, key);
-        }
-
-        /// <summary>
-        /// loads key from file into variables (key & iv)
-        /// </summary>
-        /// <param name="name"></param>
-        public void LoadKey(string path)
-        {
-            byte[] key_iv = File.ReadAllBytes(path);
-
-            key = new byte[32];
-            iv = new byte[16];
-
-            Array.Copy(key_iv, key, 32);
-            Array.Copy(key_iv, 32, iv, 0, 16);
-        }
-
-        /// <summary>
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
@@ -81,7 +50,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// internal function, abstarcts Creating direcoties at specified name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of directory</param>
         /// <returns></returns>
         private bool CreateDirectoryXml(string name)
         {
@@ -126,8 +95,7 @@ namespace ClientWindowsFormsApplication
         /// <summary>
         /// utility removes UTF-8 byte order mark from xml string
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <returns>string, without byte order mark</returns>
         private string RemoveByteOrderMarkUTF8(string xml)
         {
             string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
@@ -200,13 +168,13 @@ namespace ClientWindowsFormsApplication
             byte[] data_chunk = null; 
 
             long idx = 0; // reset index
-            while ((idx + CHUNK_SIZE) <= LEN)
+            while ((idx + FRAGMENT_SIZE) <= LEN)
             {
-                data_chunk = new byte[CHUNK_SIZE];
-                Array.Copy(data, idx, data_chunk, 0, CHUNK_SIZE);
+                data_chunk = new byte[FRAGMENT_SIZE];
+                Array.Copy(data, idx, data_chunk, 0, FRAGMENT_SIZE);
 
                 store.Create(name, data_chunk, FileMode.Append);
-                idx += CHUNK_SIZE;
+                idx += FRAGMENT_SIZE;
             }
 
             long left_over = (LEN - idx);
@@ -314,7 +282,12 @@ namespace ClientWindowsFormsApplication
             }
         }
 
-        public XmlDocument GetDirectoryDocument(string name)
+        /// <summary>
+        /// gets directory as an XmlDocument
+        /// </summary>
+        /// <param name="name">name of directory</param>
+        /// <returns>the name/doc as XmlDocument</returns>
+        private XmlDocument GetDirectoryDocument(string name)
         {
             byte[] encrypted_data = store.Read(name, 0, 0);
             byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
@@ -327,6 +300,10 @@ namespace ClientWindowsFormsApplication
             return doc;
         }
 
+        /// <summary>
+        /// delete a named object
+        /// </summary>
+        /// <param name="name">name of the object</param>
         public void Delete(string name)
         {
             if (KeyLoaded != true)
@@ -389,11 +366,11 @@ namespace ClientWindowsFormsApplication
             byte[] encrypted_data = new byte[LEN];
 
             int offset = 0; 
-            while ((offset + CHUNK_SIZE) <= LEN)
+            while ((offset + FRAGMENT_SIZE) <= LEN)
             {
-                data_chunk = store.Read(secure_name, offset, CHUNK_SIZE);
-                Array.Copy(data_chunk, 0, encrypted_data, offset, CHUNK_SIZE);
-                offset += CHUNK_SIZE;
+                data_chunk = store.Read(secure_name, offset, FRAGMENT_SIZE);
+                Array.Copy(data_chunk, 0, encrypted_data, offset, FRAGMENT_SIZE);
+                offset += FRAGMENT_SIZE;
             }
 
             int left_over = (LEN - offset);

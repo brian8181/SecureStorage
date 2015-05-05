@@ -16,6 +16,7 @@ namespace ClientWindowsFormsApplication
     public partial class MainFrm : Form
     {
         private ClientCloud client_cloud = null;
+        private CloudUtility client_utility = new CloudUtility(32, 16);
         private const int MAX_SIZE = 30000; //bytes
         //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
@@ -24,13 +25,12 @@ namespace ClientWindowsFormsApplication
         public MainFrm()
         {
             InitializeComponent();
-
-            client_cloud = new ClientCloud(new WCFStorage());
-            client_cloud.LoadKey(KEY_PATH);
-
+            
+            client_utility.LoadKey(KEY_PATH);
+            client_cloud = new ClientCloud(new WCFStorage(), client_utility.Key, client_utility.IV);
+       
             lblSever.Text = current_dir;
 
-            //RefreshFileList();
         }
 
         private string CurrentDirectory
@@ -62,9 +62,7 @@ namespace ClientWindowsFormsApplication
                 // intitialize to server mirror dir
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
 
-                CloudUtility utility = new CloudUtility();
-                utility.LoadKey(KEY_PATH);
-                utility.InitializeLocalRoot(initial_input_dir, output_dir);
+                client_utility.InitializeLocalRoot(initial_input_dir, output_dir);
 
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;
@@ -84,8 +82,6 @@ namespace ClientWindowsFormsApplication
             SettingsFrm dlg = new SettingsFrm();
             if (dlg.ShowDialog() == DialogResult.OK)
             {
-                // load the key
-                client_cloud.LoadKey(dlg.dirBrowserKeyDir.TextBox.Text.TrimEnd('\\') + "\\key");
                 Properties.Settings.Default.server_mirror_dir = dlg.dirBrowserServerDir.TextBox.Text;
                 Properties.Settings.Default.local_dir = dlg.dirBrowserLocalDir.TextBox.Text;
                 Properties.Settings.Default.key_path = dlg.dirBrowserKeyDir.TextBox.Text;

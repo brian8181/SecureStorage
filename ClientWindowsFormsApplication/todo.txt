@@ -1,10 +1,12 @@
 ﻿*Todo
+	
 		* use consisent numeric types, long vs int, uint ?
 		* handle error consistenlly, only create returna boolean?
 		* clean tmp.xml & tmp file creation in general
 		* file locking / syncronization: this has not been touched
 		* add move / copy operations
 		* default block algorithm
+		* look for all BKP / TODO comments
 	
 *Notes
 	

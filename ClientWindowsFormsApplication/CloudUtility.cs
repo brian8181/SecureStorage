@@ -12,9 +12,30 @@ namespace ClientWindowsFormsApplication
 {
     public class CloudUtility
     {
+        // BKP const?
+        private readonly int KEY_SIZE = 32;
+        private readonly int IV_SIZE = 16;
+
         private byte[] key = null;
         private byte[] iv = null;
-         
+
+        public byte[] Key
+        {
+            get { return key; }
+            set { key = value; }
+        }
+        public byte[] IV
+        {
+            get { return iv; }
+            set { iv = value; }
+        }
+
+        public CloudUtility(int key_size, int iv_size)
+        {
+            KEY_SIZE = key_size;
+            IV_SIZE = iv_size;
+        }
+
         /// <summary>
         /// loads key from file into variables (key & iv)
         /// </summary>
@@ -23,11 +44,30 @@ namespace ClientWindowsFormsApplication
         {
             byte[] key_iv = File.ReadAllBytes(path);
 
-            key = new byte[32];
-            iv = new byte[16];
+            iv = new byte[IV_SIZE];
+            key = new byte[KEY_SIZE];
 
             Array.Copy(key_iv, key, 32);
             Array.Copy(key_iv, 32, iv, 0, 16);
+        }
+
+
+        /// <summary>
+        /// create a key and write it to specified name
+        /// </summary>
+        /// <param name="name">name to write the key</param>
+        public void CreateKey(string path)
+        {
+            AesManaged aes = new AesManaged();
+            aes.GenerateKey();
+            aes.GenerateIV();
+
+            byte[] key = new byte[aes.Key.Length + aes.IV.Length];
+
+            Array.Copy(aes.Key, key, aes.Key.Length);
+            Array.Copy(aes.IV, 0, key, aes.Key.Length, aes.IV.Length);
+
+            File.WriteAllBytes(path, key);
         }
 
         //BKP copied from cloud!

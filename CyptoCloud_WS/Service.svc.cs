@@ -50,6 +50,17 @@ namespace CyptoCloud_WS
             return fi.Exists;
         }
 
+        //OVERLOADING EXAMPLE
+        //[ServiceContract]
+        //public interface ICalendarService
+        //{
+        //    [OperationContract(Name = "GetScheduledEventsByDate")]
+        //    ScheduledEvent[] GetScheduledEvents(DateTime date);
+         
+        //    [OperationContract(Name = "GetScheduledEventsByDateRange")]
+        //    ScheduledEvent[] GetScheduledEvents(DateTime start, DateTime end);
+        //}
+
         /// <summary>
         /// write date to end of file
         /// </summary>
