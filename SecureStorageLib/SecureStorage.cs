@@ -28,7 +28,6 @@ namespace SecureStorageLib
         {
             this.store = store;
             this.crypto = crypto;
-          
             FRAGMENT_SIZE = fragment_size;
         }
                 
@@ -49,10 +48,10 @@ namespace SecureStorageLib
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
-        public bool Initialize()
+        public void Initialize()
         {
             store.DeleteAll();
-            return CreateDirectoryXml(ROOT_FILE_NAME);
+            CreateDirectoryXml(ROOT_FILE_NAME);
         }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">name of directory</param>
         /// <returns></returns>
-        private bool CreateDirectoryXml(string name)
+        private void CreateDirectoryXml(string name)
         {
             // create a file system on server
             if (KeyLoaded != true)
@@ -83,9 +82,7 @@ namespace SecureStorageLib
 
             // send/store it using secure name
             if (store.Exists(secure_named_dir) != true)
-                return store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
-
-            return false;
+                store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
         }
               
         /// <summary>
