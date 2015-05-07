@@ -27,8 +27,8 @@ namespace ClientWindowsFormsApplication
             InitializeComponent();
             
             client_utility.LoadKey(KEY_PATH);
-            int frag_test = 65535 * 2;
-            client_cloud = new SecureStorage(new WCFStorage(), client_utility.Key, client_utility.IV);
+            int FRAGMENT_SIZE = 20000;
+            client_cloud = new SecureStorage(new WCFStorage(), client_utility.Key, client_utility.IV, FRAGMENT_SIZE);
        
             lblSever.Text = current_dir;
 

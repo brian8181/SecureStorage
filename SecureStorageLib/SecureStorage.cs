@@ -11,18 +11,26 @@ namespace ClientWindowsFormsApplication
 {
     public class SecureStorage 
     {
+        private ICrypto crypto = null;
         private ISecureStorage store = null;
         private byte[] key = null;
         private byte[] iv  = null;
         private const string ROOT_FILE_NAME = "/";
         private readonly int FRAGMENT_SIZE = 0xFFFF;
-            
+        
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="store">an ISecureStorage implementation</param>
+        /// <param name="key">an encryption key</param>
+        /// <param name="iv">an encryption iv</param>
+        /// <param name="fragment_size">max message size before fragmentation occurs</param>
         public SecureStorage(ISecureStorage store, byte[] key, byte[] iv, int fragment_size = 0xFFFF)
         {
             this.store = store;
             this.key = key;
             this.iv = iv;
-            FRAGMENT_SIZE = 40000;
+            FRAGMENT_SIZE = fragment_size;
         }
                 
         /// <summary>
@@ -274,21 +282,13 @@ namespace ClientWindowsFormsApplication
             XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
             modified_node.InnerText = dt.ToFileTime().ToString();
             file.AppendChild(modified_node);
-
             root.AppendChild(file);
-            // BKP hack, could just load string but there is an issue here
-            //doc.Save("tmp.xml");
-
+           
             // delete old dir file
             store.Delete(secure_sub_dir_name);
-            // create new ROOT/dir
-            // BKP hack, could just load string but there is an issue here
-            //data = File.ReadAllBytes("tmp.xml");
-
-
+          
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
-           
             encrypted_data = CryptoFunctions.Encrypt(key, data, iv);
             store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
 
