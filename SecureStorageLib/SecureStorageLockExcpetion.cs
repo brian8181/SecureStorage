@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClientWindowsFormsApplication
 {
-    public class CloudException : Exception
+    public class SecureStorageLockExcpetion : SecureStorageException
     {
-        public CloudException(string msg)
+        SecureStorageLockExcpetion(string msg)
             : base(msg)
         {
         }

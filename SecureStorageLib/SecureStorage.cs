@@ -9,7 +9,7 @@ using SecureStorageLib;
 
 namespace ClientWindowsFormsApplication
 {
-    public class ClientCloud 
+    public class SecureStorage 
     {
         private ISecureStorage store = null;
         private byte[] key = null;
@@ -17,7 +17,7 @@ namespace ClientWindowsFormsApplication
         private const string ROOT_FILE_NAME = "/";
         private readonly int FRAGMENT_SIZE = 0xFFFF;
             
-        public ClientCloud(ISecureStorage store, byte[] key, byte[] iv, int fragment_size = 0xFFFF)
+        public SecureStorage(ISecureStorage store, byte[] key, byte[] iv, int fragment_size = 0xFFFF)
         {
             this.store = store;
             this.key = key;
@@ -211,18 +211,18 @@ namespace ClientWindowsFormsApplication
 
             // assert key is loaded
             if (KeyLoaded != true)
-                throw new CloudException("Key not loaded.");
+                throw new SecureStorageException("Key not loaded.");
 
             // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
             if (store.Exists(name) != false)
-                throw new CloudException("Error creating file. (file exists");
+                throw new SecureStorageException("Error creating file. (file exists");
 
             // assert name/directory exists
             string sub_dir_name = CloudPath.GetDirectory(name);
             string secure_sub_dir_name = GetSecureName(sub_dir_name);
             if (store.Exists(secure_sub_dir_name) != true)
-                throw new CloudException("Directory does not exists.");
+                throw new SecureStorageException("Directory does not exists.");
 
             // BKP todo think about this
             bool is_directory = name.EndsWith("/") && data == null;
@@ -277,13 +277,18 @@ namespace ClientWindowsFormsApplication
 
             root.AppendChild(file);
             // BKP hack, could just load string but there is an issue here
-            doc.Save("tmp.xml");
+            //doc.Save("tmp.xml");
 
             // delete old dir file
             store.Delete(secure_sub_dir_name);
             // create new ROOT/dir
             // BKP hack, could just load string but there is an issue here
-            data = File.ReadAllBytes("tmp.xml");
+            //data = File.ReadAllBytes("tmp.xml");
+
+
+            string xml = doc.OuterXml;
+            data = Encoding.UTF8.GetBytes(xml);
+           
             encrypted_data = CryptoFunctions.Encrypt(key, data, iv);
             store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
 
@@ -332,7 +337,7 @@ namespace ClientWindowsFormsApplication
                 XmlNodeList me_node = me_doc.SelectNodes("/doc/file | /doc/directory");
                 if (me_node.Count > 0)
                 {
-                    throw new CloudException("Directory is not empty.");
+                    throw new SecureStorageException("Directory is not empty.");
                 }
             }
             
@@ -350,10 +355,7 @@ namespace ClientWindowsFormsApplication
             store.Delete(secure_dir_name);
 
             // create new dir file
-            string xml = doc.OuterXml;
-            byte[] data = Encoding.UTF8.GetBytes(xml);
-            byte[] crypt = CryptoFunctions.Encrypt(key, data, iv);
-            store.Create(secure_dir_name, crypt, FileMode.Append);
+          
         }
 
         /// <summary>
@@ -368,7 +370,7 @@ namespace ClientWindowsFormsApplication
 
             bool is_directory = name.EndsWith("/");
             if(is_directory)
-                throw new CloudException("Error, is a directory.");
+                throw new SecureStorageException("Error, is a directory.");
 
             string secure_name = GetSecureName(name);
             int LEN = (int)store.GetLength(secure_name);

@@ -15,7 +15,7 @@ namespace ClientWindowsFormsApplication
 {
     public partial class MainFrm : Form
     {
-        private ClientCloud client_cloud = null;
+        private SecureStorage client_cloud = null;
         private CloudUtility client_utility = new CloudUtility(32, 16);
         private const int MAX_SIZE = 30000; //bytes
         //private const string LOCAL_PATH = "c:\\tmp\\client\\";
@@ -28,7 +28,7 @@ namespace ClientWindowsFormsApplication
             
             client_utility.LoadKey(KEY_PATH);
             int frag_test = 65535 * 2;
-            client_cloud = new ClientCloud(new WCFStorage(), client_utility.Key, client_utility.IV);
+            client_cloud = new SecureStorage(new WCFStorage(), client_utility.Key, client_utility.IV);
        
             lblSever.Text = current_dir;
 

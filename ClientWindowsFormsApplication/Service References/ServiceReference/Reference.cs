@@ -27,6 +27,12 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateAppend", ReplyAction="http://tempuri.org/IData/CreateAppendResponse")]
         System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateReplace", ReplyAction="http://tempuri.org/IData/CreateReplaceResponse")]
+        bool CreateReplace(string name, byte[] data);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateReplace", ReplyAction="http://tempuri.org/IData/CreateReplaceResponse")]
+        System.Threading.Tasks.Task<bool> CreateReplaceAsync(string name, byte[] data);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Read", ReplyAction="http://tempuri.org/IData/ReadResponse")]
         byte[] Read(string name, int offset, int lenght);
         
@@ -123,6 +129,14 @@ namespace ClientWindowsFormsApplication.ServiceReference {
         
         public System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data) {
             return base.Channel.CreateAppendAsync(name, data);
+        }
+        
+        public bool CreateReplace(string name, byte[] data) {
+            return base.Channel.CreateReplace(name, data);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CreateReplaceAsync(string name, byte[] data) {
+            return base.Channel.CreateReplaceAsync(name, data);
         }
         
         public byte[] Read(string name, int offset, int lenght) {
