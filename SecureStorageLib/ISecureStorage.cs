@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientWindowsFormsApplication
+namespace SecureStorageLib
 {
     /// <summary>
     /// high level interface 

@@ -7,7 +7,7 @@ using SecureStorageLib;
 //using Utility;
 //using Utility.IO;
 
-namespace ClientWindowsFormsApplication
+namespace SecureStorageLib
 {
     public class SecureStorage 
     {
@@ -258,21 +258,21 @@ namespace ClientWindowsFormsApplication
                 file = doc.CreateElement(string.Empty, "directory", string.Empty);
             }
 
-            // APPEND name
+            // name
             XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
             name_node.InnerText = name;
             file.AppendChild(name_node);
 
             if (is_directory != true)
             {
-                // APPEND signature
+                // signature
                 byte[] sha256 = CryptoFunctions.SHA256(data);
                 XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
                 signature_node.InnerText = Convert.ToBase64String(sha256);
                 file.AppendChild(signature_node);
             }
 
-            // APPEND dates
+            // dates
             DateTime dt = DateTime.Now;
             // created
             XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);

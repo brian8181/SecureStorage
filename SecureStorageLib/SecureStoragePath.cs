@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ClientWindowsFormsApplication
+namespace SecureStorageLib
 {
     public static class CloudPath
     {
