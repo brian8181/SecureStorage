@@ -27,11 +27,12 @@ namespace ClientWindowsFormsApplication
             InitializeComponent();
             
             client_utility.LoadKey(KEY_PATH);
+            int frag_test = 65535 * 2;
             client_cloud = new ClientCloud(new WCFStorage(), client_utility.Key, client_utility.IV);
        
             lblSever.Text = current_dir;
 
-        }
+         }
 
         private string CurrentDirectory
         {
@@ -120,6 +121,7 @@ namespace ClientWindowsFormsApplication
             }
         }
 
+
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CreateFrm dlg = new CreateFrm();
@@ -131,6 +133,38 @@ namespace ClientWindowsFormsApplication
             }
 
         }
+
+   
+        //private void OnClick()
+        //{
+        //    System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(CreateThread));
+        //    t.Start();
+        //}
+
+        //private void CreateThread()
+        //{
+        //    CreateFrm dlg = new CreateFrm();
+        //    if (dlg.ShowDialog() == DialogResult.OK)
+        //    {
+        //        byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
+        //        client_cloud.CreateName(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+        //        RefreshFileList();
+        //    }
+
+        //    UpdateStatus("");
+        //}
+
+        //string status;
+        //private void UpdateStatus(string status)
+        //{
+        //    if (this.InvokeRequired) // invoke on gui thread
+        //    {
+        //        this.Invoke(new StringDelegate(UpdateStatus), new object[] { status });
+        //        return;
+        //    }
+        //    this.status = status;
+        //}
+
 
         private void btnRead_Click(object sender, EventArgs e)
         {
@@ -224,6 +258,16 @@ namespace ClientWindowsFormsApplication
                     RefreshFileList();
                 }
             }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            StdMsgBox.OK("not implemented");
+        }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            StdMsgBox.OK("not implemented");
         }
     }
 }

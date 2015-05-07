@@ -43,6 +43,8 @@
             this.btnCreateDir = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grpLocal = new System.Windows.Forms.GroupBox();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnMove = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.grpLocal.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +54,7 @@
             this.serverfileList.FormattingEnabled = true;
             this.serverfileList.Location = new System.Drawing.Point(3, 35);
             this.serverfileList.Name = "serverfileList";
-            this.serverfileList.Size = new System.Drawing.Size(191, 355);
+            this.serverfileList.Size = new System.Drawing.Size(191, 433);
             this.serverfileList.TabIndex = 0;
             this.serverfileList.DoubleClick += new System.EventHandler(this.serverfileList_DoubleClick);
             // 
@@ -68,7 +70,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(6, 164);
+            this.btnRead.Location = new System.Drawing.Point(6, 222);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(102, 23);
             this.btnRead.TabIndex = 2;
@@ -78,7 +80,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(6, 193);
+            this.btnDelete.Location = new System.Drawing.Point(6, 251);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(102, 23);
             this.btnDelete.TabIndex = 3;
@@ -180,6 +182,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnMove);
+            this.groupBox1.Controls.Add(this.btnCopy);
             this.groupBox1.Controls.Add(this.btnCreateEmpty);
             this.groupBox1.Controls.Add(this.btnCreate);
             this.groupBox1.Controls.Add(this.btnCreateDir);
@@ -189,7 +193,7 @@
             this.groupBox1.Controls.Add(this.btnGetDirs);
             this.groupBox1.Location = new System.Drawing.Point(200, 165);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(118, 225);
+            this.groupBox1.Size = new System.Drawing.Size(118, 303);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
@@ -206,11 +210,31 @@
             this.grpLocal.TabStop = false;
             this.grpLocal.Text = "Local";
             // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(6, 164);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(102, 23);
+            this.btnCopy.TabIndex = 17;
+            this.btnCopy.Text = "Copy File";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnMove
+            // 
+            this.btnMove.Location = new System.Drawing.Point(6, 193);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(102, 23);
+            this.btnMove.TabIndex = 18;
+            this.btnMove.Text = "Move File";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(327, 395);
+            this.ClientSize = new System.Drawing.Size(327, 470);
             this.Controls.Add(this.grpLocal);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnUpDirectory);
@@ -244,6 +268,8 @@
         private System.Windows.Forms.Button btnCreateDir;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox grpLocal;
+        private System.Windows.Forms.Button btnMove;
+        private System.Windows.Forms.Button btnCopy;
     }
 }
 

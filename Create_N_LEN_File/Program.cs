@@ -12,7 +12,6 @@ namespace Create_N_LEN_File
         {
             //string s =  "ABC";
             int max = (int)Math.Floor(Math.Pow(2, 16) / 2); 
-            
             StreamWriter sw = new StreamWriter("c:\\tmp\\file.txt");
     
             for (int i = 0; i < max; ++i) 

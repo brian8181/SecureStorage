@@ -10,18 +10,18 @@ namespace ClientWindowsFormsApplication
 {
     public class ClientCloud //: IRemoteData
     {
-        private IStorage store = null;
+        private ISecureStorage store = null;
         private byte[] key = null;
         private byte[] iv  = null;
         private const string ROOT_FILE_NAME = "/";
-        //BKP change to readonly
-        private const int FRAGMENT_SIZE = 1000;
-        
-        public ClientCloud(IStorage store, byte[] key, byte[] iv)
+        private readonly int FRAGMENT_SIZE = 0xFFFF;
+            
+        public ClientCloud(ISecureStorage store, byte[] key, byte[] iv, int fragment_size = 0xFFFF)
         {
             this.store = store;
             this.key = key;
             this.iv = iv;
+            FRAGMENT_SIZE = 40000;
         }
                 
         /// <summary>
@@ -93,6 +93,17 @@ namespace ClientWindowsFormsApplication
         }
 
         /// <summary>
+        /// get the length of an object
+        /// </summary>
+        /// <param name="name">the object name</param>
+        /// <returns>length in bytes</returns>
+        public long GetLength(string name)
+        {
+            string secure_name = GetSecureName(name);
+            return store.GetLength(secure_name);
+        }
+
+        /// <summary>
         /// utility removes UTF-8 byte order mark from xml string
         /// </summary>
         /// <returns>string, without byte order mark</returns>
@@ -118,7 +129,7 @@ namespace ClientWindowsFormsApplication
         /// </summary>
         /// <param name="dir_name">directory name</param>
         /// <returns>files as xml</returns>
-        public XmlNodeList  GetFiles(string dir_name)
+        public XmlNodeList GetFiles(string dir_name)
         {
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
@@ -354,10 +365,9 @@ namespace ClientWindowsFormsApplication
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
-            //BKP todo
             bool is_directory = name.EndsWith("/");
             if(is_directory)
-                throw new CloudException("Error, object a directory.");
+                throw new CloudException("Error, is a directory.");
 
             string secure_name = GetSecureName(name);
             int LEN = (int)store.GetLength(secure_name);
@@ -382,17 +392,5 @@ namespace ClientWindowsFormsApplication
 
             return CryptoFunctions.DecryptAES(key, encrypted_data, iv); ;
         }
-
-        /// <summary>
-        /// get the length of an object
-        /// </summary>
-        /// <param name="name">the object name</param>
-        /// <returns>length in bytes</returns>
-        public long GetLength(string name)
-        {
-            string secure_name = GetSecureName(name);
-            return store.GetLength(secure_name);
-        }
-
     }
 }

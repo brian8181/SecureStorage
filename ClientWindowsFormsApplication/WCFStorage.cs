@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ClientWindowsFormsApplication
 {
-    public class WCFStorage : IStorage
+    public class WCFStorage : ISecureStorage
     {
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
         
@@ -51,6 +51,16 @@ namespace ClientWindowsFormsApplication
         }
 
         public void CreateEmpty(string name, int len, bool random = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Copy(string src_name, string dst_name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Move(string src_name, string dst_name)
         {
             throw new NotImplementedException();
         }
