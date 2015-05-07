@@ -1,33 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SecureStorageLib
 {
-    class CryptoAES : ICrypto
+    public class CryptoAES : ICrypto
     {
         #region ICrypto Members
 
+        private byte[] key = null;
+        private byte[] iv = null;
+
+        public CryptoAES(byte[] key, byte[] iv)
+        {
+            this.iv = iv;
+            this.key = key;
+        }
+
         public byte[] Encrypt(byte[] key, byte[] iv, byte[] data)
         {
-            throw new NotImplementedException();
+            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+            {
+                csp.Key = key;
+                csp.IV = iv;
+
+                // Get an encryptor.
+                ICryptoTransform encryptor = csp.CreateEncryptor(key, iv);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+                    {
+                        // Write all data to the crypto stream and flush it.
+                        cs.Write(data, 0, data.Length);
+                        cs.FlushFinalBlock();
+                        return ms.ToArray();
+                    }
+                }
+            }
         }
 
         public byte[] Decrypt(byte[] key, byte[] iv, byte[] data)
         {
-            throw new NotImplementedException();
-        }
+            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+            {
+                csp.Key = key;
+                csp.IV = iv;
 
-        public string FromBytesToHex(byte[] array)
-        {
-            throw new NotImplementedException();
+                //Get a decryptor that uses the same key and IV as the encryptor.
+                ICryptoTransform decryptor = csp.CreateDecryptor(key, iv);
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+                    {
+
+                        // read it into buffer
+                        List<byte> buffer = new List<byte>();
+                        int b = cs.ReadByte();
+                        while (b != -1)
+                        {
+                            buffer.Add((byte)b);
+                            b = cs.ReadByte();
+                        }
+
+                        return buffer.ToArray();
+                    }
+                }
+            }
         }
 
         public byte[] SHA256(byte[] data)
         {
-            throw new NotImplementedException();
+            SHA256 sha256 = new SHA256CryptoServiceProvider();
+            byte[] result = sha256.ComputeHash(data);
+            return result;
+        }
+
+        public string FromBytesToHex(byte[] array)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in array)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
         }
 
         #endregion

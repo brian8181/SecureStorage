@@ -22,14 +22,15 @@ namespace ClientWindowsFormsApplication
         //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
         string current_dir = "/";
+        private const int FRAGMENT_SIZE = 20000;
 
         public MainFrm()
         {
             InitializeComponent();
             
             client_utility.LoadKey(KEY_PATH);
-            int FRAGMENT_SIZE = 20000;
-            client_cloud = new SecureStorage(new WCFStorage(), client_utility.Key, client_utility.IV, FRAGMENT_SIZE);
+            client_cloud = new SecureStorage( new WCFStorage(), new CryptoAES(client_utility.Key, client_utility.IV), 
+                                                client_utility.Key, client_utility.IV, FRAGMENT_SIZE );
        
             lblSever.Text = current_dir;
 

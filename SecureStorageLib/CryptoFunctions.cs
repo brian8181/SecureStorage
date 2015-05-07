@@ -7,10 +7,10 @@ using System.Text;
 
 namespace SecureStorageLib
 {
-    //BKP todo change param order
+    //BKP todo change param order, the delete this shit in favor of CyptoAES
     public class CryptoFunctions //: ICrypto
     {
-        public static byte[] Encrypt(byte[] key, byte[] data, byte[] iv)
+        public static byte[] Encrypt(byte[] key, byte[] iv, byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
@@ -32,7 +32,7 @@ namespace SecureStorageLib
             }
         }
 
-        public static byte[] Decrypt(byte[] key, byte[] data, byte[] iv)
+        public static byte[] Decrypt(byte[] key, byte[] iv, byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {

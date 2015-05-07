@@ -45,7 +45,6 @@
     <Compile Include="SecureStorageException.cs" />
     <Compile Include="SecureStorageLockExcpetion.cs" />
     <Compile Include="SecureStoragePath.cs" />
-    <Compile Include="CryptoFunctions.cs" />
     <Compile Include="ISecureStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
