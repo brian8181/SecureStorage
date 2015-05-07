@@ -7,14 +7,15 @@ using SecureStorageLib;
 
 namespace SecureStorageLib
 {
+    /// <summary>
+    /// manages a secure storage store
+    /// </summary>
     public class SecureStorage 
     {
         private ISecureStorage store = null;
         private ICrypto crypto = null;
-        private byte[] key = null;
-        private byte[] iv  = null;
-        private const string ROOT_FILE_NAME = "/";
         private readonly int FRAGMENT_SIZE = 0xFFFF;
+        private const string ROOT_FILE_NAME = "/";
         
         /// <summary>
         /// ctor
@@ -23,12 +24,11 @@ namespace SecureStorageLib
         /// <param name="key">an encryption key</param>
         /// <param name="iv">an encryption iv</param>
         /// <param name="fragment_size">max message size before fragmentation occurs</param>
-        public SecureStorage(ISecureStorage store, ICrypto crypto, byte[] key, byte[] iv, int fragment_size = 0xFFFF)
+        public SecureStorage(ISecureStorage store, ICrypto crypto, int fragment_size = 0xFFFF)
         {
             this.store = store;
             this.crypto = crypto;
-            this.key = key;
-            this.iv = iv;
+          
             FRAGMENT_SIZE = fragment_size;
         }
                 
@@ -39,7 +39,7 @@ namespace SecureStorageLib
         {
             get
             {
-                if(key == null || iv ==  null)
+                if (crypto.Key == null || crypto.IV == null)
                     return false;
                 return true;
             }
@@ -79,7 +79,7 @@ namespace SecureStorageLib
 
             // encrypt xml file
             byte[] xml_file_data = File.ReadAllBytes(secure_named_dir);
-            byte[] encrypted_xml_file_data = crypto.Encrypt(key, iv, xml_file_data);
+            byte[] encrypted_xml_file_data = crypto.Encrypt(xml_file_data);
 
             // send/store it using secure name
             if (store.Exists(secure_named_dir) != true)
@@ -145,7 +145,7 @@ namespace SecureStorageLib
             // decrypt
             string secure_name = GetSecureName(dir_name);
             byte[] encrypted_data = store.Read(secure_name, 0, 0);
-            byte[] data = crypto.Decrypt(key, iv, encrypted_data);
+            byte[] data = crypto.Decrypt(encrypted_data);
 
             XmlDocument doc = new XmlDocument();
             // encode to string & remove: byte order mark (BOM)
@@ -169,9 +169,7 @@ namespace SecureStorageLib
             if (KeyLoaded != true)
                 throw new Exception("key not loaded");
 
-            HMACSHA256 hmacsha256 = new HMACSHA256(key);
-            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
-            byte[] hash = hmacsha256.ComputeHash(data);
+            byte[] hash = crypto.HMACSHA256(name);
             return crypto.FromBytesToHex(hash);
         }
         
@@ -237,7 +235,7 @@ namespace SecureStorageLib
             if (is_directory != true)
             {
                 // encrypt file to upload
-                encrypted_data = crypto.Encrypt(key, iv, data);
+                encrypted_data = crypto.Encrypt(data);
                 // upload file
                 CreateAppendFragment(secure_name, encrypted_data);
             }
@@ -287,7 +285,7 @@ namespace SecureStorageLib
           
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
-            encrypted_data = crypto.Encrypt(key, iv, data);
+            encrypted_data = crypto.Encrypt(data);
             store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
 
             if (is_directory == true)
@@ -305,7 +303,7 @@ namespace SecureStorageLib
         private XmlDocument GetDirectoryDocument(string name)
         {
             byte[] encrypted_data = store.Read(name, 0, 0);
-            byte[] data = crypto.Decrypt(key, iv, encrypted_data);
+            byte[] data = crypto.Decrypt(encrypted_data);
             
             string xml = Encoding.UTF8.GetString(data);
             xml = RemoveByteOrderMarkUTF8(xml);
@@ -355,7 +353,7 @@ namespace SecureStorageLib
             // create new dir file
             string xml = doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
-            byte[] crypt = crypto.Encrypt(key, iv, data);
+            byte[] crypt = crypto.Encrypt(data);
             store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
@@ -394,7 +392,7 @@ namespace SecureStorageLib
                 Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
             }
 
-            return crypto.Decrypt(key, iv, encrypted_data); ;
+            return crypto.Decrypt(encrypted_data); ;
         }
     }
 }

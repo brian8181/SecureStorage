@@ -17,11 +17,28 @@ namespace SecureStorageLib
 
         public CryptoAES(byte[] key, byte[] iv)
         {
+            //BKP todo: check key & iv len
             this.iv = iv;
             this.key = key;
         }
 
-        public byte[] Encrypt(byte[] key, byte[] iv, byte[] data)
+        public byte[] Key
+        {
+            get
+            {
+                return key;
+            }
+        }
+
+        public byte[] IV
+        {
+            get
+            {
+                return iv;
+            }
+       }
+
+        public byte[] Encrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
@@ -43,7 +60,7 @@ namespace SecureStorageLib
             }
         }
 
-        public byte[] Decrypt(byte[] key, byte[] iv, byte[] data)
+        public byte[] Decrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
@@ -89,6 +106,13 @@ namespace SecureStorageLib
             return sb.ToString();
         }
 
+        public byte[] HMACSHA256(string name)
+        {
+            HMACSHA256 hmacsha256 = new HMACSHA256(Key);
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
+            byte[] hash = hmacsha256.ComputeHash(data);
+            return hash;
+        }
         #endregion
     }
 }

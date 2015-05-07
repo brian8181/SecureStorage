@@ -8,21 +8,20 @@ namespace SecureStorageLib
 {
     public interface ICrypto
     {
-        //byte[] Key
-        //{
-        //    get;
-        //    set;
-        //}
+        byte[] Key
+        {
+            get;
+        }
 
-        //byte[] IV
-        //{
-        //     get;
-        //     set;
-        //}
+        byte[] IV
+        {
+            get;
+        }
 
-        byte[] Encrypt(byte[] key, byte[] iv, byte[] data);
-        byte[] Decrypt(byte[] key, byte[] iv, byte[] data);
+        byte[] Encrypt(byte[] data);
+        byte[] Decrypt(byte[] data);
         string FromBytesToHex(byte[] array);
         byte[] SHA256(byte[] data);
+        byte[] HMACSHA256(string name);
     }
 }
