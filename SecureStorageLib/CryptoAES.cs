@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace SecureStorageLib
 {
     public class CryptoAES : ICrypto
     {
-        #region ICrypto Members
-
         private byte[] key = null;
         private byte[] iv = null;
+        private const int KEY_SIZE = 32;
+        private const int IV_SIZE = 16;
 
         public CryptoAES(byte[] key, byte[] iv)
         {
-            //BKP todo: check key & iv len
+            if (iv.Length != IV_SIZE && key.Length != KEY_SIZE)
+                throw new SecureStroageCryptoException("Wrong key/iv size.");
             this.iv = iv;
             this.key = key;
         }
@@ -37,6 +36,14 @@ namespace SecureStorageLib
                 return iv;
             }
        }
+
+        public int KeySize
+        {
+            get
+            {
+                return KEY_SIZE;
+            }
+        }
 
         public byte[] Encrypt(byte[] data)
         {
@@ -113,6 +120,5 @@ namespace SecureStorageLib
             byte[] hash = hmacsha256.ComputeHash(data);
             return hash;
         }
-        #endregion
     }
 }

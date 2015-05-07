@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace SecureStorageLib
 {
-    public class SecureStorageException : Exception
+    public class SecureStroageCryptoException : SecureStorageException
     {
-        public SecureStorageException()
-            : base("Unknown SecureStorageException")
+        public SecureStroageCryptoException() 
+            : base("Unknown SecureStroageCryptoException")
         {
         }
-        public SecureStorageException(string msg)
+        public SecureStroageCryptoException(string msg)
             : base(msg)
         {
         }

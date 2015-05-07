@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecureStorageLib
 {
@@ -18,10 +14,15 @@ namespace SecureStorageLib
             get;
         }
 
+        int KeySize
+        {
+            get;
+        }
+
         byte[] Encrypt(byte[] data);
         byte[] Decrypt(byte[] data);
-        string FromBytesToHex(byte[] array);
         byte[] SHA256(byte[] data);
         byte[] HMACSHA256(string name);
+        string FromBytesToHex(byte[] array);
     }
 }

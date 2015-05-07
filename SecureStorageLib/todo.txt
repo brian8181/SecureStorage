@@ -1,6 +1,8 @@
 ﻿*Todo
 	*Create Version SercureStorageLib (Todo)
-
+		* IMPLEMENT RANDOM IV
+			* may use ArraySegment<T> Structure 
+		* CloudUtility need thi? has key, iv stuff duplicated?
 		* ISecureStorage interface is locked????	
 
 		* handle error consistenlly, only create returna boolean?
