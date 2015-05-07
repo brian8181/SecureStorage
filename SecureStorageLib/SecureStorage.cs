@@ -334,7 +334,7 @@ namespace ClientWindowsFormsApplication
             {
                 // is this dir empty
                 XmlDocument me_doc = GetDirectoryDocument(secure_name);
-                XmlNodeList me_node = me_doc.SelectNodes("/doc/file | /doc/directory");
+                XmlNodeList me_node = me_doc.SelectNodes("/root/file | /root/directory");
                 if (me_node.Count > 0)
                 {
                     throw new SecureStorageException("Directory is not empty.");
@@ -355,7 +355,10 @@ namespace ClientWindowsFormsApplication
             store.Delete(secure_dir_name);
 
             // create new dir file
-          
+            string xml = doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
+            byte[] crypt = CryptoFunctions.Encrypt(key, data, iv);
+            store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>

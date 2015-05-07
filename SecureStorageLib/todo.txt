@@ -26,6 +26,8 @@
 		* file locking / syncronization: this has not been touched
 		* look for all BKP / TODO comments
 		* add move / copy operations
+		* parma order id CrytoFunction is goofy
+			*public static byte[] Encrypt(byte[] key, byte[] data, byte[] iv)
 
 	Done:
 
