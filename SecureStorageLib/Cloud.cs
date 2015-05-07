@@ -3,8 +3,9 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
-using Utility;
-using Utility.IO;
+using SecureStorageLib;
+//using Utility;
+//using Utility.IO;
 
 namespace ClientWindowsFormsApplication
 {
@@ -71,7 +72,7 @@ namespace ClientWindowsFormsApplication
 
             // encrypt xml file
             byte[] xml_file_data = File.ReadAllBytes(secure_named_dir);
-            byte[] encrypted_xml_file_data = CryptoFunctions.EncryptAES(key, xml_file_data, iv);
+            byte[] encrypted_xml_file_data = CryptoFunctions.Encrypt(key, xml_file_data, iv);
 
             // send/store it using secure name
             if (store.Exists(secure_named_dir) != true)
@@ -137,7 +138,7 @@ namespace ClientWindowsFormsApplication
             // decrypt
             string secure_name = GetSecureName(dir_name);
             byte[] encrypted_data = store.Read(secure_name, 0, 0);
-            byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
+            byte[] data = CryptoFunctions.Decrypt(key, encrypted_data, iv);
 
             XmlDocument doc = new XmlDocument();
             // encode to string & remove: byte order mark (BOM)
@@ -230,7 +231,7 @@ namespace ClientWindowsFormsApplication
             if (is_directory != true)
             {
                 // encrypt file to upload
-                encrypted_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
+                encrypted_data = CryptoFunctions.Encrypt(key, data, iv);
                 // upload file
                 CreateAppendFragment(secure_name, encrypted_data);
             }
@@ -257,7 +258,7 @@ namespace ClientWindowsFormsApplication
             if (is_directory != true)
             {
                 // APPEND signature
-                byte[] sha256 = Utility.CryptoFunctions.SHA256(data);
+                byte[] sha256 = CryptoFunctions.SHA256(data);
                 XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
                 signature_node.InnerText = Convert.ToBase64String(sha256);
                 file.AppendChild(signature_node);
@@ -283,7 +284,7 @@ namespace ClientWindowsFormsApplication
             // create new ROOT/dir
             // BKP hack, could just load string but there is an issue here
             data = File.ReadAllBytes("tmp.xml");
-            encrypted_data = CryptoFunctions.EncryptAES(key, data, iv);
+            encrypted_data = CryptoFunctions.Encrypt(key, data, iv);
             store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
 
             if (is_directory == true)
@@ -301,7 +302,7 @@ namespace ClientWindowsFormsApplication
         private XmlDocument GetDirectoryDocument(string name)
         {
             byte[] encrypted_data = store.Read(name, 0, 0);
-            byte[] data = CryptoFunctions.DecryptAES(key, encrypted_data, iv);
+            byte[] data = CryptoFunctions.Decrypt(key, encrypted_data, iv);
             
             string xml = Encoding.UTF8.GetString(data);
             xml = RemoveByteOrderMarkUTF8(xml);
@@ -351,7 +352,7 @@ namespace ClientWindowsFormsApplication
             // create new dir file
             string xml = doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
-            byte[] crypt = CryptoFunctions.EncryptAES(key, data, iv);
+            byte[] crypt = CryptoFunctions.Encrypt(key, data, iv);
             store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
@@ -390,7 +391,7 @@ namespace ClientWindowsFormsApplication
                 Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
             }
 
-            return CryptoFunctions.DecryptAES(key, encrypted_data, iv); ;
+            return CryptoFunctions.Decrypt(key, encrypted_data, iv); ;
         }
     }
 }
