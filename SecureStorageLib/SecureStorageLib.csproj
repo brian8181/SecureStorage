@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryptoAES.cs" />
     <Compile Include="ICrypto.cs" />
     <Compile Include="SecureStorage.cs" />
     <Compile Include="SecureStorageException.cs" />

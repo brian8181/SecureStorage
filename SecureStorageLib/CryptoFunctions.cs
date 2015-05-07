@@ -8,7 +8,7 @@ using System.Text;
 namespace SecureStorageLib
 {
     //BKP todo change param order
-    public class CryptoFunctions
+    public class CryptoFunctions //: ICrypto
     {
         public static byte[] Encrypt(byte[] key, byte[] data, byte[] iv)
         {
