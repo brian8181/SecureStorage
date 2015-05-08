@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:59463/Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59463/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59463/Service.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_CreateEmpty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEmpty" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateEmpty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateEmptyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateAppend_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAppend" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateAppend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateAppendResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateReplace_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateReplace" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateReplace_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateReplaceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Read_InputMessage">
+    <wsdl:part name="parameters" element="tns:Read" />
+  </wsdl:message>
+  <wsdl:message name="IService_Read_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Delete_InputMessage">
+    <wsdl:part name="parameters" element="tns:Delete" />
+  </wsdl:message>
+  <wsdl:message name="IService_Delete_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetLength_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLength" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetLength_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLengthResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCount" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Exists_InputMessage">
+    <wsdl:part name="parameters" element="tns:Exists" />
+  </wsdl:message>
+  <wsdl:message name="IService_Exists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNames" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllNames_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNames" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAllNames_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_DeleteAll_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAll" />
+  </wsdl:message>
+  <wsdl:message name="IService_DeleteAll_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_SHA256_InputMessage">
+    <wsdl:part name="parameters" element="tns:SHA256" />
+  </wsdl:message>
+  <wsdl:message name="IService_SHA256_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SHA256Response" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="CreateEmpty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CreateEmpty" message="tns:IService_CreateEmpty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateEmptyResponse" message="tns:IService_CreateEmpty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateAppend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CreateAppend" message="tns:IService_CreateAppend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateAppendResponse" message="tns:IService_CreateAppend_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateReplace">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/CreateReplace" message="tns:IService_CreateReplace_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CreateReplaceResponse" message="tns:IService_CreateReplace_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Read">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Read" message="tns:IService_Read_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ReadResponse" message="tns:IService_Read_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Delete" message="tns:IService_Delete_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DeleteResponse" message="tns:IService_Delete_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLength">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetLength" message="tns:IService_GetLength_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetLengthResponse" message="tns:IService_GetLength_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetCount" message="tns:IService_GetCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetCountResponse" message="tns:IService_GetCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Exists" message="tns:IService_Exists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/ExistsResponse" message="tns:IService_Exists_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetNames" message="tns:IService_GetNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetNamesResponse" message="tns:IService_GetNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNames">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/GetAllNames" message="tns:IService_GetAllNames_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/GetAllNamesResponse" message="tns:IService_GetAllNames_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAll">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/DeleteAll" message="tns:IService_DeleteAll_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/DeleteAllResponse" message="tns:IService_DeleteAll_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SHA256">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/SHA256" message="tns:IService_SHA256_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/SHA256Response" message="tns:IService_SHA256_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateEmpty">
+      <soap:operation soapAction="http://tempuri.org/IData/CreateEmpty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAppend">
+      <soap:operation soapAction="http://tempuri.org/IData/CreateAppend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateReplace">
+      <soap:operation soapAction="http://tempuri.org/IData/CreateReplace" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Read">
+      <soap:operation soapAction="http://tempuri.org/IData/Read" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <soap:operation soapAction="http://tempuri.org/IData/Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLength">
+      <soap:operation soapAction="http://tempuri.org/IData/GetLength" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCount">
+      <soap:operation soapAction="http://tempuri.org/IData/GetCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Exists">
+      <soap:operation soapAction="http://tempuri.org/IData/Exists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNames">
+      <soap:operation soapAction="http://tempuri.org/IData/GetNames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllNames">
+      <soap:operation soapAction="http://tempuri.org/IData/GetAllNames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAll">
+      <soap:operation soapAction="http://tempuri.org/IData/DeleteAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SHA256">
+      <soap:operation soapAction="http://tempuri.org/IData/SHA256" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://localhost:59463/Service.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
