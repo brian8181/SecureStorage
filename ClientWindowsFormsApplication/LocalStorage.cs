@@ -19,7 +19,7 @@ namespace ClientWindowsFormsApplication
             throw new NotImplementedException();
         }
 
-        public bool Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
+        public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
             throw new NotImplementedException();
         }

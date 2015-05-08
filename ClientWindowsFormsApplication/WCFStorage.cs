@@ -8,7 +8,6 @@ namespace ClientWindowsFormsApplication
     {
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
         
-
         #region IStorage Members
 
         public void Lock(string name)
@@ -21,9 +20,9 @@ namespace ClientWindowsFormsApplication
             throw new NotImplementedException();
         }
 
-        public bool Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
+        public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
-            return cloud.CreateAppend(name, data);
+            cloud.CreateAppend(name, data);
         }
 
         public byte[] Read(string name, int offset, int len)

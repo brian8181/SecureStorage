@@ -29,6 +29,7 @@ namespace ClientWindowsFormsApplication
             InitializeComponent();
             
             client_utility.LoadKey(KEY_PATH);
+            //bkp 
             client_cloud = new SecureStorage( new WCFStorage(), new CryptoAES(client_utility.Key, client_utility.IV), FRAGMENT_SIZE );
        
             lblSever.Text = current_dir;
@@ -230,14 +231,8 @@ namespace ClientWindowsFormsApplication
 
         private void btnInitialize_Click_1(object sender, EventArgs e)
         {
-            if (client_cloud.Initialize())
-            {
-                StdMsgBox.OK("Initialized.");
-            }
-            else
-            {
-                StdMsgBox.Error("Unknown error.");
-            }
+            client_cloud.Initialize();
+            StdMsgBox.OK("Initialized.");
 
             CurrentDirectory = "/";
 

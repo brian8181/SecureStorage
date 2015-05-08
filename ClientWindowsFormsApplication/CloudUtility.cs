@@ -76,7 +76,7 @@ namespace ClientWindowsFormsApplication
         /// </summary>
         /// <param name="name">orginal name</param>
         /// <returns>secure name based off original</returns>
-        private string GetSecureName(string name)
+        private string GetSecureName2(string name)
         {
             //if (KeyLoaded != true)
             //    throw new Exception("key not loaded");
@@ -116,7 +116,7 @@ namespace ClientWindowsFormsApplication
         private void InitializeLocal(DirectoryInfo dir, string output_dir)
         {
             string cloud_dir_name = GetCloudPath(dir.FullName);
-            string secure_dir_name = GetSecureName(cloud_dir_name);
+            string secure_dir_name = GetSecureName2(cloud_dir_name);
 
             XmlDocument doc = new XmlDocument();
             //xml declaration is recommended, but not mandatory
@@ -134,7 +134,7 @@ namespace ClientWindowsFormsApplication
 
                 byte[] data = File.ReadAllBytes(file.FullName);
                 //todo, write file to disk
-                string secure_name = GetSecureName(file.Name);
+                string secure_name = GetSecureName2(file.Name);
                 byte[] secure_data = Utility.CryptoFunctions.EncryptAES(key, data, iv);
                 File.WriteAllBytes(output_dir + "\\" + secure_name, secure_data);
 
