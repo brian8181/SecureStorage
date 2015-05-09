@@ -265,5 +265,10 @@ namespace ClientWindowsFormsApplication
         {
             StdMsgBox.OK("not implemented");
         }
+
+        private void MainFrm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

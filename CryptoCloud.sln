@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageClient", "Secu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageWebService", "SecureStorageWebService\SecureStorageWebService.csproj", "{66D6CD5B-413F-45C1-AF3B-817E0BFD6EC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleGenericPOC", "ConsoleGenericPOC\ConsoleGenericPOC.csproj", "{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -298,6 +300,21 @@ Global
 		{66D6CD5B-413F-45C1-AF3B-817E0BFD6EC7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{66D6CD5B-413F-45C1-AF3B-817E0BFD6EC7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{66D6CD5B-413F-45C1-AF3B-817E0BFD6EC7}.Release|Win32.ActiveCfg = Release|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Deploy_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Deploy_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Deploy_Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

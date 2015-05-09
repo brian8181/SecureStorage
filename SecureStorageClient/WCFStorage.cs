@@ -4,7 +4,7 @@ using SecureStorageLib;
 
 namespace SecureStorageClient
 {
-    public class WCFStorage : ISecureStorage
+    public class WCFStorage : IStorage
     {
         private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
         

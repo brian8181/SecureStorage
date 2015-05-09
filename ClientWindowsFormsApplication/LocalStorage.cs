@@ -5,7 +5,7 @@ using SecureStorageLib;
 
 namespace ClientWindowsFormsApplication
 {
-    class LocalStorage : ISecureStorage
+    class LocalStorage : IStorage
     {
         #region IStorage Members
 

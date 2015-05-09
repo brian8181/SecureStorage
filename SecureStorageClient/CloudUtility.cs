@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Utility;
 
-namespace ClientWindowsFormsApplication
+namespace SecureStorageClient
 {
     public class CloudUtility
     {

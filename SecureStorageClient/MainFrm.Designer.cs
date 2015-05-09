@@ -1,4 +1,4 @@
-﻿namespace ClientWindowsFormsApplication
+﻿namespace SecureStorageClient
 {
     partial class MainFrm
     {
@@ -42,9 +42,9 @@
             this.btnInitialize = new System.Windows.Forms.Button();
             this.btnCreateDir = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.grpLocal = new System.Windows.Forms.GroupBox();
-            this.btnCopy = new System.Windows.Forms.Button();
             this.btnMove = new System.Windows.Forms.Button();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.grpLocal = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.grpLocal.SuspendLayout();
             this.SuspendLayout();
@@ -198,17 +198,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
             // 
-            // grpLocal
+            // btnMove
             // 
-            this.grpLocal.Controls.Add(this.btnCreateKey);
-            this.grpLocal.Controls.Add(this.btnInitializeLocal);
-            this.grpLocal.Controls.Add(this.btnSettings);
-            this.grpLocal.Location = new System.Drawing.Point(200, 34);
-            this.grpLocal.Name = "grpLocal";
-            this.grpLocal.Size = new System.Drawing.Size(118, 109);
-            this.grpLocal.TabIndex = 18;
-            this.grpLocal.TabStop = false;
-            this.grpLocal.Text = "Local";
+            this.btnMove.Location = new System.Drawing.Point(6, 193);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(102, 23);
+            this.btnMove.TabIndex = 18;
+            this.btnMove.Text = "Move File";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // btnCopy
             // 
@@ -220,15 +218,17 @@
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
-            // btnMove
+            // grpLocal
             // 
-            this.btnMove.Location = new System.Drawing.Point(6, 193);
-            this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(102, 23);
-            this.btnMove.TabIndex = 18;
-            this.btnMove.Text = "Move File";
-            this.btnMove.UseVisualStyleBackColor = true;
-            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            this.grpLocal.Controls.Add(this.btnCreateKey);
+            this.grpLocal.Controls.Add(this.btnInitializeLocal);
+            this.grpLocal.Controls.Add(this.btnSettings);
+            this.grpLocal.Location = new System.Drawing.Point(200, 34);
+            this.grpLocal.Name = "grpLocal";
+            this.grpLocal.Size = new System.Drawing.Size(118, 109);
+            this.grpLocal.TabIndex = 18;
+            this.grpLocal.TabStop = false;
+            this.grpLocal.Text = "Local";
             // 
             // MainFrm
             // 
@@ -243,7 +243,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainFrm";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "CryptoCloud Tester";
+            this.Text = "SecureStorage Tester";
             this.groupBox1.ResumeLayout(false);
             this.grpLocal.ResumeLayout(false);
             this.ResumeLayout(false);

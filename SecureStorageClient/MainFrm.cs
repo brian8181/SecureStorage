@@ -13,7 +13,7 @@ using SecureStorageClient;
 using SecureStorageLib;
 using Utility;
 
-namespace ClientWindowsFormsApplication
+namespace SecureStorageClient
 {
     public partial class MainFrm : Form
     {

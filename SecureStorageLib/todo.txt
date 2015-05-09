@@ -1,5 +1,8 @@
 ﻿*Todo
 	*Create Version SercureStorageLib (Todo)
+		*change SecureStorage to template? still thinking	
+		* rename ISecureStorage to IStore, IStorage? after all it is not secure
+			*matter a fact the name ISecureStorage should apply to my SecureStorage class, right?
 		* IMPLEMENT RANDOM IV
 			* may use ArraySegment<T> Structure 
 		* CloudUtility need thi? has key, iv stuff duplicated?

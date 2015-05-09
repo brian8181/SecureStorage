@@ -10,9 +10,9 @@ namespace SecureStorageLib
     /// <summary>
     /// manages a secure storage store
     /// </summary>
-    public class SecureStorage 
+    public class SecureStorage
     {
-        private ISecureStorage store = null;
+        private IStorage store = null;
         private ICrypto crypto = null;
         private readonly int FRAGMENT_SIZE = 0xFFFF;
         private const string ROOT_FILE_NAME = "/";
@@ -24,7 +24,7 @@ namespace SecureStorageLib
         /// <param name="key">an encryption key</param>
         /// <param name="iv">an encryption iv</param>
         /// <param name="fragment_size">max message size before fragmentation occurs</param>
-        public SecureStorage(ISecureStorage store, ICrypto crypto, int fragment_size = 0xFFFF)
+        public SecureStorage(IStorage store, ICrypto crypto, int fragment_size = 0xFFFF)
         {
             this.store = store;
             this.crypto = crypto;
