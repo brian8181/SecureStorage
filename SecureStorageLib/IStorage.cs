@@ -4,7 +4,7 @@ using System.IO;
 namespace SecureStorageLib
 {
     /// <summary>
-    /// high level interface 
+    /// high level interface to storage
     /// </summary>
     public interface IStorage
     {

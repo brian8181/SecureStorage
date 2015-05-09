@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloudUtility.cs" />
+    <Compile Include="SecureStorageUtility.cs" />
     <Compile Include="CreateDirectoryFrm.cs">
       <SubType>Form</SubType>
     </Compile>

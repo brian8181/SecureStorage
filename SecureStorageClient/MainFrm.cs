@@ -18,7 +18,7 @@ namespace SecureStorageClient
     public partial class MainFrm : Form
     {
         private SecureStorage client_cloud = null;
-        private CloudUtility client_utility = new CloudUtility(32, 16);
+        private SecureStorageUtility client_utility = new SecureStorageUtility(32, 16);
         private const int MAX_SIZE = 30000; //bytes
         //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";

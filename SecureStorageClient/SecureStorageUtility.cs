@@ -10,7 +10,7 @@ using Utility;
 
 namespace SecureStorageClient
 {
-    public class CloudUtility
+    public class SecureStorageUtility
     {
         // BKP const?
         private readonly int KEY_SIZE = 32;
@@ -30,7 +30,7 @@ namespace SecureStorageClient
             set { iv = value; }
         }
 
-        public CloudUtility(int key_size, int iv_size)
+        public SecureStorageUtility(int key_size, int iv_size)
         {
             KEY_SIZE = key_size;
             IV_SIZE = iv_size;
