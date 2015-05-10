@@ -25,6 +25,12 @@ namespace ClientWindowsFormsApplication
             cloud.CreateAppend(name, data);
         }
 
+        //BKP todo
+        public void Create(string name, byte[] data, int offset, int len, FileMode mode = FileMode.Create)
+        {
+            throw new NotImplementedException();
+        }
+
         public byte[] Read(string name, int offset, int len)
         {
             return cloud.Read(name, offset, len);
@@ -64,6 +70,8 @@ namespace ClientWindowsFormsApplication
         {
             throw new NotImplementedException();
         }
+
+       
 
         #endregion
     }

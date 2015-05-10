@@ -24,6 +24,12 @@ namespace ClientWindowsFormsApplication
             throw new NotImplementedException();
         }
 
+        //BKP todo
+        public void Create(string name, byte[] data, int offset, int len, FileMode mode = FileMode.Create)
+        {
+            throw new NotImplementedException();
+        }
+
         public byte[] Read(string name, int offset, int len)
         {
             throw new NotImplementedException();

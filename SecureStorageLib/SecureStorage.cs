@@ -14,9 +14,9 @@ namespace SecureStorageLib
     {
         private IStorage store = null;
         private ICrypto crypto = null;
-        private readonly int FRAGMENT_SIZE = 0xFFFF;
+        private readonly int FRAGMENT_SIZE = 0;
         private const string ROOT_FILE_NAME = "/";
-        
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -24,13 +24,13 @@ namespace SecureStorageLib
         /// <param name="key">an encryption key</param>
         /// <param name="iv">an encryption iv</param>
         /// <param name="fragment_size">max message size before fragmentation occurs</param>
-        public SecureStorage(IStorage store, ICrypto crypto, int fragment_size = 0xFFFF)
+        public SecureStorage(IStorage store, ICrypto crypto, int fragment_size = 0)
         {
             this.store = store;
             this.crypto = crypto;
             FRAGMENT_SIZE = fragment_size;
         }
-                
+
         /// <summary>
         /// true if key has been loaded, otherwise false
         /// </summary>
@@ -52,6 +52,47 @@ namespace SecureStorageLib
         {
             store.DeleteAll();
             CreateDirectoryXml(ROOT_FILE_NAME);
+        }
+
+        /// <summary>
+        /// get a secure name
+        /// </summary>
+        /// <param name="name">orginal name</param>
+        /// <returns>secure name based off original</returns>
+        private string GetSecureName(string name)
+        {
+            byte[] hash = crypto.HMACSHA256(name);
+            return crypto.FromBytesToHex(hash);
+        }
+
+        /// <summary>
+        /// gets directory as an XmlDocument
+        /// </summary>
+        /// <param name="name">name of directory</param>
+        /// <returns>the name/doc as XmlDocument</returns>
+        private XmlDocument GetDirectoryDocument(string name)
+        {
+            byte[] encrypted_data = store.Read(name, 0, 0);
+            byte[] data = crypto.Decrypt(encrypted_data);
+
+            string xml = Encoding.UTF8.GetString(data);
+            xml = RemoveByteOrderMarkUTF8(xml);
+
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return doc;
+        }
+
+        /// <summary>
+        /// utility removes UTF-8 byte order mark from xml string
+        /// </summary>
+        /// <returns>string, without byte order mark</returns>
+        private string RemoveByteOrderMarkUTF8(string xml)
+        {
+            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+            if (xml.StartsWith(byte_order_mark))
+                xml = xml.Remove(0, byte_order_mark.Length);
+            return xml;
         }
 
         /// <summary>
@@ -84,41 +125,6 @@ namespace SecureStorageLib
             if (store.Exists(secure_named_dir) != true)
                 store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
         }
-              
-        /// <summary>
-        /// create an empty file, fill with random or zeroed data
-        /// </summary>
-        /// <param name="name">name of file</param>
-        /// <param name="len">length of ile</param>
-        /// <param name="random">if true fills with random otherwise zeros</param>
-        public void CreateEmptyFile(string name, int len, bool random = true)
-        {
-            string secure_name = GetSecureName(name);
-            store.CreateEmpty(secure_name, len, random);
-        }
-
-        /// <summary>
-        /// get the length of an object
-        /// </summary>
-        /// <param name="name">the object name</param>
-        /// <returns>length in bytes</returns>
-        public long GetLength(string name)
-        {
-            string secure_name = GetSecureName(name);
-            return store.GetLength(secure_name);
-        }
-
-        /// <summary>
-        /// utility removes UTF-8 byte order mark from xml string
-        /// </summary>
-        /// <returns>string, without byte order mark</returns>
-        private string RemoveByteOrderMarkUTF8(string xml)
-        {
-            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml.StartsWith(byte_order_mark))
-                xml = xml.Remove(0, byte_order_mark.Length);
-            return xml;
-        }
 
         /// <summary>
         /// get files in encrypted directory (ROOT)
@@ -137,7 +143,7 @@ namespace SecureStorageLib
         public XmlNodeList GetFiles(string dir_name)
         {
             if (KeyLoaded != true)
-                throw new Exception("key not loaded");
+                throw new SecureStorageException("key not loaded");
 
             // decrypt
             string secure_name = GetSecureName(dir_name);
@@ -148,7 +154,6 @@ namespace SecureStorageLib
             // encode to string & remove: byte order mark (BOM)
             string xml = UTF8Encoding.UTF8.GetString(data);
             xml = RemoveByteOrderMarkUTF8(xml);
-            // save doc
             doc.LoadXml(xml);
 
             XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
@@ -157,50 +162,28 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// get a secure name
+        /// get the length of an object
         /// </summary>
-        /// <param name="name">orginal name</param>
-        /// <returns>secure name based off original</returns>
-        private string GetSecureName(string name)
+        /// <param name="name">the object name</param>
+        /// <returns>length in bytes</returns>
+        public int GetLength(string name)
         {
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
-            byte[] hash = crypto.HMACSHA256(name);
-            return crypto.FromBytesToHex(hash);
+            string secure_name = GetSecureName(name);
+            return store.GetLength(secure_name);
         }
-        
+
         /// <summary>
-        /// create / or append to file (creates one file from all parts)
+        /// create an empty file, fill with random or zeroed data
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="encrypted_data"></param>
-        private void CreateAppendFragment(string name, byte[] data)
+        /// <param name="name">name of file</param>
+        /// <param name="len">length of ile</param>
+        /// <param name="random">if true fills with random otherwise zeros</param>
+        public void CreateEmptyFile(string name, int len, bool random = true)
         {
-            // write all fragments
-            long LEN = data.Length;
-            byte[] data_chunk = null; 
-
-            long idx = 0; // reset index
-            while ((idx + FRAGMENT_SIZE) <= LEN)
-            {
-                data_chunk = new byte[FRAGMENT_SIZE];
-                Array.Copy(data, idx, data_chunk, 0, FRAGMENT_SIZE);
-
-                store.Create(name, data_chunk, FileMode.Append);
-                idx += FRAGMENT_SIZE;
-            }
-
-            long left_over = (LEN - idx);
-            if (left_over > 0)
-            {
-                data_chunk = new byte[left_over];
-                Array.Copy(data, idx, data_chunk, 0, left_over);
-
-                store.Create(name, data_chunk, FileMode.Append);
-            }
+            string secure_name = GetSecureName(name);
+            store.CreateEmpty(secure_name, len, random);
         }
-        
+
         /// <summary>
         /// create a file or directory
         /// </summary>
@@ -276,10 +259,10 @@ namespace SecureStorageLib
             modified_node.InnerText = dt.ToFileTime().ToString();
             file.AppendChild(modified_node);
             root.AppendChild(file);
-           
+
             // delete old dir file
             store.Delete(secure_sub_dir_name);
-          
+
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
             encrypted_data = crypto.Encrypt(data);
@@ -293,21 +276,43 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// gets directory as an XmlDocument
+        /// create / or append to file (creates one file from all parts)
         /// </summary>
-        /// <param name="name">name of directory</param>
-        /// <returns>the name/doc as XmlDocument</returns>
-        private XmlDocument GetDirectoryDocument(string name)
+        /// <param name="name"></param>
+        /// <param name="encrypted_data"></param>
+        private void CreateAppendFragment(string name, byte[] data)
         {
-            byte[] encrypted_data = store.Read(name, 0, 0);
-            byte[] data = crypto.Decrypt(encrypted_data);
-            
-            string xml = Encoding.UTF8.GetString(data);
-            xml = RemoveByteOrderMarkUTF8(xml);
+            // write all fragments
+            int LEN = data.Length;
+            if (FRAGMENT_SIZE <= 0 || FRAGMENT_SIZE >= LEN)
+            {
+                // no fragmentaion
+                store.Create(name, data, FileMode.Append);
+            }
+            else
+            {
+                byte[] data_chunk = null;
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            return doc;
+                int idx = 0; // reset index
+                while ((idx + FRAGMENT_SIZE) <= LEN)
+                {
+                    data_chunk = new byte[FRAGMENT_SIZE];
+                    Array.Copy(data, idx, data_chunk, 0, FRAGMENT_SIZE);
+
+                    store.Create(name, data_chunk, FileMode.Append);
+                    idx += FRAGMENT_SIZE;
+                }
+
+                int left_over = (LEN - idx);
+                if (left_over > 0)
+                {
+                    data_chunk = new byte[left_over];
+                    Array.Copy(data, idx, data_chunk, 0, left_over);
+
+                    store.Create(name, data_chunk, FileMode.Append);
+                }
+
+            }
         }
 
         /// <summary>
@@ -317,7 +322,7 @@ namespace SecureStorageLib
         public void Delete(string name)
         {
             if (KeyLoaded != true)
-                throw new Exception("key not loaded");
+                throw new SecureStorageException("key not loaded");
 
             // delete file 
             string secure_name = GetSecureName(name);
@@ -333,7 +338,7 @@ namespace SecureStorageLib
                     throw new SecureStorageException("Directory is not empty.");
                 }
             }
-            
+
             store.Delete(secure_name);
             // decrypt xml dir file
             string dir_name = StoragePath.GetDirectory(name);
@@ -365,28 +370,38 @@ namespace SecureStorageLib
                 throw new Exception("key not loaded");
 
             bool is_directory = name.EndsWith("/");
-            if(is_directory)
+            if (is_directory)
                 throw new SecureStorageException("Error, is a directory.");
 
             string secure_name = GetSecureName(name);
             int LEN = (int)store.GetLength(secure_name);
-
-            byte[] data_chunk = null;
             byte[] encrypted_data = new byte[LEN];
 
-            int offset = 0; 
-            while ((offset + FRAGMENT_SIZE) <= LEN)
+            if (FRAGMENT_SIZE <= 0 || FRAGMENT_SIZE >= LEN)
             {
-                data_chunk = store.Read(secure_name, offset, FRAGMENT_SIZE);
-                Array.Copy(data_chunk, 0, encrypted_data, offset, FRAGMENT_SIZE);
-                offset += FRAGMENT_SIZE;
+                // no fragmentation
+                encrypted_data = store.Read(secure_name, 0, LEN);
             }
-
-            int left_over = (LEN - offset);
-            if (left_over > 0)
+            else
             {
-                data_chunk = store.Read(secure_name, offset, left_over);
-                Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
+                byte[] data_chunk = null;
+
+
+                int offset = 0;
+                while ((offset + FRAGMENT_SIZE) <= LEN)
+                {
+                    data_chunk = store.Read(secure_name, offset, FRAGMENT_SIZE);
+                    Array.Copy(data_chunk, 0, encrypted_data, offset, FRAGMENT_SIZE);
+                    offset += FRAGMENT_SIZE;
+                }
+
+                int left_over = (LEN - offset);
+                if (left_over > 0)
+                {
+                    data_chunk = store.Read(secure_name, offset, left_over);
+                    Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
+                }
+
             }
 
             return crypto.Decrypt(encrypted_data); ;

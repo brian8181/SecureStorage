@@ -29,9 +29,12 @@ namespace SecureStorageClient
         {
             InitializeComponent();
             
-            client_utility.LoadKey(KEY_PATH);
-            //bkp 
-            client_cloud = new SecureStorage( new WCFStorage(), new CryptoAES(client_utility.Key, client_utility.IV), FRAGMENT_SIZE );
+             //client_utility.LoadKey(KEY_PATH);
+
+            byte[] key = null;
+            byte[] iv = null;
+            SecureStorageUtility2.LoadKey(KEY_PATH, 32, 16, out key, out iv);
+            client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
        
             lblSever.Text = current_dir;
 

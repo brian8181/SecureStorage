@@ -30,7 +30,7 @@ namespace ClientWindowsFormsApplication
             
             client_utility.LoadKey(KEY_PATH);
             //bkp 
-            client_cloud = new SecureStorage( new WCFStorage(), new CryptoAES(client_utility.Key, client_utility.IV), FRAGMENT_SIZE );
+            client_cloud = new SecureStorage( new WCFStorage(), new AES(client_utility.Key, client_utility.IV), FRAGMENT_SIZE );
        
             lblSever.Text = current_dir;
 

@@ -12,7 +12,7 @@ namespace ClientWindowsFormsApplication
     public class SecureData
     {
         private readonly int BLOCK_SIZE = 0;
-        private readonly int OFFSET = 0;
+       // private readonly int OFFSET = 0;
 
         public SecureData(int block_size, byte[] data)
         {
