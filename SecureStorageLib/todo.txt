@@ -1,6 +1,8 @@
 ﻿*Todo
 		
 		* what data should be validated (exceptions thrown), what should not
+			* important I want to stop data corrpution or invalid state, ie i don not want you tbe able
+				todo something that will not work
 		
 		* ISecureStorage interface is locked????	
 		

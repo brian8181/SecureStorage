@@ -39,16 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AES.cs" />
+    <Compile Include="Crypto\AES.cs" />
+    <Compile Include="Crypto.cs" />
+    <Compile Include="Crypto\DES.cs" />
     <Compile Include="ICrypto.cs" />
+    <Compile Include="Crypto\RC2.cs" />
+    <Compile Include="Crypto\Rijndael.cs" />
     <Compile Include="SecureStorage.cs" />
-    <Compile Include="SecureStorageException.cs" />
-    <Compile Include="SecureStorageLockExcpetion.cs" />
+    <Compile Include="Exceptions\SecureStorageException.cs" />
+    <Compile Include="Exceptions\SecureStorageLockExcpetion.cs" />
     <Compile Include="SecureStoragePath.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecureStorageUtility2.cs" />
-    <Compile Include="SecureStorageCryptoException.cs" />
+    <Compile Include="Exceptions\SecureStorageCryptoException.cs" />
+    <Compile Include="Crypto\TripleDES.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="todo.txt" />

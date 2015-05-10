@@ -24,20 +24,24 @@ namespace SecureStorageClient
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
         string current_dir = "/";
         private const int FRAGMENT_SIZE = 20000;
+        
+     
+        
 
         public MainFrm()
         {
             InitializeComponent();
             
              //client_utility.LoadKey(KEY_PATH);
+            bool b1 = StoragePath.isValid("agyaay/hfubfju/");
+            bool b2 = StoragePath.isValid("agyaay/hfu>bfju/");
 
             byte[] key = null;
             byte[] iv = null;
-            SecureStorageUtility2.LoadKey(KEY_PATH, 32, 16, out key, out iv);
-            client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
-       
+            
+            SecureStorageUtility2.LoadKey(KEY_PATH, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            client_cloud = new SecureStorage(new WCFStorage(), new AES(iv, key), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
-
          }
 
         private string CurrentDirectory

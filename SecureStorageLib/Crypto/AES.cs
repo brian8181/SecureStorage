@@ -10,8 +10,8 @@ namespace SecureStorageLib
     {
         private byte[] key = null;
         private byte[] iv = null;
-        private const int KEY_SIZE = 32;
-        private const int IV_SIZE = 16;
+        public const int KEY_SIZE = 32;
+        public const int IV_SIZE = 16;
 
         public AES(byte[] key, byte[] iv)
         {
@@ -38,6 +38,14 @@ namespace SecureStorageLib
        }
 
         public int KeySize
+        {
+            get
+            {
+                return KEY_SIZE;
+            }
+        }
+
+        public int IVSize
         {
             get
             {

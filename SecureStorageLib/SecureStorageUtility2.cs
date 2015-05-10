@@ -21,9 +21,10 @@ namespace SecureStorageLib
             iv = new byte[iv_size];
             key = new byte[key_size];
 
-            Array.Copy(key_iv, key, 32);
-            Array.Copy(key_iv, 32, iv, 0, 16);
+            Array.Copy(key_iv, key, key_size);
+            Array.Copy(key_iv, key_size, iv, 0, iv_size);
         }
+
 
         /// <summary>
         /// create a key and write it to specified name
