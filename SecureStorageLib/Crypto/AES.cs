@@ -104,12 +104,12 @@ namespace SecureStorageLib
             }
         }
 
-        public byte[] SHA256(byte[] data)
-        {
-            SHA256 sha256 = new SHA256CryptoServiceProvider();
-            byte[] result = sha256.ComputeHash(data);
-            return result;
-        }
+        //public byte[] SHA256(byte[] data)
+        //{
+        //    SHA256 sha256 = new SHA256CryptoServiceProvider();
+        //    byte[] result = sha256.ComputeHash(data);
+        //    return result;
+        //}
 
         public string FromBytesToHex(byte[] array)
         {

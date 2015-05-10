@@ -61,7 +61,7 @@ namespace SecureStorageLib
         /// <returns>secure name based off original</returns>
         private string GetSecureName(string name)
         {
-            byte[] hash = crypto.HMACSHA256(name);
+            byte[] hash = SecureStorageUtility2.HMACSHA256(name, crypto.Key);
             return crypto.FromBytesToHex(hash);
         }
 
@@ -242,7 +242,7 @@ namespace SecureStorageLib
             if (is_directory != true)
             {
                 // signature
-                byte[] sha256 = crypto.SHA256(data);
+                byte[] sha256 = SecureStorageUtility2.SHA256(data);
                 XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
                 signature_node.InnerText = Convert.ToBase64String(sha256);
                 file.AppendChild(signature_node);

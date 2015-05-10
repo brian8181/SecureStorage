@@ -1,19 +1,53 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace SecureStorageLib
 {
     public static class SecureStorageUtility2
     {
         /// <summary>
-        /// 
+        /// get a secure name
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="key_size"></param>
-        /// <param name="iv_size"></param>
-        /// <param name="key"></param>
-        /// <param name="iv"></param>
+        /// <param name="name">orginal name</param>
+        /// <returns>secure name based off original</returns>
+        private static string GetSecureName(string name, byte[] key)
+        {
+            //if (KeyLoaded != true)
+            //    throw new Exception("key not loaded");
+
+            HMACSHA256 hmacsha256 = new HMACSHA256(key);
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
+            byte[] hash = hmacsha256.ComputeHash(data);
+            return FromBytesToHex(hash);
+        }
+
+        public static byte[] HMACSHA256(string name, byte[] key)
+        {
+            HMACSHA256 hmacsha256 = new HMACSHA256(key);
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
+            byte[] hash = hmacsha256.ComputeHash(data);
+            return hash;
+        }
+
+        public static byte[] SHA256(byte[] data)
+        {
+            SHA256 sha256 = new SHA256CryptoServiceProvider();
+            byte[] result = sha256.ComputeHash(data);
+            return result;
+        }
+
+        public static string FromBytesToHex(byte[] array)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in array)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
+        }
+
         public static void LoadKey(string path, int key_size, int iv_size, out byte[] key, out byte[] iv)
         {
             byte[] key_iv = File.ReadAllBytes(path);
@@ -24,8 +58,7 @@ namespace SecureStorageLib
             Array.Copy(key_iv, key, key_size);
             Array.Copy(key_iv, key_size, iv, 0, iv_size);
         }
-
-
+        
         /// <summary>
         /// create a key and write it to specified name
         /// </summary>
