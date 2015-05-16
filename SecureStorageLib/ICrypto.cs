@@ -32,8 +32,5 @@ namespace SecureStorageLib
 
         byte[] Encrypt(byte[] data);
         byte[] Decrypt(byte[] data);
-        //byte[] SHA256(byte[] data);
-        //byte[] HMACSHA256(string name);
-        string FromBytesToHex(byte[] array);
     }
 }

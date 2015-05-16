@@ -103,30 +103,5 @@ namespace SecureStorageLib
                 }
             }
         }
-
-        //public byte[] SHA256(byte[] data)
-        //{
-        //    SHA256 sha256 = new SHA256CryptoServiceProvider();
-        //    byte[] result = sha256.ComputeHash(data);
-        //    return result;
-        //}
-
-        public string FromBytesToHex(byte[] array)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in array)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-            return sb.ToString();
-        }
-
-        public byte[] HMACSHA256(string name)
-        {
-            HMACSHA256 hmacsha256 = new HMACSHA256(Key);
-            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
-            byte[] hash = hmacsha256.ComputeHash(data);
-            return hash;
-        }
     }
 }

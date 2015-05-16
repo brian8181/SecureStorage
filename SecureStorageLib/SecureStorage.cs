@@ -62,7 +62,7 @@ namespace SecureStorageLib
         private string GetSecureName(string name)
         {
             byte[] hash = SecureStorageUtility2.HMACSHA256(name, crypto.Key);
-            return crypto.FromBytesToHex(hash);
+            return SecureStorageUtility2.FromBytesToHex(hash);
         }
 
         /// <summary>
