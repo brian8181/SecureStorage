@@ -16,6 +16,7 @@ namespace SecureStorageClient
         {
             InitializeComponent();
             dirBrowser.Label = "Base";
+            dirBrowserOut.Label = "Output";
         }
     }
 }

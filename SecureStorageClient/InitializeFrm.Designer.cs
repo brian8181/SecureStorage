@@ -31,6 +31,7 @@
             this.dirBrowser = new Utility.GUI.DirBrowser();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.dirBrowserOut = new Utility.GUI.DirBrowser();
             this.SuspendLayout();
             // 
             // dirBrowser
@@ -44,7 +45,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(177, 52);
+            this.btnCancel.Location = new System.Drawing.Point(178, 95);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -54,12 +55,20 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(258, 53);
+            this.btnOK.Location = new System.Drawing.Point(259, 95);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            // 
+            // dirBrowserOut
+            // 
+            this.dirBrowserOut.Label = "Directory";
+            this.dirBrowserOut.Location = new System.Drawing.Point(12, 52);
+            this.dirBrowserOut.Name = "dirBrowserOut";
+            this.dirBrowserOut.Size = new System.Drawing.Size(334, 34);
+            this.dirBrowserOut.TabIndex = 7;
             // 
             // InitializeFrm
             // 
@@ -67,7 +76,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(363, 90);
+            this.ClientSize = new System.Drawing.Size(363, 130);
+            this.Controls.Add(this.dirBrowserOut);
             this.Controls.Add(this.dirBrowser);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
@@ -82,5 +92,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
         public Utility.GUI.DirBrowser dirBrowser;
+        public Utility.GUI.DirBrowser dirBrowserOut;
     }
 }

@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISecureStorageUtility.cs" />
-    <Compile Include="SecureStorageUtility.cs" />
     <Compile Include="CreateDirectoryFrm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -42,7 +42,6 @@ namespace SecureStorageLib
                 }
                 ret[i] = sb.ToString();
             }
-
             return ret;
         }
 
@@ -75,9 +74,7 @@ namespace SecureStorageLib
             int len = path.Length;
             if (path[len - 1] == '/')
                 return null; // is a directory
-
             string[] splits = path.Split(StoragePath.PathSeperator);
-
             return splits[splits.Length - 1];
         }
   

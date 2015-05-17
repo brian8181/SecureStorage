@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crypto\AES.cs" />
-    <Compile Include="Crypto.cs" />
     <Compile Include="Crypto\DES.cs" />
     <Compile Include="ICrypto.cs" />
     <Compile Include="Crypto\RC2.cs" />

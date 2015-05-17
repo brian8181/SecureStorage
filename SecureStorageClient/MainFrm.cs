@@ -18,13 +18,13 @@ namespace SecureStorageClient
     public partial class MainFrm : Form
     {
         private SecureStorage client_cloud = null;
-        private SecureStorageUtility client_utility = new SecureStorageUtility(32, 16);
         private const int MAX_SIZE = 30000; //bytes
         //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
         string current_dir = "/";
         private const int FRAGMENT_SIZE = 20000;
-        
+        byte[] key = null;
+        byte[] iv = null;
      
         
 
@@ -36,11 +36,10 @@ namespace SecureStorageClient
             bool b1 = StoragePath.isValid("agyaay/hfubfju/");
             bool b2 = StoragePath.isValid("agyaay/hfu>bfju/");
 
-            byte[] key = null;
-            byte[] iv = null;
             
-            SecureStorageUtility2.LoadKey(KEY_PATH, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            client_cloud = new SecureStorage(new WCFStorage(), new AES(iv, key), FRAGMENT_SIZE);
+            
+            SecureStorageUtility.LoadKey(KEY_PATH, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
          }
 
@@ -67,13 +66,15 @@ namespace SecureStorageClient
                 string output_dir = Properties.Settings.Default.server_mirror_dir;
 
                 //delete all file server directory
-                Directory.Delete(output_dir, true);
+                if(Directory.Exists(output_dir))
+                    Directory.Delete(output_dir, true);
                 Directory.CreateDirectory(output_dir);
 
                 // intitialize to server mirror dir
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
 
-                client_utility.InitializeLocalRoot(initial_input_dir, output_dir);
+                //client_utility.InitializeLocalRoot(initial_input_dir, output_dir);
+                SecureStorageUtility.InitializeLocalRoot(initial_input_dir, output_dir, key, iv);
 
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;

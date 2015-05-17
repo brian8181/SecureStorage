@@ -4,12 +4,6 @@ namespace SecureStorageLib
 {
     public interface ICrypto
     {
-        //BKP
-        //bool KeyValid
-        //{
-        //    get;
-        //}
-
         byte[] Key
         {
             get;
