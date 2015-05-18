@@ -6,19 +6,9 @@ namespace SecureStorageClient
 {
     public class WCFStorage : IStorage
     {
-        private ServiceReference.IService cloud = new ServiceReference.ServiceClient();
+        private ServiceReference.IStorageService cloud = new ServiceReference.StorageServiceClient();
         
         #region IStorage Members
-
-        //public void Lock(string name)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void Unlock(string name)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {

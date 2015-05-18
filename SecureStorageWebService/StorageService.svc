@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="SecureStorageWebService.Service1" CodeBehind="StorageService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SecureStorageWebService.StorageService" CodeBehind="StorageService.svc.cs" %>

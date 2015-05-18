@@ -1,14 +1,9 @@
 ﻿*Todo
 		
 		* what data should be validated (exceptions thrown), what should not
-			* important I want to stop data corrpution or invalid state, ie i don not want you tbe able
+			* important I want to stop data corrpution or invalid state, ie i dont not want you tbe able
 				todo something that will not work
 		
-		* IStorage interface is locked????	
-			
-
-		* look for all BKP / TODO comments
-		* make sure all Properties/Settings are nesaccary
 
 	Future:
 		* password based key (PBKDF2-SHA1), keey keys from being stored unec rypted
@@ -23,8 +18,23 @@
 		* make len type long
 		*change SecureStorage to template? still thinking	
 
-	Done:
 
+		* in StoragePath --->
+		// BKP todo
+        public static bool isValid(string name)
+        {
+            // todo
+            string regx = @"(^(\w+/?)+)|(^/)$";
+
+            //char[] c1 = System.IO.Path.GetInvalidFileNameChars();
+            char[] invalid_chars = System.IO.Path.GetInvalidPathChars();
+            return name.IndexOfAny(invalid_chars, 0) == -1;
+        }
+
+	Done:
+		
+		* make sure all Properties/Settings are nesaccary
+		* look for all BKP / TODO comments
 		* use consisent numeric types, long vs int, uint ? 
 				* went with ints we are consistent but should it be long?
 		* CloudUtility need thi? has key, iv stuff duplicated?

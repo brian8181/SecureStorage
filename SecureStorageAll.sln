@@ -42,6 +42,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageLib", "SecureStorageLib\SecureStorageLib.csproj", "{668C34D7-2D2E-4F8E-98D2-DCAA36FF850C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageClient", "SecureStorageClient\SecureStorageClient.csproj", "{EDB48F9D-0428-420B-B94F-B98E65AD1ADC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0836A70B-F69C-4D20-846B-D0EEFDC6A83F} = {0836A70B-F69C-4D20-846B-D0EEFDC6A83F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleGenericPOC", "ConsoleGenericPOC\ConsoleGenericPOC.csproj", "{5C1354D6-44D3-4654-BEAE-F64D2C141D7D}"
 EndProject

@@ -6,18 +6,7 @@ namespace SecureStorageLib
     public static class StoragePath
     {
         public static char PathSeperator = '/';
-
-        // BKP todo
-        public static bool isValid(string name)
-        {
-            // todo
-            string regx = @"(^(\w+/?)+)|(^/)$";
-
-            //char[] c1 = System.IO.Path.GetInvalidFileNameChars();
-            char[] invalid_chars = System.IO.Path.GetInvalidPathChars();
-            return name.IndexOfAny(invalid_chars, 0) == -1;
-        }
-        
+       
         public static bool IsDirectory(string name)
         {
             // this is as simple as it gets
@@ -77,6 +66,5 @@ namespace SecureStorageLib
             string[] splits = path.Split(StoragePath.PathSeperator);
             return splits[splits.Length - 1];
         }
-  
     }
 }

@@ -12,8 +12,8 @@ namespace SecureStorageClient.ServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IService")]
-    public interface IService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IStorageService")]
+    public interface IStorageService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateEmpty", ReplyAction="http://tempuri.org/IData/CreateEmptyResponse")]
         void CreateEmpty(string name, int len, bool random);
@@ -89,29 +89,29 @@ namespace SecureStorageClient.ServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceChannel : SecureStorageClient.ServiceReference.IService, System.ServiceModel.IClientChannel {
+    public interface IStorageServiceChannel : SecureStorageClient.ServiceReference.IStorageService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServiceClient : System.ServiceModel.ClientBase<SecureStorageClient.ServiceReference.IService>, SecureStorageClient.ServiceReference.IService {
+    public partial class StorageServiceClient : System.ServiceModel.ClientBase<SecureStorageClient.ServiceReference.IStorageService>, SecureStorageClient.ServiceReference.IStorageService {
         
-        public ServiceClient() {
+        public StorageServiceClient() {
         }
         
-        public ServiceClient(string endpointConfigurationName) : 
+        public StorageServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public ServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public StorageServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public StorageServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public ServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public StorageServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
