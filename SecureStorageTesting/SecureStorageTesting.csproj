@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="SecureStoragePathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecureStorageTesting.cs" />
+    <Compile Include="SecureStorageUtilityTesting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SecureStorageLib\SecureStorageLib.csproj">
