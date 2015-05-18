@@ -46,7 +46,6 @@
     <Compile Include="Crypto\Rijndael.cs" />
     <Compile Include="SecureStorage.cs" />
     <Compile Include="Exceptions\SecureStorageException.cs" />
-    <Compile Include="Exceptions\SecureStorageLockExcpetion.cs" />
     <Compile Include="SecureStoragePath.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

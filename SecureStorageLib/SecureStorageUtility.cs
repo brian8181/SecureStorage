@@ -95,7 +95,7 @@ namespace SecureStorageLib
         /// <returns>cloud name / name</returns>
         private static string GetCloudPath(string path)
         {
-            path = path.Remove(0, 3);
+            path = path.Remove(0, 3); // remove drive letter
             path = path.Replace('\\', '/');
             path = path.TrimStart('/'); // may trim start ?
             return path + "/";

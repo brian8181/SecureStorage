@@ -10,15 +10,15 @@ namespace SecureStorageClient
         
         #region IStorage Members
 
-        public void Lock(string name)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Lock(string name)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void Unlock(string name)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Unlock(string name)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
@@ -52,7 +52,7 @@ namespace SecureStorageClient
 
         public void CreateEmpty(string name, int len, bool random = false)
         {
-            throw new NotImplementedException();
+            cloud.CreateEmpty(name, len, random);
         }
 
         public void Copy(string src_name, string dst_name)

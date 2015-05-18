@@ -4,16 +4,17 @@
 			* important I want to stop data corrpution or invalid state, ie i don not want you tbe able
 				todo something that will not work
 		
-		* ISecureStorage interface is locked????	
-		
-		* file locking / syncronization: this has not been touched
-			* need default & set expire times
+		* IStorage interface is locked????	
+			
 
 		* look for all BKP / TODO comments
 		* make sure all Properties/Settings are nesaccary
 
 	Future:
-		
+		* password based key (PBKDF2-SHA1), keey keys from being stored unec rypted
+		* file locking / syncronization: this has not been touched
+			* need default & set expire times
+
 		* add move / copy operations
 		* IMPLEMENT RANDOM IV
 			* may use ArraySegment<T> Structure 
