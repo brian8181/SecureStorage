@@ -1,0 +1,1 @@
+﻿* remove "private string working_dir = "c:\\tmp\\svr\\";"
