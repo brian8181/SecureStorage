@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using Utility;
+using SecureStorageLib;
 
 namespace SecureStorageWebService
 {
@@ -29,7 +27,7 @@ namespace SecureStorageWebService
             byte[] data = null;
             if (random)
             {
-                data = Utility.CryptoFunctions.GenerateRandomBytes(len);
+                data = SecureStorageUtility.GenerateRandomBytes(len);
                 File.WriteAllBytes(working_dir + name, data);
             }
             else
@@ -176,7 +174,7 @@ namespace SecureStorageWebService
         public byte[] SHA256(string name)
         {
             byte[] data = File.ReadAllBytes(working_dir + name);
-            return CryptoFunctions.SHA256(data);
+            return SecureStorageUtility.SHA256(data);
         }
         #endregion
     }

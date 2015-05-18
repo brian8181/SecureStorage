@@ -36,6 +36,31 @@ namespace SecureStorageLib
             return result;
         }
 
+        /// <summary>
+        /// generate key/salt or any random value of arbitrary length
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static byte[] GererateKey(int len)
+        {
+            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+            {
+                byte[] key = new byte[len];
+                rng.GetBytes(key);
+                return key;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public static byte[] GenerateRandomBytes(int len)
+        {
+            return GererateKey(len);
+        }
+
         public static string FromBytesToHex(byte[] array)
         {
             StringBuilder sb = new StringBuilder();

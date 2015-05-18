@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0836A70B-F69C-4D20-846B-D0EEFDC6A83F}</ProjectGuid>
+    <ProjectGuid>{66D6CD5B-413F-45C1-AF3B-817E0BFD6EC7}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -83,9 +83,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\utility\utility\utility.csproj">
-      <Project>{4dfc8774-e67d-4eff-9249-301c0d5eb158}</Project>
-      <Name>utility</Name>
+    <ProjectReference Include="..\SecureStorageLib\SecureStorageLib.csproj">
+      <Project>{668c34d7-2d2e-4f8e-98d2-dcaa36ff850c}</Project>
+      <Name>SecureStorageLib</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -135,14 +135,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\utility\utility.extra\utility.extra.csproj">
-      <Project>{20fcccaf-ef9b-48f8-9810-0365985aaea2}</Project>
-      <Name>utility.extra</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\utility\utility\utility.csproj">
-      <Project>{4dfc8774-e67d-4eff-9249-301c0d5eb158}</Project>
-      <Name>utility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SecureStorageLib\SecureStorageLib.csproj">
       <Project>{668c34d7-2d2e-4f8e-98d2-dcaa36ff850c}</Project>
       <Name>SecureStorageLib</Name>
