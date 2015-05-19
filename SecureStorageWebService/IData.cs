@@ -10,10 +10,6 @@ namespace SecureStorageWebService
         [OperationContract]
         void CreateEmpty(string name, int len, bool random = false);
 
-        //[Obsolete("Use AppendData to create files")]
-        //[OperationContract]
-        //void Create(string name, byte[] data);
-
         // allow to break data into smaller pieces to transfer
         [OperationContract]
         bool CreateAppend(string name, byte[] data);

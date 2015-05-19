@@ -118,6 +118,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">name / name to convert</param>
         /// <returns>cloud name / name</returns>
+        //private static string GetCloudPath(string root, string full_path)
         private static string GetCloudPath(string path)
         {
             path = path.Remove(0, 3); // remove drive letter
@@ -143,12 +144,10 @@ namespace SecureStorageLib
             FileInfo[] fis = dir.GetFiles();
             foreach (FileInfo file in fis)
             {
-                // todo write file to output
                 string full_name = cloud_dir_name + file.Name; //??
                 full_name = full_name.TrimStart('/');
 
                 byte[] data = File.ReadAllBytes(file.FullName);
-                //todo, write file to disk
                 string secure_name = GetSecureName(file.Name, key);
                 byte[] secure_data = aes.Encrypt(data);
                 File.WriteAllBytes(output_dir + "\\" + secure_name, secure_data);

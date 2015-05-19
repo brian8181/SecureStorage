@@ -12,6 +12,5 @@ namespace SecureStorageWebService
     [ServiceContract]
     public interface IStorageService : IData
     {
-    
     }
 }

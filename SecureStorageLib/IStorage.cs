@@ -10,8 +10,6 @@ namespace SecureStorageLib
     /// 
     public interface IStorage
     {
-        //void Lock(string name);
-        //void Unlock(string name);
         void Create(string name, byte[] data, FileMode mode = FileMode.Create);
         void CreateEmpty(string name, int len, bool random = false);
         void Copy(string src_name, string dst_name);

@@ -1,18 +1,46 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace SecureStorageLib
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class StoragePath
     {
         public static char PathSeperator = '/';
-       
+        
+        /// <summary>
+        /// test if this is a directory
+        /// </summary>
+        /// <param name="name">name / path to test</param>
+        /// <returns>true if a directory</returns>
         public static bool IsDirectory(string name)
         {
             // this is as simple as it gets
             return name.EndsWith(PathSeperator.ToString());
         }
         
+        /// <summary>
+        /// converts windows path to a storage path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string GetStoragePath(string path)
+        {
+            int root_len = Path.GetPathRoot(path).Length;
+            path = path.Remove(0, root_len); // remove drive letter
+            path = path.Replace('\\', '/');
+            path = path.Trim('/'); 
+            return path + "/";
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string[] GetSubDirectories(string path)
         {
             StringBuilder sb = new StringBuilder();
@@ -34,6 +62,11 @@ namespace SecureStorageLib
             return ret;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetDirectory(string path)
         {
             path = path.Trim('/');
@@ -51,6 +84,11 @@ namespace SecureStorageLib
             return ret != string.Empty ? ret : "/";
        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetShortName(string path)
         {
             // get file or dir name
@@ -58,6 +96,11 @@ namespace SecureStorageLib
             return splits[splits.Length - 1];
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetFileName(string path)
         {
             int len = path.Length;

@@ -19,25 +19,17 @@ namespace SecureStorageClient
     {
         private SecureStorage client_cloud = null;
         private const int MAX_SIZE = 30000; //bytes
-        //private const string LOCAL_PATH = "c:\\tmp\\client\\";
         private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
-        string current_dir = "/";
+        private string current_dir = "/";
         private const int FRAGMENT_SIZE = 20000;
-        byte[] key = null;
-        byte[] iv = null;
-     
-        
+        private byte[] key = null;
+        private byte[] iv = null;
+           
 
         public MainFrm()
         {
             InitializeComponent();
-            
-             //client_utility.LoadKey(KEY_PATH);
-            bool b1 = StoragePath.isValid("agyaay/hfubfju/");
-            bool b2 = StoragePath.isValid("agyaay/hfu>bfju/");
-
-            
-            
+                            
             SecureStorageUtility.LoadKey(KEY_PATH, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
@@ -55,8 +47,7 @@ namespace SecureStorageClient
                 lblSever.Text = value;
             }
         }
-
-
+        
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             InitializeFrm dlg = new InitializeFrm();
@@ -145,38 +136,6 @@ namespace SecureStorageClient
 
         }
 
-   
-        //private void OnClick()
-        //{
-        //    System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(CreateThread));
-        //    t.Start();
-        //}
-
-        //private void CreateThread()
-        //{
-        //    CreateFrm dlg = new CreateFrm();
-        //    if (dlg.ShowDialog() == DialogResult.OK)
-        //    {
-        //        byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-        //        client_cloud.CreateName(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
-        //        RefreshFileList();
-        //    }
-
-        //    UpdateStatus("");
-        //}
-
-        //string status;
-        //private void UpdateStatus(string status)
-        //{
-        //    if (this.InvokeRequired) // invoke on gui thread
-        //    {
-        //        this.Invoke(new StringDelegate(UpdateStatus), new object[] { status });
-        //        return;
-        //    }
-        //    this.status = status;
-        //}
-
-
         private void btnRead_Click(object sender, EventArgs e)
         {
             string name = (string)serverfileList.SelectedItem;
@@ -263,16 +222,6 @@ namespace SecureStorageClient
                     RefreshFileList();
                 }
             }
-        }
-
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            StdMsgBox.OK("not implemented");
-        }
-
-        private void btnMove_Click(object sender, EventArgs e)
-        {
-            StdMsgBox.OK("not implemented");
         }
     }
 }

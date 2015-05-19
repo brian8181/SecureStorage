@@ -1,20 +1,6 @@
 ﻿*Todo
-	*Create Version SercureStorageLib (Todo)
-
-		* ISecureStorage interface is locked????	
-			* what about lock timeout / expire time, this may chnage the interface
-		* handle error consistenlly, only create returna boolean?
-			*handle errors with Exception, just like FileInfo & FileStream objects
-		* use consisent numeric types, long vs int, uint ?
-		* file locking / syncronization: this has not been touched
-		* look for all BKP / TODO comments
-		* add move / copy operations
-
-	*General	
-	
-		* default block algorithm
-		* platform independent syncing "Proof of Cocept"
-	
+		
+		
 *Notes
 	
 	*CreateName

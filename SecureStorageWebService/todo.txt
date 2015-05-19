@@ -1,1 +1,8 @@
-﻿* remove "private string working_dir = "c:\\tmp\\svr\\";"
+﻿Todo:
+
+	* reconsider IData interface, Create methods?
+Future:
+	* public long GetLength(string name) Returns long not int, int was my standard type
+Done:
+	* CreateEmpty
+	* remove "private string working_dir = "c:\\tmp\\svr\\";"
