@@ -181,8 +181,7 @@ namespace SecureStorageWebService
         public byte[] SHA256(string name)
         {
             byte[] data = File.ReadAllBytes(working_dir + name);
-            //BKP TODO return SecureStorageUtility.SHA256(data);
-            return null;
+            return SecureStorageUtility.SHA256(data);
         }
         #endregion
     }
