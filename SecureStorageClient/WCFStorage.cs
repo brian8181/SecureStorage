@@ -4,12 +4,14 @@ using SecureStorageLib;
 
 namespace SecureStorageClient
 {
+    /// <summary>
+    /// implements the IStorage interface
+    /// </summary>
     public class WCFStorage : IStorage
     {
         private ServiceReference.IStorageService cloud = new ServiceReference.StorageServiceClient();
         
         #region IStorage Members
-
         public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
             cloud.CreateAppend(name, data);
@@ -44,17 +46,6 @@ namespace SecureStorageClient
         {
             cloud.CreateEmpty(name, len, random);
         }
-
-        public void Copy(string src_name, string dst_name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Move(string src_name, string dst_name)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
     }
 }

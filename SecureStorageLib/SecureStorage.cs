@@ -10,7 +10,7 @@ namespace SecureStorageLib
     /// <summary>
     /// manages a secure storage store
     /// </summary>
-    public class SecureStorage
+    public class SecureStorage 
     {
         private IStorage store = null;
         private ICrypto crypto = null;

@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 
 namespace SecureStorageLib
 {
+    /// <summary>
+    /// AES implemenation of ICypto inteface
+    /// </summary>
     public class AES : ICrypto
     {
         private byte[] key = null;
@@ -53,6 +56,11 @@ namespace SecureStorageLib
             }
         }
 
+        /// <summary>
+        /// encrypt data
+        /// </summary>
+        /// <param name="data">decrypted bytes</param>
+        /// <returns>ecrypted bytes</returns>
         public byte[] Encrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
@@ -75,6 +83,11 @@ namespace SecureStorageLib
             }
         }
 
+        /// <summary>
+        /// decrypt data
+        /// </summary>
+        /// <param name="data">ecrypted bytes</param>
+        /// <returns>decrypted bytes</returns>
         public byte[] Decrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
