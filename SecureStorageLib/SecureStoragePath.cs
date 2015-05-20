@@ -50,10 +50,10 @@ namespace SecureStorageLib
             int len = splits.Length - 1;
             string[] ret = new string[len];
 
-            for(int i = 0; i < len; ++i)
+            for (int i = 0; i < len; ++i)
             {
-                sb.Clear();    
-                for(int j = 0; j < len - i; ++j)
+                sb.Clear();
+                for (int j = 0; j < len - i; ++j)
                 {
                     sb.Append(splits[j] + "/");
                 }
@@ -63,14 +63,14 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// 
+        /// gets directory of name
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
         public static string GetDirectory(string path)
         {
             path = path.Trim('/');
-             
+
             StringBuilder sb = new StringBuilder();
             string[] splits = path.Split(StoragePath.PathSeperator);
             int len = splits.Length;
@@ -82,26 +82,14 @@ namespace SecureStorageLib
 
             string ret = sb.ToString();
             return ret != string.Empty ? ret : "/";
-       }
+        }
 
         /// <summary>
-        /// 
+        /// gets short name of object (no path)
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">the full path</param>
+        /// <returns>short name (no path) or null if directory</returns>
         public static string GetShortName(string path)
-        {
-            // get file or dir name
-            string[] splits = path.Split(StoragePath.PathSeperator);
-            return splits[splits.Length - 1];
-        }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string GetFileName(string path)
         {
             int len = path.Length;
             if (path[len - 1] == '/')

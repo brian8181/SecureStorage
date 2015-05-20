@@ -22,34 +22,46 @@ namespace SecureStorageTesting
             Assert.False(result);
         }
 
-        [Test]
-        public void GetStoragePath()
-        {
-            string path = string.Empty;
-            string store_path = string.Empty;
-
-            path = "C:\\ABC\\EFG\\";
-            store_path = SecureStorageLib.StoragePath.GetStoragePath(path);
-            Assert.AreEqual(store_path, "ABC/EFG/");
-             
-            path = "ABC\\EFG\\";
-            store_path = SecureStorageLib.StoragePath.GetStoragePath(path);
-            Assert.AreEqual(store_path, "ABC/EFG/");
-
-            path = "C:\\ABC\\EFG\\HIJ";
-            store_path = SecureStorageLib.StoragePath.GetStoragePath(path);
-            Assert.AreEqual(store_path, "ABC/EFG/HIJ/");
-        }
-
+      
         [TestCase("C:\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("M:\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("ABC\\EFG", "ABC/EFG/")]
-        public void GetStoragePath2(string input, string output)
+        [TestCase("C:\\ABC\\EFG\\HIJ", "ABC/EFG/HIJ/")]
+        public void GetStoragePath(string input, string output)
         {
             string result = SecureStorageLib.StoragePath.GetStoragePath(input);
             Assert.AreEqual(result, output);
+        }
+
+        [TestCase("a/b/c", "a/b/")]
+        [TestCase("a/b/c/", "a/b/")]
+        [TestCase("a/", "/")]
+        public void GetDirectory(string path, string output)
+        {
+            string result = SecureStorageLib.StoragePath.GetDirectory(path);
+            Assert.AreEqual(result, output);
+        }
+
+        [TestCase("a/b/c", "c")]
+        [TestCase("a/b/c/", null)]
+        public void GetShortName(string path, string output)
+        {
+            string result = SecureStorageLib.StoragePath.GetShortName(path);
+            Assert.AreEqual(result, output);
+        }
+
+        [TestCase("a/b/c/", new string[] {"a/b/", "a/"})]
+        public void GetSubDirectories(string path, string[] output)
+        {
+            string[] result = SecureStorageLib.StoragePath.GetSubDirectories(path);
+
+            Assert.AreEqual(output.Length, result.Length);
+            for (int i = 0; i < result.Length; ++i)
+            {
+                Assert.AreEqual(output[i], result[i]);
+            }
         }
     }
 }

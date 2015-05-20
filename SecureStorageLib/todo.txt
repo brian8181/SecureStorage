@@ -1,4 +1,5 @@
 ﻿*Todo
+		*name validation
 		
 		*FINISHED/READY Version.1.0.RC.1
 		
