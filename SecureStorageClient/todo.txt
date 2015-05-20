@@ -1,5 +1,8 @@
 ﻿*Todo
-		
+	
+	* remove constant strings!
+	* add setting where needed!
+	* Settings Form is a mess!	
 		
 *Notes
 	

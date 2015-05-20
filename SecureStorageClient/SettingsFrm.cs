@@ -26,17 +26,5 @@ namespace SecureStorageClient
             dirBrowserLocalDir.TextBox.Text = Properties.Settings.Default.local_dir;
             dirBrowserKeyDir.TextBox.Text = Properties.Settings.Default.key_path;
         }
-
-        private void SettingsFrm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dirBrowserLocalDir_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
     }
 }

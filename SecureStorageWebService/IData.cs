@@ -24,9 +24,6 @@ namespace SecureStorageWebService
         [OperationContract]
         void Delete(string name);
 
-        //[OperationContract]
-        //void Write(string name, int offset, byte[] data);
-
         //get len of file
         [OperationContract]
         long GetLength(string name);
@@ -42,7 +39,7 @@ namespace SecureStorageWebService
         [OperationContract]
         string[] GetNames(int idx, int len);
 
-        ////return subset of file list
+        //return subset of file list
         [OperationContract]
         string[] GetAllNames();
                

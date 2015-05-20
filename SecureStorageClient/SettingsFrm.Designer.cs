@@ -80,7 +80,6 @@
             this.dirBrowserLocalDir.Name = "dirBrowserLocalDir";
             this.dirBrowserLocalDir.Size = new System.Drawing.Size(334, 34);
             this.dirBrowserLocalDir.TabIndex = 6;
-            this.dirBrowserLocalDir.Load += new System.EventHandler(this.dirBrowserLocalDir_Load);
             // 
             // dirBrowserKeyDir
             // 
@@ -114,7 +113,6 @@
             this.Controls.Add(this.btnOK);
             this.Name = "SettingsFrm";
             this.Text = "SettingsFrmcs";
-            this.Load += new System.EventHandler(this.SettingsFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

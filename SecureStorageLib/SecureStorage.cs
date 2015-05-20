@@ -34,7 +34,7 @@ namespace SecureStorageLib
         /// <summary>
         /// true if key has been loaded, otherwise false
         /// </summary>
-        public bool KeyLoaded
+        private bool KeyLoaded
         {
             get
             {
@@ -127,15 +127,6 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// get files in encrypted directory (ROOT)
-        /// </summary>
-        /// <returns>files as xml</returns>
-        public XmlNodeList GetFiles()
-        {
-            return GetFiles(ROOT_FILE_NAME);
-        }
-
-        /// <summary>
         /// get file in encrypted directory
         /// </summary>
         /// <param name="dir_name">directory name</param>
@@ -166,7 +157,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">the object name</param>
         /// <returns>length in bytes</returns>
-        public int GetLength(string name)
+        private int GetLength(string name)
         {
             string secure_name = GetSecureName(name);
             return store.GetLength(secure_name);

@@ -24,8 +24,7 @@ namespace SecureStorageClient
         private const int FRAGMENT_SIZE = 20000;
         private byte[] key = null;
         private byte[] iv = null;
-           
-
+        
         public MainFrm()
         {
             InitializeComponent();
