@@ -34,7 +34,6 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreateKey = new System.Windows.Forms.Button();
             this.btnInitializeLocal = new System.Windows.Forms.Button();
-            this.btnSettings = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
             this.lblSever = new System.Windows.Forms.Label();
             this.btnCreateEmpty = new System.Windows.Forms.Button();
@@ -88,7 +87,7 @@
             // 
             // btnCreateKey
             // 
-            this.btnCreateKey.Location = new System.Drawing.Point(6, 77);
+            this.btnCreateKey.Location = new System.Drawing.Point(6, 48);
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
@@ -98,23 +97,13 @@
             // 
             // btnInitializeLocal
             // 
-            this.btnInitializeLocal.Location = new System.Drawing.Point(6, 48);
+            this.btnInitializeLocal.Location = new System.Drawing.Point(6, 19);
             this.btnInitializeLocal.Name = "btnInitializeLocal";
             this.btnInitializeLocal.Size = new System.Drawing.Size(102, 23);
             this.btnInitializeLocal.TabIndex = 7;
             this.btnInitializeLocal.Text = "(Re)InitializeLocalRoot";
             this.btnInitializeLocal.UseVisualStyleBackColor = true;
             this.btnInitializeLocal.Click += new System.EventHandler(this.btnInitialize_Click);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.Location = new System.Drawing.Point(6, 19);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(102, 23);
-            this.btnSettings.TabIndex = 8;
-            this.btnSettings.Text = "Settings";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnGetDirs
             // 
@@ -189,7 +178,7 @@
             this.groupBox1.Controls.Add(this.btnGetDirs);
             this.groupBox1.Location = new System.Drawing.Point(200, 165);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(118, 303);
+            this.groupBox1.Size = new System.Drawing.Size(118, 229);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
@@ -198,10 +187,9 @@
             // 
             this.grpLocal.Controls.Add(this.btnCreateKey);
             this.grpLocal.Controls.Add(this.btnInitializeLocal);
-            this.grpLocal.Controls.Add(this.btnSettings);
             this.grpLocal.Location = new System.Drawing.Point(200, 34);
             this.grpLocal.Name = "grpLocal";
-            this.grpLocal.Size = new System.Drawing.Size(118, 109);
+            this.grpLocal.Size = new System.Drawing.Size(118, 86);
             this.grpLocal.TabIndex = 18;
             this.grpLocal.TabStop = false;
             this.grpLocal.Text = "Local";
@@ -235,7 +223,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreateKey;
         private System.Windows.Forms.Button btnInitializeLocal;
-        private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Button btnGetDirs;
         private System.Windows.Forms.Label lblSever;
         private System.Windows.Forms.Button btnCreateEmpty;

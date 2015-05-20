@@ -37,7 +37,7 @@ namespace SecureStorageClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("c:\\\\tmp\\\\aes_key\\\\key")]
         public string key_path {
             get {
                 return ((string)(this["key_path"]));
@@ -61,18 +61,6 @@ namespace SecureStorageClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ROOT")]
-        public string root_name {
-            get {
-                return ((string)(this["root_name"]));
-            }
-            set {
-                this["root_name"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string local_dir {
             get {
@@ -80,6 +68,30 @@ namespace SecureStorageClient.Properties {
             }
             set {
                 this["local_dir"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        public int max_msg_size {
+            get {
+                return ((int)(this["max_msg_size"]));
+            }
+            set {
+                this["max_msg_size"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20000")]
+        public int fragment_size {
+            get {
+                return ((int)(this["fragment_size"]));
+            }
+            set {
+                this["fragment_size"] = value;
             }
         }
     }

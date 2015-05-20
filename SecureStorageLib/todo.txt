@@ -1,10 +1,11 @@
 ﻿*Todo
 		
+		*FINISHED/READY Version.1.0.RC.1
+		
+	Future:
 		* what data should be validated (exceptions thrown), what should not
 			* important I want to stop data corrpution or invalid state, ie i dont not want you tbe able
 				todo something that will not work
-		
-	Future:
 		*General	
 			* default block algorithm
 

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using SecureStorageClient;
@@ -18,21 +12,22 @@ namespace SecureStorageClient
     public partial class MainFrm : Form
     {
         private SecureStorage client_cloud = null;
-        private const int MAX_SIZE = 30000; //bytes
-        private const string KEY_PATH = "c:\\tmp\\aes_key\\key";
         private string current_dir = "/";
-        private const int FRAGMENT_SIZE = 20000;
         private byte[] key = null;
         private byte[] iv = null;
-        
+        private readonly int FRAGMENT_SIZE;
+        private readonly int MAX_SIZE;
+
         public MainFrm()
         {
             InitializeComponent();
-                            
-            SecureStorageUtility.LoadKey(KEY_PATH, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            MAX_SIZE = Properties.Settings.Default.max_msg_size;
+            FRAGMENT_SIZE = Properties.Settings.Default.fragment_size;
+
+            SecureStorageUtility.LoadKey(Properties.Settings.Default.key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
-         }
+        }
 
         private string CurrentDirectory
         {
@@ -46,7 +41,7 @@ namespace SecureStorageClient
                 lblSever.Text = value;
             }
         }
-        
+
         private void btnInitialize_Click(object sender, EventArgs e)
         {
             InitializeFrm dlg = new InitializeFrm();
@@ -56,16 +51,13 @@ namespace SecureStorageClient
                 string output_dir = Properties.Settings.Default.server_mirror_dir;
 
                 //delete all file server directory
-                if(Directory.Exists(output_dir))
+                if (Directory.Exists(output_dir))
                     Directory.Delete(output_dir, true);
                 Directory.CreateDirectory(output_dir);
 
                 // intitialize to server mirror dir
                 string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-
-                //client_utility.InitializeLocalRoot(initial_input_dir, output_dir);
                 SecureStorageUtility.InitializeLocalRoot(initial_input_dir, output_dir, key, iv);
-
                 // save setting for next time
                 Properties.Settings.Default.init_input_dir = initial_input_dir;
                 Properties.Settings.Default.Save();
@@ -76,26 +68,13 @@ namespace SecureStorageClient
 
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-            StdMsgBox.OK("not implemented");
+            SecureStorageUtility.CreateKey(Properties.Settings.Default.key_path + "/key.tmp", AES.KEY_SIZE, AES.IV_SIZE);
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            SettingsFrm dlg = new SettingsFrm();
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                Properties.Settings.Default.server_mirror_dir = dlg.dirBrowserServerDir.TextBox.Text;
-                Properties.Settings.Default.local_dir = dlg.dirBrowserLocalDir.TextBox.Text;
-                Properties.Settings.Default.key_path = dlg.dirBrowserKeyDir.TextBox.Text;
-                Properties.Settings.Default.Save();
-            }
-        }
-        
         public void RefreshFileList()
         {
             //string seerver_dir = Properties.Settings.Default.output_dir;
             XmlNodeList files = client_cloud.GetFiles(CurrentDirectory);
-
             serverfileList.Items.Clear();
             // add to fileList
             foreach (XmlNode n in files)
@@ -103,7 +82,7 @@ namespace SecureStorageClient
                 string name = n["name"].InnerText;
                 serverfileList.Items.Add(name);
             }
-       }
+        }
 
         private void btnGetDirs_Click(object sender, EventArgs e)
         {
@@ -122,7 +101,6 @@ namespace SecureStorageClient
             }
         }
 
-
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CreateFrm dlg = new CreateFrm();
@@ -132,7 +110,6 @@ namespace SecureStorageClient
                 client_cloud.CreateName(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
                 RefreshFileList();
             }
-
         }
 
         private void btnRead_Click(object sender, EventArgs e)
@@ -165,14 +142,14 @@ namespace SecureStorageClient
             }
         }
 
+        /// <summary>
+        /// just a test function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCreateEmpty_Click(object sender, EventArgs e)
         {
             client_cloud.CreateEmptyFile("EMPTY", 1000, true);
-        }
-
-        private void btnSync_Click(object sender, EventArgs e)
-        {
-            StdMsgBox.OK("not implemented");
         }
 
         private void btnUpDirectory_Click(object sender, EventArgs e)
@@ -200,9 +177,7 @@ namespace SecureStorageClient
         {
             client_cloud.Initialize();
             StdMsgBox.OK("Initialized.");
-
             CurrentDirectory = "/";
-
             RefreshFileList();
         }
 

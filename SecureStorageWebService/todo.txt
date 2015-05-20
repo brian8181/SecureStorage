@@ -1,7 +1,9 @@
 ﻿Todo:
+	
+	*FINISHED/READY Version.1.0.RC.1
 
-	* reconsider IData interface, Create methods?
 Future:
+	* reconsider IData interface, Create methods?
 	* public long GetLength(string name) Returns long not int, int was my standard type
 Done:
 	* CreateEmpty
