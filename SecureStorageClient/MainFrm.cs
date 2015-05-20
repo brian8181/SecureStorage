@@ -23,11 +23,8 @@ namespace SecureStorageClient
             InitializeComponent();
             MAX_SIZE = Properties.Settings.Default.max_msg_size;
             FRAGMENT_SIZE = Properties.Settings.Default.fragment_size;
-
-            //BKP WHAT THE FUCK
-            string k = Properties.Settings.Default.key_path;
+           
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key";
-
             SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
@@ -148,11 +145,6 @@ namespace SecureStorageClient
             }
         }
 
-        /// <summary>
-        /// just a test function
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnCreateEmpty_Click(object sender, EventArgs e)
         {
             client_cloud.CreateEmptyFile("EMPTY", 1000, true);

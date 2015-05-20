@@ -16,6 +16,12 @@ namespace SecureStorageWebService
 
         #region IData Members
 
+        /// <summary>
+        /// create empty object
+        /// </summary>
+        /// <param name="name">name of file</param>
+        /// <param name="len">len to object to create</param>
+        /// <param name="random">if true use random data otherwise zeros</param>
         public void CreateEmpty(string name, int len, bool random = false)
         {
             byte[] data = null;

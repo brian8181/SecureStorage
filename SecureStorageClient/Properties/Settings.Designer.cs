@@ -85,18 +85,6 @@ namespace SecureStorageClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("what the fuck!")]
-        public string key_path {
-            get {
-                return ((string)(this["key_path"]));
-            }
-            set {
-                this["key_path"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\tmp\\aes_key\\")]
         public string key_loc {
             get {
