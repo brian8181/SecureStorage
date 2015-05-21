@@ -21,6 +21,12 @@ namespace SecureStorageLib
             return FromBytesToHex(hash);
         }
 
+        /// <summary>
+        /// creates a HMAC SHA256 based off name / key pair
+        /// </summary>
+        /// <param name="name">name to hash</param>
+        /// <param name="key">the key</param>
+        /// <returns>the hash as bytes</returns>
         public static byte[] HMACSHA256(string name, byte[] key)
         {
             HMACSHA256 hmacsha256 = new HMACSHA256(key);
@@ -29,6 +35,11 @@ namespace SecureStorageLib
             return hash;
         }
 
+        /// <summary>
+        /// creates a SHA256
+        /// </summary>
+        /// <param name="data">data to mhash</param>
+        /// <returns>the hash as bytes</returns>
         public static byte[] SHA256(byte[] data)
         {
             SHA256 sha256 = new SHA256CryptoServiceProvider();
@@ -61,6 +72,11 @@ namespace SecureStorageLib
             return GererateKey(len);
         }
 
+        /// <summary>
+        /// coverts bytes into hex string
+        /// </summary>
+        /// <param name="array">the bytes</param>
+        /// <returns>hex as a string</returns>
         public static string FromBytesToHex(byte[] array)
         {
             StringBuilder sb = new StringBuilder();
@@ -71,6 +87,14 @@ namespace SecureStorageLib
             return sb.ToString();
         }
 
+        /// <summary>
+        /// loads a key from file
+        /// </summary>
+        /// <param name="path">path to key</param>
+        /// <param name="key_size">the key size</param>
+        /// <param name="iv_size">the iv size</param>
+        /// <param name="key">the key</param>
+        /// <param name="iv">the iv</param>
         public static void LoadKey(string path, int key_size, int iv_size, out byte[] key, out byte[] iv)
         {
             byte[] key_iv = File.ReadAllBytes(path);

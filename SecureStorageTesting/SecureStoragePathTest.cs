@@ -32,7 +32,7 @@ namespace SecureStorageTesting
         public void GetStoragePath(string input, string output)
         {
             string result = SecureStorageLib.StoragePath.GetStoragePath(input);
-            Assert.AreEqual(result, output);
+            Assert.AreEqual(output, result);
         }
 
         [TestCase("a/b/c", "a/b/")]
@@ -41,7 +41,7 @@ namespace SecureStorageTesting
         public void GetDirectory(string path, string output)
         {
             string result = SecureStorageLib.StoragePath.GetDirectory(path);
-            Assert.AreEqual(result, output);
+            Assert.AreEqual(output, result);
         }
 
         [TestCase("a/b/c", "c")]
@@ -49,7 +49,7 @@ namespace SecureStorageTesting
         public void GetShortName(string path, string output)
         {
             string result = SecureStorageLib.StoragePath.GetShortName(path);
-            Assert.AreEqual(result, output);
+            Assert.AreEqual(output, result);
         }
 
         [TestCase("a/b/c/", new string[] {"a/b/", "a/"})]

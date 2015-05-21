@@ -5,7 +5,7 @@ using System.Text;
 namespace SecureStorageLib
 {
     /// <summary>
-    /// 
+    /// path functions for storage
     /// </summary>
     public static class StoragePath
     {

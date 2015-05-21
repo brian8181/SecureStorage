@@ -7,7 +7,6 @@ namespace SecureStorageLib
     /// <summary>
     /// high level interface to storage
     /// </summary>
-    /// 
     public interface IStorage
     {
         void Create(string name, byte[] data, FileMode mode = FileMode.Create);
