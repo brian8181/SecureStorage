@@ -10,6 +10,8 @@ namespace SecureStorageTesting
 {
     public class LocalStorage : IStorage
     {
+        private string working_dir = Properties.Settings.Default.PATH;
+
         public LocalStorage(string path)
         {
         }
@@ -18,37 +20,69 @@ namespace SecureStorageTesting
 
         public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
-            throw new NotImplementedException();
+            using (FileStream fs = new FileStream(working_dir + name, FileMode.Create | FileMode.Append))
+            {
+                fs.Write(data, 0, data.Length);
+            }
         }
 
         public void CreateEmpty(string name, int len, bool random = false)
         {
-            throw new NotImplementedException();
+            byte[] data = null;
+            if (random)
+            {
+                data = SecureStorageUtility.GenerateRandomBytes(len);
+                File.WriteAllBytes(working_dir + name, data);
+            }
+            else
+            {
+                data = new byte[len];
+                // are they not already zero?
+                Array.Clear(data, 0, len);
+            }
         }
 
         public byte[] Read(string name, int offset, int len)
         {
-            throw new NotImplementedException();
+            if (len <= 0)
+                len = (int)GetLength(name);
+
+            using (FileStream fs = new FileStream(working_dir + name, FileMode.Open))
+            {
+                byte[] data = new byte[len];
+                fs.Seek(offset, SeekOrigin.Begin);
+                long read = fs.Read(data, 0, len);
+                if (read != len)
+                    return null;
+                return data;
+            }
         }
 
         public void Delete(string name)
         {
-            throw new NotImplementedException();
+            File.Delete(working_dir + name);
         }
 
         public int GetLength(string name)
         {
-            throw new NotImplementedException();
+            FileInfo fi = new FileInfo(working_dir + name);
+            return (int)fi.Length;
         }
 
         public bool Exists(string name)
         {
-            throw new NotImplementedException();
+            FileInfo fi = new FileInfo(working_dir + name);
+            return fi.Exists;
         }
 
-        public void DeleteAll()
+        public void DeleteAll() 
         {
-            throw new NotImplementedException();
+            DirectoryInfo di = new DirectoryInfo(working_dir);
+            FileSystemInfo[] fs_infos = di.GetFileSystemInfos();
+            foreach (FileSystemInfo info in fs_infos)
+            {
+                info.Delete();
+            }
         }
 
         #endregion

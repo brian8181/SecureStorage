@@ -32,6 +32,8 @@ namespace SecureStorageTesting
             SecureStorageUtility.LoadKey("", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             SecureStorage store = new SecureStorage(new LocalStorage(""), new AES(key, iv), 1000);
             store.Initialize();
+
+
             Assert.Fail(); // todo finish test case
         } 
     }
