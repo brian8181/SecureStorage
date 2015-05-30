@@ -7,21 +7,34 @@ namespace SecureStorageLib
     /// </summary>
     public interface ICrypto
     {
+
+        /// <summary>
+        /// key
+        /// </summary>
         byte[] Key
         {
             get;
         }
-
+        
+        /// <summary>
+        /// initialization vector
+        /// </summary>
         byte[] IV
         {
             get;
         }
-
+        
+        /// <summary>
+        /// size of the key
+        /// </summary>
         int KeySize
         {
             get;
         }
-
+        
+        /// <summary>
+        /// size of initialization vector
+        /// </summary>
         int IVSize
         {
             get;

@@ -1,9 +1,13 @@
 ﻿*Todo
-		*name validation
+		*name validation, validate all name, valid len, characters etc
 		
 		*FINISHED/READY Version.1.0.RC.1
 		
 	Future:
+		* random initialization vector, stored with data
+			* IMPLEMENT RANDOM IV
+			* may use ArraySegment<T> Structure, humm may suck
+
 		* what data should be validated (exceptions thrown), what should not
 			* important I want to stop data corrpution or invalid state, ie i dont not want you tbe able
 				todo something that will not work
@@ -16,8 +20,7 @@
 			* need default & set expire times
 
 		* add move / copy operations
-		* IMPLEMENT RANDOM IV
-			* may use ArraySegment<T> Structure 
+		
 		* matter a fact the name ISecureStorage should apply to my SecureStorage class, right?
 		* more complex locking (expire timer)
 		* make len type long

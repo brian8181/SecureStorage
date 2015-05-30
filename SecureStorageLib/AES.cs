@@ -16,6 +16,11 @@ namespace SecureStorageLib
         public const int KEY_SIZE = 32;
         public const int IV_SIZE = 16;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="iv">intitialzation vector</param>
         public AES(byte[] key, byte[] iv)
         {
             if (iv.Length != IV_SIZE && key.Length != KEY_SIZE)
@@ -24,6 +29,9 @@ namespace SecureStorageLib
             this.key = key;
         }
 
+        /// <summary>
+        /// key
+        /// </summary>
         public byte[] Key
         {
             get
@@ -32,14 +40,20 @@ namespace SecureStorageLib
             }
         }
 
+        /// <summary>
+        /// initialization vector
+        /// </summary>
         public byte[] IV
         {
             get
             {
                 return iv;
             }
-       }
+        }
 
+        /// <summary>
+        /// size of the key
+        /// </summary>
         public int KeySize
         {
             get
@@ -48,6 +62,9 @@ namespace SecureStorageLib
             }
         }
 
+        /// <summary>
+        /// size of initialization vector
+        /// </summary>
         public int IVSize
         {
             get

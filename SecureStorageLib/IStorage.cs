@@ -3,7 +3,6 @@ using System.IO;
 
 namespace SecureStorageLib
 {
-
     /// <summary>
     /// high level interface to storage
     /// </summary>
