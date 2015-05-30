@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace HashingAlgorithms
 {
-    public class Class1
+    public class Hash
     {
+        public static byte[] Sha1(byte[] data)
+        {
+            return null;
+        }
     }
 }

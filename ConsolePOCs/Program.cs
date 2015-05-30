@@ -72,8 +72,10 @@ namespace ConsolePOCs
             ////byte[] key = new byte[32];
             //byte[] key = CryptoFunctions.GererateKey(32);
 
-            byte[] k2 = CryptoFunctions.GererateKey(32);
-            byte[] iv = CryptoFunctions.GererateKey(16);
+            //byte[] k2 = CryptoFunctions.GererateKey(32);
+            byte[] k2 = CryptoFunctions.GenerateRandomBytes(32);
+            //byte[] iv = CryptoFunctions.GererateKey(16);
+            byte[] iv = CryptoFunctions.GenerateRandomBytes(16);
 
             ////test2
             byte[] data2 = File.ReadAllBytes("C:\\tmp\\infiles\\Desert.jpg");
