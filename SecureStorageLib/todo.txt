@@ -18,6 +18,28 @@
 		* password based key (PBKDF2-SHA1), keey keys from being stored unec rypted
 		* file locking / syncronization: this has not been touched
 			* need default & set expire times
+			*CreateLock
+
+		*Update a file Sequence: 
+
+			*Lock dir file
+			*Lock file
+			*delete dir file
+			*create new dir file
+			*create new file
+			*unlock file
+			*unlock dir file
+
+				*Notes
+					* lock_sha526_expires
+					* lock request on expired lock deletes old lock
+
+			*locking strategy
+				* create lock
+				* test lock exsits, overkill?
+				* test no other lock exsits
+					* Delete LOCK, wait try again 
+				* LOCK OBTAINED
 
 		* add move / copy operations
 		
@@ -91,3 +113,22 @@
 		* parma order id CrytoFunction is goofy, added key & iv properties
 			*public static byte[] Encrypt(byte[] key, byte[] data, byte[] iv)
 	No:
+
+*Notes
+	
+	*CreateName
+		
+		#
+		let name = "/test/"
+		let directory = "/"
+		* this is a directory (slash at end), create directory "test/"
+
+		#
+		let name = "a/b/test.jpg"
+		let directory = "a/b/"
+		* this is a file (no slash at end), append to dir "a/b/", create file "a/b/test.jpg"
+
+		#
+		let name = "a/b/c/"
+		let directory = "a/b/"
+		* this is a directory (ends with '/'), append to dir "a/b/", create directory "a/b/c/"
