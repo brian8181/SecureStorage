@@ -22,16 +22,16 @@ namespace SecureStorageClient.ServiceReference {
         System.Threading.Tasks.Task CreateEmptyAsync(string name, int len, bool random);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateAppend", ReplyAction="http://tempuri.org/IData/CreateAppendResponse")]
-        bool CreateAppend(string name, byte[] data);
+        void CreateAppend(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateAppend", ReplyAction="http://tempuri.org/IData/CreateAppendResponse")]
-        System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data);
+        System.Threading.Tasks.Task CreateAppendAsync(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateReplace", ReplyAction="http://tempuri.org/IData/CreateReplaceResponse")]
-        bool CreateReplace(string name, byte[] data);
+        void CreateReplace(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/CreateReplace", ReplyAction="http://tempuri.org/IData/CreateReplaceResponse")]
-        System.Threading.Tasks.Task<bool> CreateReplaceAsync(string name, byte[] data);
+        System.Threading.Tasks.Task CreateReplaceAsync(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Read", ReplyAction="http://tempuri.org/IData/ReadResponse")]
         byte[] Read(string name, int offset, int lenght);
@@ -129,19 +129,19 @@ namespace SecureStorageClient.ServiceReference {
             return base.Channel.CreateEmptyAsync(name, len, random);
         }
         
-        public bool CreateAppend(string name, byte[] data) {
-            return base.Channel.CreateAppend(name, data);
+        public void CreateAppend(string name, byte[] data) {
+            base.Channel.CreateAppend(name, data);
         }
         
-        public System.Threading.Tasks.Task<bool> CreateAppendAsync(string name, byte[] data) {
+        public System.Threading.Tasks.Task CreateAppendAsync(string name, byte[] data) {
             return base.Channel.CreateAppendAsync(name, data);
         }
         
-        public bool CreateReplace(string name, byte[] data) {
-            return base.Channel.CreateReplace(name, data);
+        public void CreateReplace(string name, byte[] data) {
+            base.Channel.CreateReplace(name, data);
         }
         
-        public System.Threading.Tasks.Task<bool> CreateReplaceAsync(string name, byte[] data) {
+        public System.Threading.Tasks.Task CreateReplaceAsync(string name, byte[] data) {
             return base.Channel.CreateReplaceAsync(name, data);
         }
         

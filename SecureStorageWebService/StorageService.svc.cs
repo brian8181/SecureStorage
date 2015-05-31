@@ -38,7 +38,11 @@ namespace SecureStorageWebService
             }
         }
 
-        //BKP
+        /// <summary>
+        /// copies object
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
         public void Copy(string src_name, string dst_name)
         {
             File.Copy(src_name, dst_name);
@@ -69,13 +73,12 @@ namespace SecureStorageWebService
         /// </summary>
         /// <param name="name"></param>
         /// <param name="data"></param>
-        public bool CreateAppend(string name, byte[] data)
+        public void CreateAppend(string name, byte[] data)
         {
             using (FileStream fs = new FileStream(working_dir + name, FileMode.Create | FileMode.Append))
             {
                 fs.Write(data, 0, data.Length);
             }
-            return true;
         }
 
         /// <summary>
@@ -83,13 +86,12 @@ namespace SecureStorageWebService
         /// </summary>
         /// <param name="name"></param>
         /// <param name="data"></param>
-        public bool CreateReplace(string name, byte[] data)
+        public void CreateReplace(string name, byte[] data)
         {
             using (FileStream fs = new FileStream(working_dir + name, FileMode.Create))
             {
                 fs.Write(data, 0, data.Length);
             }
-            return true;
         }
 
         /// <summary>

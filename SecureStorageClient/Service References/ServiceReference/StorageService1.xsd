@@ -25,9 +25,7 @@
   </xs:element>
   <xs:element name="CreateAppendResponse">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="CreateAppendResult" type="xs:boolean" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateReplace">
@@ -40,9 +38,7 @@
   </xs:element>
   <xs:element name="CreateReplaceResponse">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="CreateReplaceResult" type="xs:boolean" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="Read">
