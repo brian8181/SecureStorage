@@ -61,6 +61,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Copy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="src_name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dst_name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CopyResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Delete">
     <xs:complexType>
       <xs:sequence>

@@ -7,7 +7,6 @@ namespace SecureStorageLib
     /// </summary>
     public interface ICrypto
     {
-
         /// <summary>
         /// key
         /// </summary>

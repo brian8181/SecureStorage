@@ -31,6 +31,12 @@
   <wsdl:message name="IStorageService_Read_OutputMessage">
     <wsdl:part name="parameters" element="tns:ReadResponse" />
   </wsdl:message>
+  <wsdl:message name="IStorageService_Copy_InputMessage">
+    <wsdl:part name="parameters" element="tns:Copy" />
+  </wsdl:message>
+  <wsdl:message name="IStorageService_Copy_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CopyResponse" />
+  </wsdl:message>
   <wsdl:message name="IStorageService_Delete_InputMessage">
     <wsdl:part name="parameters" element="tns:Delete" />
   </wsdl:message>
@@ -96,6 +102,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IData/Read" message="tns:IStorageService_Read_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/ReadResponse" message="tns:IStorageService_Read_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="Copy">
+      <wsdl:input wsaw:Action="http://tempuri.org/IData/Copy" message="tns:IStorageService_Copy_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IData/CopyResponse" message="tns:IStorageService_Copy_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Delete">
       <wsdl:input wsaw:Action="http://tempuri.org/IData/Delete" message="tns:IStorageService_Delete_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IData/DeleteResponse" message="tns:IStorageService_Delete_OutputMessage" />
@@ -160,6 +170,15 @@
     </wsdl:operation>
     <wsdl:operation name="Read">
       <soap:operation soapAction="http://tempuri.org/IData/Read" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Copy">
+      <soap:operation soapAction="http://tempuri.org/IData/Copy" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

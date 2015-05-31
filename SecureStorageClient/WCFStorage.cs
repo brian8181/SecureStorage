@@ -46,6 +46,12 @@ namespace SecureStorageClient
         {
             cloud.CreateEmpty(name, len, random);
         }
+     
+        public void Copy(string src_name, string dst_name)
+        {
+            cloud.Copy(src_name, dst_name);
+        }
+
         #endregion
     }
 }

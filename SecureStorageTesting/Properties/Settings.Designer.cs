@@ -25,7 +25,7 @@ namespace SecureStorageTesting.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"c:\\\\tmp\\\\svr\\\\\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\tmp\\svr\\")]
         public string PATH {
             get {
                 return ((string)(this["PATH"]));

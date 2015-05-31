@@ -85,6 +85,11 @@ namespace SecureStorageTesting
             }
         }
 
+        public void Copy(string src_name, string dst_name)
+        {
+            File.Copy(src_name, dst_name);
+        }
+
         #endregion
     }
 }

@@ -11,10 +11,15 @@ namespace SecureStorageLib
     {
         public static char PathSeperator = '/';
         
+        public static bool IsValidateName(string name)
+        {
+            return false;
+        }
+        
         /// <summary>
         /// test if this is a directory
         /// </summary>
-        /// <param name="name">name / path to test</param>
+        /// <param name="name">name ends with / path to test</param>
         /// <returns>true if a directory</returns>
         public static bool IsDirectory(string name)
         {

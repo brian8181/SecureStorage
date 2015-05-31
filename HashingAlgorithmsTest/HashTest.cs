@@ -10,12 +10,15 @@ namespace HashingAlgorithmsTest
     [TestFixture]
     public class HashTest
     {
+        [Test]
         public void Sha1()
         {
-            string sha1 = "";
-            byte[] hash = HashingAlgorithms.Hash.Sha1(null);
-
-
+            string text = "abc";
+            byte[] data = Encoding.ASCII.GetBytes(text);
+            byte[] hash = HashingAlgorithms.Hash.Sha1(data);
+            
+            // assert false
+            Assert.IsTrue(false);
         }
     }
 }

@@ -38,6 +38,12 @@ namespace SecureStorageWebService
             }
         }
 
+        //BKP
+        public void Copy(string src_name, string dst_name)
+        {
+            File.Copy(src_name, dst_name);
+        }
+
         /// <summary>
         /// deletes object name
         /// </summary>

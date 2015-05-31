@@ -9,6 +9,20 @@ namespace SecureStorageTesting
     [TestFixture]
     public class SecureStorageUtilityTesting
     {
+        byte[] key = null;
+        byte[] iv = null;
+
+        [SetUp]
+        public void Init()
+        {
+            SecureStorageUtility.LoadKey("C:\\tmp\\aes_key\\key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+        }
+
         [Test]
         public void LoadKey()
         {
@@ -23,6 +37,11 @@ namespace SecureStorageTesting
             Assert.IsNotNull(iv);
             Assert.AreEqual(AES.IV_SIZE, iv.Length);
         }
+
+        //public void GetSecureName(string name, byte[] key)
+        //{
+        //    string name = SecureStorageUtility.GetSecureName("abc", key);
+        //}
     }
 }
  

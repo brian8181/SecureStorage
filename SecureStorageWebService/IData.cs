@@ -20,6 +20,9 @@ namespace SecureStorageWebService
 
         [OperationContract]
         byte[] Read(string name, int offset, int lenght);
+
+        [OperationContract]
+        void Copy(string src_name, string dst_name);
      
         [OperationContract]
         void Delete(string name);

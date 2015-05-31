@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="PATH" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">"c:\\tmp\\svr\\"</Value>
+      <Value Profile="(Default)">C:\tmp\svr\</Value>
     </Setting>
   </Settings>
 </SettingsFile>
