@@ -290,9 +290,29 @@ namespace SecureStorageLib
             root.AppendChild(file);
         }
 
-        // copy a file
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
         public void Copy(string src_name, string dst_name)
         {
+            //BKP todo...
+            //append dst_name
+            //store.Copy( ... );
+            
+
+
+
+            //// delete old dir file
+
+            //store.Delete(secure_dir_name);
+
+            //// create new dir file
+            //string xml = doc.OuterXml;
+            //byte[] data = Encoding.UTF8.GetBytes(xml);
+            //byte[] crypt = crypto.Encrypt(data);
+            //store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>

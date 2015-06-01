@@ -21,9 +21,18 @@ namespace SecureStorageWebService
         [OperationContract]
         byte[] Read(string name, int offset, int lenght);
 
+        /// <summary>
+        /// copy object of src_name to dst_name
+        /// </summary>
+        /// <param name="src_name">the source object</param>
+        /// <param name="dst_name">the destination object</param>
         [OperationContract]
         void Copy(string src_name, string dst_name);
-     
+        
+        /// <summary>
+        /// deletes a object by name
+        /// </summary>
+        /// <param name="name">name of object</param>
         [OperationContract]
         void Delete(string name);
 
@@ -35,6 +44,11 @@ namespace SecureStorageWebService
         [OperationContract]
         int GetCount();
 
+        /// <summary>
+        /// check for exsistance of object by name
+        /// </summary>
+        /// <param name="name">the name of object</param>
+        /// <returns>true if exists false othewise</returns>
         [OperationContract]
         bool Exists(string name);
 

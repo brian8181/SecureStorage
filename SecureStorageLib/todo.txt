@@ -1,14 +1,18 @@
 ﻿*Todo
+		* add move / copy operations
+
 		*keyloaded is this a good validation?
 		*name validation, validate all name, valid len, characters etc
+
+		* random initialization vector, stored with data
+			* IMPLEMENT RANDOM IV
+			* may use ArraySegment<T> Structure, humm may suck
 				
 	Future:
 		*Local Read Buffer, have a location that auto buffers files based on? last used?, fequency?, size?
 			* Optimize for least bytes downloaded
 
-		* random initialization vector, stored with data
-			* IMPLEMENT RANDOM IV
-			* may use ArraySegment<T> Structure, humm may suck
+		
 
 		* what data should be validated (exceptions thrown), what should not
 			* important I want to stop data corrpution or invalid state, ie i dont not want you tbe able
@@ -43,8 +47,7 @@
 					* Delete LOCK, wait try again 
 				* LOCK OBTAINED
 
-		* add move / copy operations
-		
+			
 		* matter a fact the name ISecureStorage should apply to my SecureStorage class, right?
 		* more complex locking (expire timer)
 		* make len type long
