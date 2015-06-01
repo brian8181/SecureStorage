@@ -42,6 +42,13 @@ namespace SecureStorageTesting
         //{
         //    string name = SecureStorageUtility.GetSecureName("abc", key);
         //}
+
+        [Test]
+        public void GererateKey()
+        {
+            byte[] key = SecureStorageUtility.GererateKey(10);
+            Assert.AreEqual(10, key.Length);
+        }
     }
 }
  

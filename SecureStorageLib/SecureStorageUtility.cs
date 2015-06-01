@@ -8,18 +8,7 @@ namespace SecureStorageLib
 {
     public static class SecureStorageUtility
     {
-        /// <summary>
-        /// get a secure name
-        /// </summary>
-        /// <param name="name">orginal name</param>
-        /// <returns>secure name based off original</returns>
-        private static string GetSecureName(string name, byte[] key)
-        {
-            HMACSHA256 hmacsha256 = new HMACSHA256(key);
-            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
-            byte[] hash = hmacsha256.ComputeHash(data);
-            return FromBytesToHex(hash);
-        }
+        
 
         /// <summary>
         /// creates a HMAC SHA256 based off name / key pair
@@ -60,16 +49,6 @@ namespace SecureStorageLib
                 rng.GetBytes(key);
                 return key;
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="len"></param>
-        /// <returns></returns>
-        public static byte[] GenerateRandomBytes(int len)
-        {
-            return GererateKey(len);
         }
 
         /// <summary>
@@ -149,6 +128,19 @@ namespace SecureStorageLib
             path = path.Replace('\\', '/');
             path = path.TrimStart('/'); // may trim start ?
             return path + "/";
+        }
+
+        /// <summary>
+        /// get a secure name
+        /// </summary>
+        /// <param name="name">orginal name</param>
+        /// <returns>secure name based off original</returns>
+        private static string GetSecureName(string name, byte[] key)
+        {
+            HMACSHA256 hmacsha256 = new HMACSHA256(key);
+            byte[] data = ASCIIEncoding.ASCII.GetBytes(name);
+            byte[] hash = hmacsha256.ComputeHash(data);
+            return FromBytesToHex(hash);
         }
 
         private static void InitializeLocal(DirectoryInfo dir, string output_dir, byte[] key, byte[] iv)

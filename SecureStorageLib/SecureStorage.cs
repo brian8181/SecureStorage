@@ -213,8 +213,47 @@ namespace SecureStorageLib
 
             // create/append xml file node to xml directory node
             XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
-            XmlNode root = doc.DocumentElement;
+            string hash = null;
+            if (is_directory == false)
+            {
+                byte[] sha256 = SecureStorageUtility.SHA256(data);
+                hash = Convert.ToBase64String(sha256);
+            }
+            AppendNameXml(doc, name, hash);
+           
+            // delete old dir file
+            store.Delete(secure_sub_dir_name);
 
+            string xml = doc.OuterXml;
+            data = Encoding.UTF8.GetBytes(xml);
+            encrypted_data = crypto.Encrypt(data);
+            store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
+
+            if (is_directory == true)
+            {
+                // create new directory file 
+                CreateDirectoryXml(name);
+            }
+        }
+
+        /// <summary>
+        /// removes a object by name from xml document
+        /// </summary>
+        /// <param name="doc">the xml document</param>
+        /// <param name="name">the object name</param>
+        private void RemoveNameXml(XmlDocument doc, string name)
+        {
+            string xpath = string.Format("/root/file[name = \"{0}\"] | /root/directory[name = \"{0}\"]", name);
+            XmlNode n = doc.SelectSingleNode(xpath);
+            n.ParentNode.RemoveChild(n);
+        }
+
+        // append a new name to xml
+        private void AppendNameXml(XmlDocument doc, string name, string hash)
+        {
+            bool is_directory = name.EndsWith("/");
+            
+            XmlNode root = doc.DocumentElement;
             XmlNode file = null;
             if (is_directory != true)
             {
@@ -230,12 +269,11 @@ namespace SecureStorageLib
             name_node.InnerText = name;
             file.AppendChild(name_node);
 
+            // if dir add signature
             if (is_directory != true)
             {
-                // signature
-                byte[] sha256 = SecureStorageUtility.SHA256(data);
                 XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
-                signature_node.InnerText = Convert.ToBase64String(sha256);
+                signature_node.InnerText = hash;
                 file.AppendChild(signature_node);
             }
 
@@ -250,20 +288,11 @@ namespace SecureStorageLib
             modified_node.InnerText = dt.ToFileTime().ToString();
             file.AppendChild(modified_node);
             root.AppendChild(file);
+        }
 
-            // delete old dir file
-            store.Delete(secure_sub_dir_name);
-
-            string xml = doc.OuterXml;
-            data = Encoding.UTF8.GetBytes(xml);
-            encrypted_data = crypto.Encrypt(data);
-            store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
-
-            if (is_directory == true)
-            {
-                // create new directory file 
-                CreateDirectoryXml(name);
-            }
+        // copy a file
+        public void Copy(string src_name, string dst_name)
+        {
         }
 
         /// <summary>
@@ -335,10 +364,7 @@ namespace SecureStorageLib
             string dir_name = StoragePath.GetDirectory(name);
             string secure_dir_name = GetSecureName(dir_name);
             XmlDocument doc = GetDirectoryDocument(secure_dir_name);
-
-            string xpath = string.Format("/root/file[name = \"{0}\"] | /root/directory[name = \"{0}\"]", name);
-            XmlNode n = doc.SelectSingleNode(xpath);
-            n.ParentNode.RemoveChild(n);
+            RemoveNameXml(doc, name);
 
             // delete old dir file
             store.Delete(secure_dir_name);
@@ -376,8 +402,6 @@ namespace SecureStorageLib
             else
             {
                 byte[] data_chunk = null;
-
-
                 int offset = 0;
                 while ((offset + FRAGMENT_SIZE) <= LEN)
                 {
@@ -394,7 +418,6 @@ namespace SecureStorageLib
                 }
 
             }
-
             return crypto.Decrypt(encrypted_data); ;
         }
     }

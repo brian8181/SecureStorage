@@ -27,7 +27,7 @@ namespace SecureStorageWebService
             byte[] data = null;
             if (random)
             {
-                data = SecureStorageUtility.GenerateRandomBytes(len);
+                data = SecureStorageUtility.GererateKey(len);
                 File.WriteAllBytes(working_dir + name, data);
             }
             else

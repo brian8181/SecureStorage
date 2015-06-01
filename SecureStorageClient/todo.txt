@@ -4,11 +4,6 @@
 	* add setting where needed!
 	* Settings Form is a mess!	
 		
-
-	
-	
-
-
 *Done
 		* clean tmp.xml & tmp file creation in general
 		* new name, SecureStorage, SecureStore, SecureTransStore?, any more ... ?

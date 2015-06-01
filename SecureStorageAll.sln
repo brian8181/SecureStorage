@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithms", "Hashin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithmsTest", "HashingAlgorithmsTest\HashingAlgorithmsTest.csproj", "{029E1218-86AD-4925-BA09-B7146050124C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenSSLConsolePOC", "OpenSSLConsolePOC\OpenSSLConsolePOC.vcxproj", "{37239AE6-01AA-472D-8E85-6291028287E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -402,6 +404,21 @@ Global
 		{029E1218-86AD-4925-BA09-B7146050124C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{029E1218-86AD-4925-BA09-B7146050124C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{029E1218-86AD-4925-BA09-B7146050124C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Win32.Build.0 = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Win32.ActiveCfg = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Win32.Build.0 = Debug|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Release|Any CPU.ActiveCfg = Release|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Release|Win32.ActiveCfg = Release|Win32
+		{37239AE6-01AA-472D-8E85-6291028287E6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
