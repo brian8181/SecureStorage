@@ -4,7 +4,7 @@
 		*keyloaded is this a good validation?
 		*name validation, validate all name, valid len, characters etc
 
-		* random initialization vector, stored with data
+		* random initialization vector, stored with data, or stored in directory!
 			* IMPLEMENT RANDOM IV
 			* may use ArraySegment<T> Structure, humm may suck
 				
