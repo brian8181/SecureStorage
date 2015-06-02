@@ -14,7 +14,6 @@ std::string sha256( const std::string str )
     SHA256_CTX sha256;  
     SHA256_Init(&sha256);  
     SHA256_Update(&sha256, str.c_str(), str.size());  
-      
     SHA256_Final(hash, &sha256);  
       
     std::stringstream ss;  
@@ -69,10 +68,10 @@ int main()
     std::cout << sha256( "Sample String" ) << std::endl << std::endl;   
   
     // hash a file  
-    /*std::cout << "SHA-256 hash of text file Hamlet.txt:" << std::endl;  
+    std::cout << "SHA-256 hash of text file Hamlet.txt:" << std::endl;  
     char calc_hash[65];  
     sha256_file( "Hamlet.txt", calc_hash );  
-    std::cout << calc_hash << std::endl;   */
+    std::cout << calc_hash << std::endl;   
   
     return 0;  
 }  
