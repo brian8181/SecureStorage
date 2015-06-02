@@ -32,19 +32,6 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// true if key has been loaded, otherwise false
-        /// </summary>
-        private bool KeyLoaded
-        {
-            get
-            {
-                if (crypto.Key == null || crypto.IV == null)
-                    return false;
-                return true;
-            }
-        }
-
-        /// <summary>
         /// inititalize/create an empty root attempt to send / store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
@@ -102,10 +89,7 @@ namespace SecureStorageLib
         /// <returns></returns>
         private void CreateDirectoryXml(string name)
         {
-            // create a file system on server
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
+          
             // create xml file for root directory
             XmlDocument doc = new XmlDocument();
             XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -133,9 +117,6 @@ namespace SecureStorageLib
         /// <returns>files as xml</returns>
         public XmlNodeList GetFiles(string dir_name)
         {
-            if (KeyLoaded != true)
-                throw new SecureStorageException("key not loaded");
-
             // decrypt
             string secure_name = GetSecureName(dir_name);
             byte[] encrypted_data = store.Read(secure_name, 0, 0);
@@ -174,6 +155,13 @@ namespace SecureStorageLib
             string secure_name = GetSecureName(name);
             store.CreateEmpty(secure_name, len, random);
         }
+        
+        private bool AssertNameExists(string name)
+        {
+            // assert name/file/dir/name does not exists
+            string secure_name = GetSecureName(name);
+            return store.Exists(name);
+        }
 
         /// <summary>
         /// create a file or directory
@@ -183,16 +171,12 @@ namespace SecureStorageLib
         public void CreateName(string name, byte[] data)
         {
             // trim root slash from name
-            name = name.TrimStart('/');
-
-            // assert key is loaded
-            if (KeyLoaded != true)
-                throw new SecureStorageException("Key not loaded.");
+            //name = name.TrimStart('/');
 
             // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
-            if (store.Exists(name) != false)
-                throw new SecureStorageException("Error creating file. (file exists");
+            //if (store.Exists(secure_name) != false)
+            //    throw new SecureStorageException("Error creating file. (file exists");
 
             // assert name/directory exists
             string sub_dir_name = StoragePath.GetDirectory(name);
@@ -299,6 +283,12 @@ namespace SecureStorageLib
         {
             //BKP todo...
             //append dst_name
+
+            string secure_dst_name = GetSecureName(dst_name);
+            if (store.Exists(secure_dst_name) != false)
+                throw new SecureStorageException("Error creating file. (file exists");
+
+            //if(
             //store.Copy( ... );
             
 
@@ -361,9 +351,6 @@ namespace SecureStorageLib
         /// <param name="name">name of the object</param>
         public void Delete(string name)
         {
-            if (KeyLoaded != true)
-                throw new SecureStorageException("key not loaded");
-
             // delete file 
             string secure_name = GetSecureName(name);
 
@@ -403,9 +390,6 @@ namespace SecureStorageLib
         /// <returns></returns>
         public byte[] Read(string name)
         {
-            if (KeyLoaded != true)
-                throw new Exception("key not loaded");
-
             bool is_directory = name.EndsWith("/");
             if (is_directory)
                 throw new SecureStorageException("Error, is a directory.");

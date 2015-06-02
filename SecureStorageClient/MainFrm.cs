@@ -99,7 +99,7 @@ namespace SecureStorageClient
             {
                 string name = dlg.txtName.Text;
                 name = name.EndsWith("/") ? name : name + "/";
-                client_cloud.CreateName(CurrentDirectory + name, null);
+                client_cloud.CreateName((CurrentDirectory + name).TrimStart('/'), null);
                 RefreshFileList();
             }
         }
@@ -110,7 +110,7 @@ namespace SecureStorageClient
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 byte[] data = File.ReadAllBytes(dlg.fileBrowser.TextBox.Text);
-                client_cloud.CreateName(CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text), data);
+                client_cloud.CreateName((CurrentDirectory + Path.GetFileName(dlg.fileBrowser.TextBox.Text)).TrimStart('/'), data);
                 RefreshFileList();
             }
         }

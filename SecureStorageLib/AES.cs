@@ -82,10 +82,9 @@ namespace SecureStorageLib
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
+                // load key & iv
                 csp.Key = key;
                 csp.IV = iv;
-
-                // Get an encryptor.
                 ICryptoTransform encryptor = csp.CreateEncryptor(key, iv);
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -109,16 +108,14 @@ namespace SecureStorageLib
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
+                // load key & iv
                 csp.Key = key;
                 csp.IV = iv;
-
-                //Get a decryptor that uses the same key and IV as the encryptor.
                 ICryptoTransform decryptor = csp.CreateDecryptor(key, iv);
                 using (MemoryStream ms = new MemoryStream(data))
                 {
                     using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
                     {
-
                         // read it into buffer
                         List<byte> buffer = new List<byte>();
                         int b = cs.ReadByte();
@@ -127,7 +124,6 @@ namespace SecureStorageLib
                             buffer.Add((byte)b);
                             b = cs.ReadByte();
                         }
-
                         return buffer.ToArray();
                     }
                 }

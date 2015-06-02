@@ -1,0 +1,4 @@
+﻿** SimpleBuffer **
+	* Size N
+	* delete all on exit
+	* when full make room with fewest operations, aka deletes

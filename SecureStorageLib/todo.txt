@@ -1,6 +1,6 @@
 ﻿*Todo
 		* add move / copy operations
-
+		* remopve / rethink error handling responsibilities
 		*keyloaded is this a good validation?
 		*name validation, validate all name, valid len, characters etc
 

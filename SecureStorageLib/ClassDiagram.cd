@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAEgAAAAAIAA=</HashCode>
+      <FileName>AES.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SecureStorageLib.SecureStorageCryptoException" Collapsed="true">
+    <Position X="0.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\SecureStorageCryptoException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SecureStorageLib.SecureStorageException" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\SecureStorageException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SecureStorageLib.SecureStorage">
+    <Position X="3.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AoAAAAAAAAQCAQAADAQEAwAkAgUAAAABAAABACgAAAA=</HashCode>
+      <FileName>SecureStorage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SecureStorageLib.StoragePath">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEACAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
+      <FileName>SecureStoragePath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SecureStorageLib.SecureStorageUtility">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEAAAAIAAAAEACgBAAAAAAAAQAAAAQAAAAIAAAAA=</HashCode>
+      <FileName>SecureStorageUtility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="SecureStorageLib.ICrypto">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAAEgAAAAAAAA=</HashCode>
+      <FileName>ICrypto.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SecureStorageLib.IStorage">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAgBAAAAAAgAgEAAEAAAAAAAAEAAAA=</HashCode>
+      <FileName>IStorage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
