@@ -22,6 +22,20 @@ namespace SecureStorageTesting
             Assert.False(result);
         }
 
+        [TestCase("space test.jpg", true)]
+        [TestCase("tab  test.jpg", true)]
+        [TestCase("abc.jpg", true)]
+        [TestCase("1`~@#$%^&_-+=.abc", true)]
+        [TestCase("abc?.jpg", false)]
+        [TestCase("abc/", false)]
+        [TestCase("abc\\", false)]
+        [TestCase("abc|abc", false)]
+        public void IsValidName(string name, bool input)
+        {
+            bool output = SecureStorageLib.StoragePath.IsValidName(name);
+            Assert.AreEqual(output, input);
+        }
+
       
         [TestCase("C:\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("M:\\ABC\\EFG\\", "ABC/EFG/")]

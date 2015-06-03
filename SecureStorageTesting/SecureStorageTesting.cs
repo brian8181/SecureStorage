@@ -13,18 +13,27 @@ namespace SecureStorageTesting
     {
         byte[] key = null;
         byte[] iv = null;
+        private string path = "..\\..\\test\\tmp\\";
 
         [SetUp]
         public void Init()
         {
+
             string cur_dir = Directory.GetCurrentDirectory();
-            Directory.CreateDirectory("test_tmp");
+            if (Directory.Exists(path))
+                Directory.Delete(path, true);
+            Directory.CreateDirectory(path);
         }
 
         [TearDown]
         public void Dispose()
         {
-            //Directory.Delete("test_tmp");
+            
+        }
+
+        [Test]
+        public void Initialize()
+        {
         }
 
         [Test]
@@ -36,6 +45,31 @@ namespace SecureStorageTesting
             string xml = doc.OuterXml;
             Assert.IsFalse( string.IsNullOrWhiteSpace(xml) );
 
+        }
+
+        [Test]
+        public void CreateReadFile()
+        {
+            SecureStorageUtility.CreateKey(path + "key", 32, 16);
+            SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
+            store.Initialize();
+            
+
+            //string file_name = "file.txt";
+            //byte[] data = File.ReadAllBytes(path + file_name);
+            
+            //store.CreateFile(file_name, data);
+            //byte[] o_data = store.Read(file_name);
+
+            //Assert.AreEqual(data.Length, o_data.Length);
+
+            //for (int i = 0; i < data.Length; ++i)
+            //{
+            //    Assert.AreEqual(data[i], o_data[i]);
+            //}
+
+            Assert.IsTrue(false);
         }
 
         [Test]

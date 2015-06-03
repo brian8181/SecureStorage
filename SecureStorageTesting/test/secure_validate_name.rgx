@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?><REGX><Expression>^[a-zA-Z0-9.,;~`'@#$%^&amp;{}()\[\]!+-=_]+$</Expression><Input>{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+{\colortbl ;\red255\green255\blue0;}
+\viewkind4\uc1\pard\highlight1\f0\fs18 $[]()\highlight0\par
+}
+</Input></REGX>
