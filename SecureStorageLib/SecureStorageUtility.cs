@@ -6,12 +6,13 @@ using System.Xml;
 
 namespace SecureStorageLib
 {
+    /// <summary>
+    /// SecureStorageUtility
+    /// </summary>
     public static class SecureStorageUtility
     {
-        
-
         /// <summary>
-        /// creates a HMAC SHA256 based off name / key pair
+        /// HMACSHA256: creates a HMAC SHA256 based off name / key pair
         /// </summary>
         /// <param name="name">name to hash</param>
         /// <param name="key">the key</param>
@@ -25,7 +26,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// creates a SHA256
+        /// SHA256: creates a SHA256
         /// </summary>
         /// <param name="data">data to mhash</param>
         /// <returns>the hash as bytes</returns>
@@ -37,7 +38,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// generate key/salt or any random value of arbitrary length
+        /// GererateKey: generate key/salt or any random value of arbitrary length
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -52,7 +53,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// coverts bytes into hex string
+        /// FromBytesToHex: coverts bytes into hex string
         /// </summary>
         /// <param name="array">the bytes</param>
         /// <returns>hex as a string</returns>
@@ -67,7 +68,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// loads a key from file
+        /// LoadKey: loads a key from file
         /// </summary>
         /// <param name="path">path to key</param>
         /// <param name="key_size">the key size</param>
@@ -86,7 +87,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// create a key and write it to specified name
+        /// CreateKey: create a key and write it to specified name
         /// </summary>
         /// <param name="name">name to write the key</param>
         public static void CreateKey(string path, int key_size, int iv_size)
@@ -106,7 +107,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// initialize/create a directory based on input directory
+        /// InitializeLocalRoot: initialize/create a directory based on input directory
         /// </summary>
         /// <param name="in_path"></param>
         /// <param name="out_path"></param>
@@ -117,7 +118,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// (ONLY USED BY InitializeLocal) gets name / name used for cloud, aka removes local root & adjust slashes
+        /// GetCloudPath: (ONLY USED BY InitializeLocal) gets name / name used for cloud, aka removes local root & adjust slashes
         /// </summary>
         /// <param name="name">name / name to convert</param>
         /// <returns>cloud name / name</returns>
@@ -131,7 +132,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// get a secure name
+        /// GetSecureName: get a secure name
         /// </summary>
         /// <param name="name">orginal name</param>
         /// <returns>secure name based off original</returns>
@@ -143,6 +144,13 @@ namespace SecureStorageLib
             return FromBytesToHex(hash);
         }
 
+        /// <summary>
+        /// InitializeLocal
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="output_dir"></param>
+        /// <param name="key"></param>
+        /// <param name="iv"></param>
         private static void InitializeLocal(DirectoryInfo dir, string output_dir, byte[] key, byte[] iv)
         {
             string cloud_dir_name = GetCloudPath(dir.FullName);
