@@ -10,16 +10,16 @@ namespace SecureStorageTesting
     [TestFixture]
     public class SecureStoragePathTest
     {
-        [Test]
-        public void IsDirectoryTest()
-        {
-            string name = "a/";
-            bool result = SecureStorageLib.StoragePath.IsDirectory(name);
-            Assert.True(result);
 
-            name = "a";
-            result = SecureStorageLib.StoragePath.IsDirectory(name);
-            Assert.False(result);
+        [TestCase("/", true)]
+        [TestCase("/a", false)]
+        [TestCase("a/", true)]
+        [TestCase("a/b", false)]
+        [TestCase("a/b/", true)]
+        public void IsDirectoryTest(string name, bool expected)
+        {
+            bool actual = SecureStorageLib.StoragePath.IsDirectory(name);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("space test.jpg", true)]
@@ -49,6 +49,8 @@ namespace SecureStorageTesting
             Assert.AreEqual(output, result);
         }
 
+        // [TestCase("a//b", "b/)]
+        [TestCase("foo/boo/doo/goo/too", "goo/")]
         [TestCase("a/b/c", "a/b/")]
         [TestCase("a/b/c/", "a/b/")]
         [TestCase("a/", "/")]
@@ -58,13 +60,13 @@ namespace SecureStorageTesting
             Assert.AreEqual(output, result);
         }
 
-        [TestCase("a/b/c", "c")]
-        [TestCase("a/b/c/", null)]
-        public void GetShortName(string path, string output)
-        {
-            string result = SecureStorageLib.StoragePath.GetShortName(path);
-            Assert.AreEqual(output, result);
-        }
+        //[TestCase("a/b/c", "c")]
+        //[TestCase("a/b/c/", "c")]
+        //public void GetShortName(string path, string output)
+        //{
+        //    string result = SecureStorageLib.StoragePath.GetName(path);
+        //    Assert.AreEqual(output, result);
+        //}
 
         [TestCase("a/b/c/", new string[] {"a/b/", "a/"})]
         public void GetSubDirectories(string path, string[] output)

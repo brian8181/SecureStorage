@@ -135,7 +135,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">orginal name</param>
         /// <returns>secure name based off original</returns>
-        private static string GetSecureName(string name, byte[] key)
+        public static string GetSecureName(string name, byte[] key)
         {
             HMACSHA256 hmacsha256 = new HMACSHA256(key);
             byte[] data = ASCIIEncoding.ASCII.GetBytes(name);

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
-    <Position X="1.5" Y="6.25" Width="1.5" />
+    <Position X="0.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAEgAAAAAIAA=</HashCode>
       <FileName>AES.cs</FileName>
@@ -23,21 +23,22 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SecureStorageLib.SecureStorage">
-    <Position X="3.5" Y="0.5" Width="2" />
+    <Position X="3.5" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AoAAAAAAAAQCAQAADAQEAwAkAgUAAAABAAABACgAAAA=</HashCode>
+      <HashCode>AoAAAAAAAAQCAQBEDAQEAwAkAgUABAABAAABACgAAAA=</HashCode>
       <FileName>SecureStorage.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SecureStorageLib.StoragePath">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAEACAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
+      <HashCode>AAAAAAAAAACAAEAAEACAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
       <FileName>SecureStoragePath.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SecureStorageLib.SecureStorageUtility">
-    <Position X="7.75" Y="0.5" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAEEAAAAIAAAAEACgBAAAAAAAAQAAAAQAAAAIAAAAA=</HashCode>
       <FileName>SecureStorageUtility.cs</FileName>
@@ -51,10 +52,17 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.IStorage">
-    <Position X="6.25" Y="3.75" Width="1.5" />
+    <Position X="8.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAgBAAAAAAgAgEAAEAAAAAAAAEAAAA=</HashCode>
       <FileName>IStorage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SecureStorageLib.ISecureStorage">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQBEAAQAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISecureStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

@@ -10,7 +10,7 @@ namespace SecureStorageLib
     /// <summary>
     /// manages a secure storage store
     /// </summary>
-    public class SecureStorage 
+    public class SecureStorage : ISecureStorage
     {
         private IStorage store = null;
         private ICrypto crypto = null;
@@ -29,7 +29,10 @@ namespace SecureStorageLib
             this.store = store;
             this.crypto = crypto;
             FRAGMENT_SIZE = fragment_size;
+            CurrentDirectory = "/"; 
         }
+
+        public string CurrentDirectory { get; set; }
 
         /// <summary>
         /// inititalize/create an empty root attempt to send / store
@@ -38,7 +41,7 @@ namespace SecureStorageLib
         public void Initialize()
         {
             store.DeleteAll();
-            CreateDirectoryXml(ROOT_FILE_NAME);
+            CreateDescriptorFile(ROOT_FILE_NAME);
         }
 
         /// <summary>
@@ -70,6 +73,18 @@ namespace SecureStorageLib
             return doc;
         }
 
+        //BKP new
+        public string GetDescriptor(string name)
+        {
+            byte[] encrypted_data = store.Read(name, 0, 0);
+            byte[] data = crypto.Decrypt(encrypted_data);
+
+            string xml = Encoding.UTF8.GetString(data);
+            xml = RemoveByteOrderMarkUTF8(xml);
+
+            return xml;
+        }
+
         /// <summary>
         /// utility removes UTF-8 byte order mark from xml string
         /// </summary>
@@ -87,9 +102,8 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">name of directory</param>
         /// <returns></returns>
-        private void CreateDirectoryXml(string name)
+        private void CreateDescriptorFile(string name)
         {
-          
             // create xml file for root directory
             XmlDocument doc = new XmlDocument();
             XmlDeclaration decel = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
@@ -111,7 +125,7 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// get file in encrypted directory
+        /// get files in encrypted directory
         /// </summary>
         /// <param name="dir_name">directory name</param>
         /// <returns>files as xml</returns>
@@ -163,61 +177,55 @@ namespace SecureStorageLib
             return store.Exists(name);
         }
 
-        /// <summary>
-        /// create a file or directory
-        /// </summary>
-        /// <param name="name">name of object</param>
-        /// <param name="data">file data, is null if directory</param>
-        public void CreateName(string name, byte[] data)
+        public void CreateFile(string name, byte[] data)
         {
-            // trim root slash from name
-            //name = name.TrimStart('/');
-
-            // assert name/file/dir/name does not exists
+            // get all names
             string secure_name = GetSecureName(name);
-            //if (store.Exists(secure_name) != false)
-            //    throw new SecureStorageException("Error creating file. (file exists");
+            string dir_name = StoragePath.GetDirectory(name);
+            string secure_dir_name = GetSecureName(dir_name);
 
-            // assert name/directory exists
-            string sub_dir_name = StoragePath.GetDirectory(name);
-            string secure_sub_dir_name = GetSecureName(sub_dir_name);
-            if (store.Exists(secure_sub_dir_name) != true)
-                throw new SecureStorageException("Directory does not exists.");
-
-            bool is_directory = name.EndsWith("/");
-
-            byte[] encrypted_data = null;
-            if (is_directory != true)
-            {
-                // encrypt file to upload
-                encrypted_data = crypto.Encrypt(data);
-                // upload file
-                CreateAppendFragment(secure_name, encrypted_data);
-            }
+            // encrypt file to upload
+            byte[] encrypted_data = crypto.Encrypt(data);
+            // upload file
+            CreateAppendFragment(secure_name, encrypted_data);
 
             // create/append xml file node to xml directory node
-            XmlDocument doc = GetDirectoryDocument(secure_sub_dir_name);
+            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
             string hash = null;
-            if (is_directory == false)
-            {
-                byte[] sha256 = SecureStorageUtility.SHA256(data);
-                hash = Convert.ToBase64String(sha256);
-            }
-            AppendNameXml(doc, name, hash);
-           
-            // delete old dir file
-            store.Delete(secure_sub_dir_name);
+            byte[] sha256 = SecureStorageUtility.SHA256(data);
+            hash = Convert.ToBase64String(sha256);
+            AppendFileXml(doc, name, hash);
 
+            // delete old dir file
+            store.Delete(secure_dir_name);
+            // create new dir file
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
             encrypted_data = crypto.Encrypt(data);
-            store.Create(secure_sub_dir_name, encrypted_data, FileMode.Append);
+            store.Create(secure_dir_name, encrypted_data, FileMode.Append);
+        }
 
-            if (is_directory == true)
-            {
-                // create new directory file 
-                CreateDirectoryXml(name);
-            }
+        public void CreateDirectory(string name)
+        {
+            // get all names
+            string secure_name = GetSecureName(name);
+            string dir_name = StoragePath.GetDirectory(name);
+            string secure_dir_name = GetSecureName(dir_name);
+
+            // create descriptor file
+            CreateDescriptorFile(name);
+
+            // create/append xml file node to xml directory node
+            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
+            AppendDirectoryXml(doc, name);
+
+            // delete old dir file
+            store.Delete(secure_dir_name);
+            // create new dir file
+            string xml = doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
+            byte[] encrypted_data = crypto.Encrypt(data);
+            store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
 
         /// <summary>
@@ -232,46 +240,60 @@ namespace SecureStorageLib
             n.ParentNode.RemoveChild(n);
         }
 
-        // append a new name to xml
-        private void AppendNameXml(XmlDocument doc, string name, string hash)
+        /// <summary>
+        /// AppendFileXml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="name"></param>
+        /// <param name="hash"></param>
+        private void AppendFileXml(XmlDocument doc, string name, string hash)
         {
-            bool is_directory = name.EndsWith("/");
-            
             XmlNode root = doc.DocumentElement;
-            XmlNode file = null;
-            if (is_directory != true)
-            {
-                file = doc.CreateElement(string.Empty, "file", string.Empty);
-            }
-            else
-            {
-                file = doc.CreateElement(string.Empty, "directory", string.Empty);
-            }
+            XmlNode node = doc.CreateElement(string.Empty, "file", string.Empty);
+            AppendCommonNodesXml(doc, node, name);
 
+            // signature
+            XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
+            signature_node.InnerText = hash;
+            node.AppendChild(signature_node);
+
+            root.AppendChild(node);
+        }
+
+        /// <summary>
+        /// AppendDirectoryXml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="name"></param>
+        private void AppendDirectoryXml(XmlDocument doc, string name)
+        {
+            XmlNode root = doc.DocumentElement;
+            XmlNode node = doc.CreateElement(string.Empty, "directory", string.Empty); ;
+            AppendCommonNodesXml(doc, node, name);
+
+            root.AppendChild(node);
+        }
+
+        /// <summary>
+        /// AppendCommonNodesXml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="node"></param>
+        /// <param name="name"></param>
+        private void AppendCommonNodesXml(XmlDocument doc, XmlNode node, string name)
+        {
             // name
             XmlNode name_node = doc.CreateElement(string.Empty, "name", string.Empty);
             name_node.InnerText = name;
-            file.AppendChild(name_node);
-
-            // if dir add signature
-            if (is_directory != true)
-            {
-                XmlNode signature_node = doc.CreateElement(string.Empty, "signature", string.Empty);
-                signature_node.InnerText = hash;
-                file.AppendChild(signature_node);
-            }
-
-            // dates
+            node.AppendChild(name_node);
+            // date time 
             DateTime dt = DateTime.Now;
-            // created
             XmlNode created_node = doc.CreateElement(string.Empty, "created", string.Empty);
             created_node.InnerText = dt.ToFileTime().ToString();
-            file.AppendChild(created_node);
-            // modified
+            node.AppendChild(created_node);
             XmlNode modified_node = doc.CreateElement(string.Empty, "modified", string.Empty);
             modified_node.InnerText = dt.ToFileTime().ToString();
-            file.AppendChild(modified_node);
-            root.AppendChild(file);
+            node.AppendChild(modified_node);
         }
 
         /// <summary>
@@ -322,8 +344,8 @@ namespace SecureStorageLib
             else
             {
                 byte[] data_chunk = null;
-
                 int idx = 0; // reset index
+
                 while ((idx + FRAGMENT_SIZE) <= LEN)
                 {
                     data_chunk = new byte[FRAGMENT_SIZE];
@@ -341,7 +363,6 @@ namespace SecureStorageLib
 
                     store.Create(name, data_chunk, FileMode.Append);
                 }
-
             }
         }
 
@@ -354,7 +375,7 @@ namespace SecureStorageLib
             // delete file 
             string secure_name = GetSecureName(name);
 
-            //only delete id directory is empty
+            //only delete if directory is empty
             if (name.EndsWith("/"))
             {
                 // is this dir empty
@@ -420,7 +441,6 @@ namespace SecureStorageLib
                     data_chunk = store.Read(secure_name, offset, left_over);
                     Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
                 }
-
             }
             return crypto.Decrypt(encrypted_data); ;
         }

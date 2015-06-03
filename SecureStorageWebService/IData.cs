@@ -36,11 +36,18 @@ namespace SecureStorageWebService
         [OperationContract]
         void Delete(string name);
 
-        //get len of file
+        /// <summary>
+        /// gets length of a file
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [OperationContract]
         long GetLength(string name);
 
-        // get count all files
+        /// <summary>
+        /// get count of all files & directories
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         int GetCount();
 
@@ -52,19 +59,35 @@ namespace SecureStorageWebService
         [OperationContract]
         bool Exists(string name);
 
-        //return subset of file list
+        /// <summary>
+        /// get all file names
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
         [OperationContract]
         string[] GetNames(int idx, int len);
 
         //return subset of file list
+
+        /// <summary>
+        /// gets a files and directories
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
         string[] GetAllNames();
                
-        // get list of all files in dir, used for 
+        /// <summary>
+        /// delete all files in working directory
+        /// </summary>
         [OperationContract]
         void DeleteAll();
 
-        //get sha256 of file data
+        /// <summary>
+        /// gets sha256 of a files
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [OperationContract]
         byte[] SHA256(string name);
     }

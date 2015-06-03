@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SecureStorageLib
 {
@@ -11,9 +12,32 @@ namespace SecureStorageLib
     {
         public static char PathSeperator = '/';
         
-        public static bool IsValidateName(string name)
+
+        /// <summary>
+        /// validate a name (file, or directory name before hashing)
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsValidName(string name)
         {
+            // BKP simplify this sucker
+            //string expression = @"^[a-zA-Z0-9\s.,;~`'@#$%^&{}()\[\]!+-=_]+$";
+            // BKP no = sign, had problems with + sign
+            string expression = @"^[a-zA-Z0-9\s._=,;~`'@#$%^&{}()\[\]!+-]+$";
+            Regex regx = new Regex(expression, RegexOptions.Singleline);
+            
+            MatchCollection mc = regx.Matches(name);
+            // test for exact match
+            if (mc.Count == 1 && mc[0].Length == name.Length)
+                return true;
             return false;
+        }
+
+        public static bool DescriptorExists(string sercure_name, IStorage store, ICrypto crypto)
+        {
+            string sub_dir_name = StoragePath.GetDirectory(sercure_name);
+            string secure_sub_dir_name = SecureStorageUtility.GetSecureName(sub_dir_name, crypto.Key);
+            return store.Exists(secure_sub_dir_name);
         }
         
         /// <summary>
@@ -89,18 +113,17 @@ namespace SecureStorageLib
             return ret != string.Empty ? ret : "/";
         }
 
-        /// <summary>
-        /// gets short name of object (no path)
-        /// </summary>
-        /// <param name="path">the full path</param>
-        /// <returns>short name (no path) or null if directory</returns>
-        public static string GetShortName(string path)
-        {
-            int len = path.Length;
-            if (path[len - 1] == '/')
-                return null; // is a directory
-            string[] splits = path.Split(StoragePath.PathSeperator);
-            return splits[splits.Length - 1];
-        }
+        // this makes no sense since directories are always names with a follwing /
+        ///// <summary>
+        ///// gets short name of object (no path)
+        ///// </summary>
+        ///// <param name="path">the full path</param>
+        ///// <returns>short name (no path) or null if directory</returns>
+        //public static string GetName(string path)
+        //{
+        //    int len = path.Length;
+        //    string[] splits = path.Split(StoragePath.PathSeperator);
+        //    return splits[splits.Length - 1];
+        //}
     }
 }
