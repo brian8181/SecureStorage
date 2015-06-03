@@ -1,4 +1,5 @@
 ﻿*Todo
+		* IStorage GetLenght should return long, says me!
 		*NEW Idea 
 			* Two Names
 				* Desciptor the file on ther server ( ecrypted xml in this case )
