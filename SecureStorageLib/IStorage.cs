@@ -4,7 +4,7 @@ using System.IO;
 namespace SecureStorageLib
 {
     /// <summary>
-    /// high level interface to storage
+    /// IStorage: high level interface to storage
     /// </summary>
     public interface IStorage
     {
@@ -41,7 +41,7 @@ namespace SecureStorageLib
         void Copy(string src_name, string dst_name);
 
         /// <summary>
-        /// 
+        /// Delete
         /// </summary>
         /// <param name="name"></param>
         void Delete(string name);
