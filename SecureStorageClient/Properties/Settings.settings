@@ -9,7 +9,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="local_dir" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\tmp\cc\local</Value>
     </Setting>
     <Setting Name="max_msg_size" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30000</Value>

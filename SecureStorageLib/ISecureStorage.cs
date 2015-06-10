@@ -14,7 +14,7 @@ namespace SecureStorageLib
         //BKP todo .. define what ISecureStorage does?
         //     1. builds a secure storage system from 2 intefaces IStorgae, ICrypto
 
-        //IStorage Store { get; }
+        IStorage Store { get; }
         //ICrypto Crypto { get; }
         string CurrentDirectory { get; set; }
 

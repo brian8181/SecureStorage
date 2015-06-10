@@ -1,5 +1,5 @@
 ﻿Todo:
-	
+	*IFreeStore inteface patentable idea
 	*FINISHED/READY Version.1.0.RC.1
 
 Future:

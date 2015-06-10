@@ -8,7 +8,7 @@ using SecureStorageLib;
 namespace SecureStorageLib
 {
     /// <summary>
-    /// manages a secure storage store
+    /// manages a secure storage Store
     /// </summary>
     public class SecureStorage : ISecureStorage
     {
@@ -20,7 +20,7 @@ namespace SecureStorageLib
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="store">an ISecureStorage implementation</param>
+        /// <param name="Store">an ISecureStorage implementation</param>
         /// <param name="key">an encryption key</param>
         /// <param name="iv">an encryption iv</param>
         /// <param name="fragment_size">max message size before fragmentation occurs</param>
@@ -34,13 +34,18 @@ namespace SecureStorageLib
 
         public string CurrentDirectory { get; set; }
 
+        public IStorage Store
+        {
+            get { return store; }
+        }
+
         /// <summary>
-        /// inititalize/create an empty root attempt to send / store
+        /// inititalize/create an empty root attempt to send / Store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
         public void Initialize()
         {
-            store.DeleteAll();
+            Store.DeleteAll();
             CreateDescriptorFile(ROOT_FILE_NAME);
         }
 
@@ -62,7 +67,7 @@ namespace SecureStorageLib
         /// <returns>the name/doc as XmlDocument</returns>
         private XmlDocument GetDirectoryDocument(string name)
         {
-            byte[] encrypted_data = store.Read(name, 0, 0);
+            byte[] encrypted_data = Store.Read(name, 0, 0);
             byte[] data = crypto.Decrypt(encrypted_data);
 
             string xml = Encoding.UTF8.GetString(data);
@@ -76,7 +81,7 @@ namespace SecureStorageLib
         //BKP new
         public string GetDescriptor(string name)
         {
-            byte[] encrypted_data = store.Read(name, 0, 0);
+            byte[] encrypted_data = Store.Read(name, 0, 0);
             byte[] data = crypto.Decrypt(encrypted_data);
 
             string xml = Encoding.UTF8.GetString(data);
@@ -119,9 +124,9 @@ namespace SecureStorageLib
             byte[] xml_file_data = File.ReadAllBytes(secure_named_dir);
             byte[] encrypted_xml_file_data = crypto.Encrypt(xml_file_data);
 
-            // send/store it using secure name
-            if (store.Exists(secure_named_dir) != true)
-                store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
+            // send/Store it using secure name
+            if (Store.Exists(secure_named_dir) != true)
+                Store.Create(secure_named_dir, encrypted_xml_file_data, FileMode.Append);
         }
 
         /// <summary>
@@ -133,7 +138,7 @@ namespace SecureStorageLib
         {
             // decrypt
             string secure_name = GetSecureName(dir_name);
-            byte[] encrypted_data = store.Read(secure_name, 0, 0);
+            byte[] encrypted_data = Store.Read(secure_name, 0, 0);
             byte[] data = crypto.Decrypt(encrypted_data);
 
             XmlDocument doc = new XmlDocument();
@@ -155,7 +160,7 @@ namespace SecureStorageLib
         private int GetLength(string name)
         {
             string secure_name = GetSecureName(name);
-            return store.GetLength(secure_name);
+            return Store.GetLength(secure_name);
         }
 
         /// <summary>
@@ -167,14 +172,14 @@ namespace SecureStorageLib
         public void CreateEmptyFile(string name, int len, bool random = true)
         {
             string secure_name = GetSecureName(name);
-            store.CreateEmpty(secure_name, len, random);
+            Store.CreateEmpty(secure_name, len, random);
         }
         
         private bool AssertNameExists(string name)
         {
             // assert name/file/dir/name does not exists
             string secure_name = GetSecureName(name);
-            return store.Exists(name);
+            return Store.Exists(name);
         }
 
         public void CreateFile(string name, byte[] data)
@@ -197,12 +202,12 @@ namespace SecureStorageLib
             AppendFileXml(doc, name, hash);
 
             // delete old dir file
-            store.Delete(secure_dir_name);
+            Store.Delete(secure_dir_name);
             // create new dir file
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
             encrypted_data = crypto.Encrypt(data);
-            store.Create(secure_dir_name, encrypted_data, FileMode.Append);
+            Store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
 
         public void CreateDirectory(string name)
@@ -220,12 +225,12 @@ namespace SecureStorageLib
             AppendDirectoryXml(doc, name);
 
             // delete old dir file
-            store.Delete(secure_dir_name);
+            Store.Delete(secure_dir_name);
             // create new dir file
             string xml = doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] encrypted_data = crypto.Encrypt(data);
-            store.Create(secure_dir_name, encrypted_data, FileMode.Append);
+            Store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
 
         /// <summary>
@@ -307,24 +312,24 @@ namespace SecureStorageLib
             //append dst_name
 
             string secure_dst_name = GetSecureName(dst_name);
-            if (store.Exists(secure_dst_name) != false)
+            if (Store.Exists(secure_dst_name) != false)
                 throw new SecureStorageException("Error creating file. (file exists");
 
             //if(
-            //store.Copy( ... );
+            //Store.Copy( ... );
             
 
 
 
             //// delete old dir file
 
-            //store.Delete(secure_dir_name);
+            //Store.Delete(secure_dir_name);
 
             //// create new dir file
             //string xml = doc.OuterXml;
             //byte[] data = Encoding.UTF8.GetBytes(xml);
             //byte[] crypt = crypto.Encrypt(data);
-            //store.Create(secure_dir_name, crypt, FileMode.Append);
+            //Store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>
@@ -339,7 +344,7 @@ namespace SecureStorageLib
             if (FRAGMENT_SIZE <= 0 || FRAGMENT_SIZE >= LEN)
             {
                 // no fragmentaion
-                store.Create(name, data, FileMode.Append);
+                Store.Create(name, data, FileMode.Append);
             }
             else
             {
@@ -351,7 +356,7 @@ namespace SecureStorageLib
                     data_chunk = new byte[FRAGMENT_SIZE];
                     Array.Copy(data, idx, data_chunk, 0, FRAGMENT_SIZE);
 
-                    store.Create(name, data_chunk, FileMode.Append);
+                    Store.Create(name, data_chunk, FileMode.Append);
                     idx += FRAGMENT_SIZE;
                 }
 
@@ -361,7 +366,7 @@ namespace SecureStorageLib
                     data_chunk = new byte[left_over];
                     Array.Copy(data, idx, data_chunk, 0, left_over);
 
-                    store.Create(name, data_chunk, FileMode.Append);
+                    Store.Create(name, data_chunk, FileMode.Append);
                 }
             }
         }
@@ -383,11 +388,12 @@ namespace SecureStorageLib
                 XmlNodeList me_node = me_doc.SelectNodes("/root/file | /root/directory");
                 if (me_node.Count > 0)
                 {
+                    //BKP delete all
                     throw new SecureStorageException("Directory is not empty.");
                 }
             }
 
-            store.Delete(secure_name);
+            Store.Delete(secure_name);
             // decrypt xml dir file
             string dir_name = StoragePath.GetDirectory(name);
             string secure_dir_name = GetSecureName(dir_name);
@@ -395,13 +401,13 @@ namespace SecureStorageLib
             RemoveNameXml(doc, name);
 
             // delete old dir file
-            store.Delete(secure_dir_name);
+            Store.Delete(secure_dir_name);
 
             // create new dir file
             string xml = doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] crypt = crypto.Encrypt(data);
-            store.Create(secure_dir_name, crypt, FileMode.Append);
+            Store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>
@@ -416,13 +422,13 @@ namespace SecureStorageLib
                 throw new SecureStorageException("Error, is a directory.");
 
             string secure_name = GetSecureName(name);
-            int LEN = (int)store.GetLength(secure_name);
+            int LEN = (int)Store.GetLength(secure_name);
             byte[] encrypted_data = new byte[LEN];
 
             if (FRAGMENT_SIZE <= 0 || FRAGMENT_SIZE >= LEN)
             {
                 // no fragmentation
-                encrypted_data = store.Read(secure_name, 0, LEN);
+                encrypted_data = Store.Read(secure_name, 0, LEN);
             }
             else
             {
@@ -430,7 +436,7 @@ namespace SecureStorageLib
                 int offset = 0;
                 while ((offset + FRAGMENT_SIZE) <= LEN)
                 {
-                    data_chunk = store.Read(secure_name, offset, FRAGMENT_SIZE);
+                    data_chunk = Store.Read(secure_name, offset, FRAGMENT_SIZE);
                     Array.Copy(data_chunk, 0, encrypted_data, offset, FRAGMENT_SIZE);
                     offset += FRAGMENT_SIZE;
                 }
@@ -438,7 +444,7 @@ namespace SecureStorageLib
                 int left_over = (LEN - offset);
                 if (left_over > 0)
                 {
-                    data_chunk = store.Read(secure_name, offset, left_over);
+                    data_chunk = Store.Read(secure_name, offset, left_over);
                     Array.Copy(data_chunk, 0, encrypted_data, offset, left_over);
                 }
             }

@@ -41,7 +41,7 @@ namespace SecureStorageLib
         void Copy(string src_name, string dst_name);
 
         /// <summary>
-        /// Delete
+        /// Delete 
         /// </summary>
         /// <param name="name"></param>
         void Delete(string name);
