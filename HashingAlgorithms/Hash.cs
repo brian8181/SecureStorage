@@ -37,5 +37,16 @@ namespace HashingAlgorithms
 
             return null;
         }
+
+        public static byte[] PadMessage(byte[] msg)
+        {
+            return null; 
+        }
+
+        public static uint CircularShift(uint x, int n)
+        {
+            uint z = (x << n) | (x >> (32 - n));
+            return z;
+        }
     }
 }

@@ -371,6 +371,16 @@ namespace SecureStorageLib
             }
         }
 
+        public void DeleteFile(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDirectory(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// delete a named object
         /// </summary>

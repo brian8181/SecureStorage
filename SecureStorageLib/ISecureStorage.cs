@@ -27,7 +27,10 @@ namespace SecureStorageLib
         //BKP new way
         void CreateFile(string name, byte[] data);
         void CreateDirectory(string name);
-
+        //BKP try this
+        void DeleteFile(string name);
+        void DeleteDirectory(string name);
+         
         //void CreateName(string name, byte[] data);
 
         //void DeleteName(string name);

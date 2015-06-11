@@ -22,10 +22,10 @@
       <FileName>Exceptions\SecureStorageException.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SecureStorageLib.SecureStorage">
-    <Position X="3.5" Y="3.25" Width="2" />
+  <Class Name="SecureStorageLib.SecureStorage" Collapsed="true">
+    <Position X="3.25" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AoAAAAAAAAQCAQBEDAQEAwAkAgUABAABAAABACgAAAA=</HashCode>
+      <HashCode>A4AAAAAAAAQAAQAEDAQEAwAgAiUBBAABAAEAASgAAQA=</HashCode>
       <FileName>SecureStorage.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -33,7 +33,7 @@
   <Class Name="SecureStorageLib.StoragePath">
     <Position X="5.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAEAAEACAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
+      <HashCode>AAAAAAAAAACAAEAAEAAAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
       <FileName>SecureStoragePath.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -52,16 +52,16 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.IStorage">
-    <Position X="8.75" Y="4.5" Width="1.5" />
+    <Position X="7.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAgBAAAAAAgAgEAAEAAAAAAAAEAAAA=</HashCode>
       <FileName>IStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.ISecureStorage">
-    <Position X="3.75" Y="0.5" Width="1.5" />
+    <Position X="3.25" Y="2.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQBEAAQAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAEAAQAAAAAAAQABAAAAAEAAQAAAQA=</HashCode>
       <FileName>ISecureStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
