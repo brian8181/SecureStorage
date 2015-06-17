@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AES.cs" />
-    <Compile Include="ICrypto.cs" />
+    <Compile Include="ICryptography.cs" />
     <Compile Include="ISecureStorage.cs" />
     <Compile Include="SecureStorage.cs" />
     <Compile Include="Exceptions\SecureStorageException.cs" />

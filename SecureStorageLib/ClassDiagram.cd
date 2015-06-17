@@ -25,7 +25,7 @@
   <Class Name="SecureStorageLib.SecureStorage" Collapsed="true">
     <Position X="3.25" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>A4AAAAAAAAQAAQAEDAQEAwAgAiUBBAABAAEAASgAAQA=</HashCode>
+      <HashCode>A4AAAAAAAIQAAQAEDAQEAwAgAiUBBAABAAEAASgAAQA=</HashCode>
       <FileName>SecureStorage.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -44,11 +44,11 @@
       <FileName>SecureStorageUtility.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="SecureStorageLib.ICrypto">
+  <Interface Name="SecureStorageLib.ICryptography">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAAEgAAAAAAAA=</HashCode>
-      <FileName>ICrypto.cs</FileName>
+      <FileName>ICryptography.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.IStorage">

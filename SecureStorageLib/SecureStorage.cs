@@ -13,7 +13,7 @@ namespace SecureStorageLib
     public class SecureStorage : ISecureStorage
     {
         private IStorage store = null;
-        private ICrypto crypto = null;
+        private ICryptography crypto = null;
         private string current_directory = "/";
         private readonly int FRAGMENT_SIZE = 0;
         private const string ROOT_FILE_NAME = "/";
@@ -25,7 +25,7 @@ namespace SecureStorageLib
         /// <param name="key">an encryption key</param>
         /// <param name="iv">an encryption iv</param>
         /// <param name="fragment_size">max message size before fragmentation occurs</param>
-        public SecureStorage(IStorage store, ICrypto crypto, int fragment_size = 0)
+        public SecureStorage(IStorage store, ICryptography crypto, int fragment_size = 0)
         {
             this.store = store;
             this.crypto = crypto;

@@ -9,7 +9,7 @@ namespace SecureStorageLib
     /// <summary>
     /// AES implemenation of ICypto inteface
     /// </summary>
-    public class AES : ICrypto
+    public class AES : ICryptography
     {
         private byte[] key = null;
         private byte[] iv = null;

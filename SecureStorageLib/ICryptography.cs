@@ -3,9 +3,9 @@
 namespace SecureStorageLib
 {
     /// <summary>
-    /// defines cryptographic inteface
+    /// ICryptography: defines cryptographic inteface
     /// </summary>
-    public interface ICrypto
+    public interface ICryptography
     {
         /// <summary>
         /// key
@@ -16,7 +16,7 @@ namespace SecureStorageLib
         }
         
         /// <summary>
-        /// initialization vector
+        /// IV: initialization vector
         /// </summary>
         byte[] IV
         {
@@ -24,7 +24,7 @@ namespace SecureStorageLib
         }
         
         /// <summary>
-        /// size of the key
+        /// KeySize: size of the key
         /// </summary>
         int KeySize
         {
@@ -32,7 +32,7 @@ namespace SecureStorageLib
         }
         
         /// <summary>
-        /// size of initialization vector
+        /// IVSize: size of initialization vector
         /// </summary>
         int IVSize
         {
@@ -40,13 +40,14 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// encrypt data
+        /// Encrypt: encrypt data
         /// </summary>
         /// <param name="data">decrypted bytes</param>
         /// <returns>ecrypted bytes</returns>
         byte[] Encrypt(byte[] data);
+
         /// <summary>
-        /// decrypt data
+        /// Decrypt: decrypt data
         /// </summary>
         /// <param name="data">ecrypted bytes</param>
         /// <returns>decrypted bytes</returns>
