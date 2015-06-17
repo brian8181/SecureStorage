@@ -12,6 +12,7 @@ namespace SecureStorageClient
         private ServiceReference.IStorageService cloud = new ServiceReference.StorageServiceClient();
         
         #region IStorage Members
+        
         public void Create(string name, byte[] data, System.IO.FileMode mode = FileMode.Create)
         {
             cloud.CreateAppend(name, data);
@@ -51,7 +52,7 @@ namespace SecureStorageClient
         {
             cloud.Copy(src_name, dst_name);
         }
-
+        
         #endregion
     }
 }

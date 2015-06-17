@@ -8,6 +8,7 @@ namespace HashingAlgorithms
 {
     public class Hash
     {
+        public const uint SHA1_BIT_SIZE = 512;
         public const uint SHA1_BLOCK_SIZE = 64;
 
         public static byte[] Sha1(byte[] data)
@@ -29,7 +30,7 @@ namespace HashingAlgorithms
                              
             };
 
-            //padding to 5121 bit block length
+            //padding to 512 bit block length
             uint num_pad_bytes = (uint)(data.Length % SHA1_BLOCK_SIZE);
             byte bit = 0x80;
             ushort len_bytes = 0;
@@ -40,7 +41,39 @@ namespace HashingAlgorithms
 
         public static byte[] PadMessage(byte[] msg)
         {
-            return null; 
+            int len = msg.Length;
+            len += (64 - (msg.Length % 64));
+            byte[] buffer = new byte[len];
+            Array.Copy(msg, buffer, msg.Length);
+            buffer[msg.Length] = 1; // add a one bit to end of message
+            byte[] len_bytes = BitConverter.GetBytes((long)(msg.Length * 8));
+            // copy len bytes
+            Array.Copy(len_bytes, 0, buffer, len - 8, 8); 
+            
+            return buffer; 
+        }
+
+        public static uint F0(uint B, uint C, uint D)
+        {
+            // (B AND C) OR ((NOT B) AND D)
+
+            uint z = (B & C) | (~B & D);
+            return z;
+        }
+
+        public static void F20(uint B, uint C, uint D)
+        {
+            // B XOR C XOR D
+        }
+
+        public static void F40(uint B, uint C, uint D)
+        {
+            // (B AND C) OR (B AND D) OR (C AND D)
+        }
+
+        public static void F60(uint B, uint C, uint D)
+        {
+            // B XOR C XOR D
         }
 
         public static uint CircularShift(uint x, int n)

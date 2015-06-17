@@ -1,10 +1,10 @@
 ﻿*Todo
-		* IStorage GetLenght should return long, says me!
+		* IStorage GetLength should return long, says me!
 		*NEW Idea 
 			* Two Names
 				* Desciptor the file on ther server ( ecrypted xml in this case )
 				* Directory a virtual thing you can see ( made by addtion to description and it own descriptor)
-		* delete delets whole tree recusive
+		* delete delete whole tree recusive
 		* create ISecureStorgae interface
 			* Possible Errors
 				1. Name exists

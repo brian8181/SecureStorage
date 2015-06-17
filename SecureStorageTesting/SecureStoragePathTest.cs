@@ -49,8 +49,8 @@ namespace SecureStorageTesting
             Assert.AreEqual(output, result);
         }
 
-        // [TestCase("a//b", "b/)]
-        [TestCase("foo/boo/doo/goo/too", "goo/")]
+        //[TestCase("a//b", "b/")]
+        [TestCase("foo/boo/doo/goo/too", "foo/boo/doo/goo/")]
         [TestCase("a/b/c", "a/b/")]
         [TestCase("a/b/c/", "a/b/")]
         [TestCase("a/", "/")]

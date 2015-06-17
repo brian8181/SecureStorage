@@ -14,6 +14,7 @@ namespace SecureStorageLib
     {
         private IStorage store = null;
         private ICrypto crypto = null;
+        private string current_directory = "/";
         private readonly int FRAGMENT_SIZE = 0;
         private const string ROOT_FILE_NAME = "/";
 
@@ -32,8 +33,19 @@ namespace SecureStorageLib
             CurrentDirectory = "/"; 
         }
 
-        public string CurrentDirectory { get; set; }
+        /// <summary>
+        /// CurrentDirectory 
+        /// </summary>
+        public string CurrentDirectory 
+        { 
+            get{ return current_directory; } 
+            set{ current_directory = value; }
+        }
 
+
+        /// <summary>
+        /// Store
+        /// </summary>
         public IStorage Store
         {
             get { return store; }

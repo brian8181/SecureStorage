@@ -58,7 +58,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageTesting", "Sec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithms", "HashingAlgorithms\HashingAlgorithms.csproj", "{FE5A59BB-0BBC-45C3-AD58-F3009601E2C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithmsTest", "HashingAlgorithmsTest\HashingAlgorithmsTest.csproj", "{029E1218-86AD-4925-BA09-B7146050124C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithmsTests", "HashingAlgorithmsTest\HashingAlgorithmsTests.csproj", "{029E1218-86AD-4925-BA09-B7146050124C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenSSLConsolePOC", "OpenSSLConsolePOC\OpenSSLConsolePOC.vcxproj", "{37239AE6-01AA-472D-8E85-6291028287E6}"
 EndProject
@@ -75,8 +75,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageBufferLib", "SecureStorageBufferLib\SecureStorageBufferLib.csproj", "{86396355-B4B2-4C7A-BF0E-A1FE62E2E2DE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenSSL_SHA256_Example", "OpenSSL_SHA256_Example\OpenSSL_SHA256_Example.vcxproj", "{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashingAlgorithms_nUnitTest", "HashingAlgorithms_nUnitTest\HashingAlgorithms_nUnitTest.csproj", "{49754116-4435-4D5C-AF89-D166E545434E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -435,7 +433,6 @@ Global
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D63DDEEA-18F6-4347-AF0B-41B4A52F35A9}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -450,7 +447,6 @@ Global
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -464,7 +460,6 @@ Global
 		{70920E0E-AA5B-4988-B210-DF9F59044C9E}.Release|Win32.ActiveCfg = Release|Any CPU
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Debug|Win32.Build.0 = Debug|Win32
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -479,7 +474,6 @@ Global
 		{AAD18DC6-D1A4-4423-B86A-78A92955E6D7}.Release|Win32.Build.0 = Release|Win32
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Debug|Win32.Build.0 = Debug|Win32
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -494,7 +488,6 @@ Global
 		{1A09C298-EA12-40DB-B21D-00ADC32441FB}.Release|Win32.Build.0 = Release|Win32
 		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Debug|Win32.ActiveCfg = Debug|Win32
 		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Debug|Win32.Build.0 = Debug|Win32
 		{ED83BC7D-3F5C-44EE-B00D-69E7481F5032}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -537,21 +530,6 @@ Global
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Release|Win32.ActiveCfg = Release|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Release|Win32.Build.0 = Release|Win32
-		{49754116-4435-4D5C-AF89-D166E545434E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Deploy_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Deploy_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Deploy_Debug|Win32.ActiveCfg = Debug|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{49754116-4435-4D5C-AF89-D166E545434E}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

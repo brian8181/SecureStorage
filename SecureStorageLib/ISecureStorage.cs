@@ -32,13 +32,11 @@ namespace SecureStorageLib
         void DeleteDirectory(string name);
          
         //void CreateName(string name, byte[] data);
-
         //void DeleteName(string name);
         //void ReadName(string name);
         //void MoveName(string src_anme, string dst_name);
         //void CopyName(string src_anme, string dst_name);
         //string[] GetNames(string names);
-
         //long GetLength(string name); ?
 
         //string GetDirectoryInfo(string name);
