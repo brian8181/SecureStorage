@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SecureStorageLib
 {
     /// <summary>
-    /// an interface for secure storeage
+    /// an interface for secure storage
     /// </summary>
     public interface ISecureStorage
     {
@@ -27,10 +27,10 @@ namespace SecureStorageLib
         //BKP new way
         void CreateFile(string name, byte[] data);
         void CreateDirectory(string name);
-        //BKP try this
         void DeleteFile(string name);
         void DeleteDirectory(string name);
-         
+        string GetDescriptor(string name);
+
         //void CreateName(string name, byte[] data);
         //void DeleteName(string name);
         //void ReadName(string name);
@@ -41,7 +41,7 @@ namespace SecureStorageLib
 
         //string GetDirectoryInfo(string name);
         //BKP new name maybe?
-        string GetDescriptor(string name);
+        
     }   
 }
  

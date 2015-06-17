@@ -20,7 +20,7 @@ namespace HashingAlgorithmsTest
             byte[] hash = HashingAlgorithms.Hash.Sha1(data);
                        
             
-            // assert false
+            // assert false 
             //Assert.IsTrue(false);
             Assert.Inconclusive();
         }

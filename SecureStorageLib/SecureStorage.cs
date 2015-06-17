@@ -194,6 +194,11 @@ namespace SecureStorageLib
             return Store.Exists(name);
         }
 
+        /// <summary>
+        /// CreateFile
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
         public void CreateFile(string name, byte[] data)
         {
             // get all names
@@ -222,6 +227,10 @@ namespace SecureStorageLib
             Store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
 
+        /// <summary>
+        /// CreateDirectory
+        /// </summary>
+        /// <param name="name"></param>
         public void CreateDirectory(string name)
         {
             // get all names
@@ -244,6 +253,67 @@ namespace SecureStorageLib
             byte[] encrypted_data = crypto.Encrypt(data);
             Store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
+
+        /// <summary>
+        /// DeleteFile
+        /// </summary>
+        /// <param name="name"></param>
+        public void DeleteFile(string name)
+        {
+            string secure_name = GetSecureName(name);
+
+            Store.Delete(secure_name);
+            // decrypt xml dir file
+            string dir_name = StoragePath.GetDirectory(name);
+            string secure_dir_name = GetSecureName(dir_name);
+            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
+            RemoveNameXml(doc, name);
+
+            // delete old dir file
+            Store.Delete(secure_dir_name);
+
+            // create new dir file
+            string xml = doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
+            byte[] crypt = crypto.Encrypt(data);
+            Store.Create(secure_dir_name, crypt, FileMode.Append);
+        }
+
+        /// <summary>
+        /// DeleteDirectory
+        /// </summary>
+        /// <param name="name"></param>
+        public void DeleteDirectory(string name)
+        {
+            // delete file 
+            string secure_name = GetSecureName(name);
+
+            // is this dir empty
+            XmlDocument me_doc = GetDirectoryDocument(secure_name);
+            XmlNodeList me_node = me_doc.SelectNodes("/root/file | /root/directory");
+            if (me_node.Count > 0)
+            {
+                //BKP delete all
+                throw new SecureStorageException("Directory is not empty.");
+            }
+
+            Store.Delete(secure_name);
+            // decrypt xml dir file
+            string dir_name = StoragePath.GetDirectory(name);
+            string secure_dir_name = GetSecureName(dir_name);
+            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
+            RemoveNameXml(doc, name);
+
+            // delete old dir file
+            Store.Delete(secure_dir_name);
+
+            // create new dir file
+            string xml = doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
+            byte[] crypt = crypto.Encrypt(data);
+            Store.Create(secure_dir_name, crypt, FileMode.Append);
+        }
+
 
         /// <summary>
         /// removes a object by name from xml document
@@ -381,55 +451,6 @@ namespace SecureStorageLib
                     Store.Create(name, data_chunk, FileMode.Append);
                 }
             }
-        }
-
-        public void DeleteFile(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteDirectory(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// delete a named object
-        /// </summary>
-        /// <param name="name">name of the object</param>
-        public void Delete(string name)
-        {
-            // delete file 
-            string secure_name = GetSecureName(name);
-
-            //only delete if directory is empty
-            if (name.EndsWith("/"))
-            {
-                // is this dir empty
-                XmlDocument me_doc = GetDirectoryDocument(secure_name);
-                XmlNodeList me_node = me_doc.SelectNodes("/root/file | /root/directory");
-                if (me_node.Count > 0)
-                {
-                    //BKP delete all
-                    throw new SecureStorageException("Directory is not empty.");
-                }
-            }
-
-            Store.Delete(secure_name);
-            // decrypt xml dir file
-            string dir_name = StoragePath.GetDirectory(name);
-            string secure_dir_name = GetSecureName(dir_name);
-            XmlDocument doc = GetDirectoryDocument(secure_dir_name);
-            RemoveNameXml(doc, name);
-
-            // delete old dir file
-            Store.Delete(secure_dir_name);
-
-            // create new dir file
-            string xml = doc.OuterXml;
-            byte[] data = Encoding.UTF8.GetBytes(xml);
-            byte[] crypt = crypto.Encrypt(data);
-            Store.Create(secure_dir_name, crypt, FileMode.Append);
         }
 
         /// <summary>

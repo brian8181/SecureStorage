@@ -140,7 +140,14 @@ namespace SecureStorageClient
             string name = (string)serverfileList.SelectedItem;
             if (name != null)
             {
-                client_cloud.Delete(name);
+                if (name.EndsWith("/"))
+                {
+                    client_cloud.DeleteDirectory(name);
+                }
+                else
+                {
+                    client_cloud.DeleteFile(name);
+                }
                 RefreshFileList();
             }
         }

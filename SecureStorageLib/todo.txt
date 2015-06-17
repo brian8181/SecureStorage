@@ -1,6 +1,6 @@
 ﻿*Todo
 		* IStorage GetLength should return long, says me!
-		*NEW Idea 
+		* NEW Idea 
 			* Two Names
 				* Desciptor the file on ther server ( ecrypted xml in this case )
 				* Directory a virtual thing you can see ( made by addtion to description and it own descriptor)
@@ -18,8 +18,8 @@
 
 		* add move / copy operations
 		* remopve / rethink error handling responsibilities
-		*keyloaded is this a good validation?
-		*name validation, validate all name, valid len, characters etc
+		* keyloaded is this a good validation?
+		* name validation, validate all name, valid len, characters etc
 
 		* random initialization vector, stored with data, or stored in directory!
 			* IMPLEMENT RANDOM IV

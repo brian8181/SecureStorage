@@ -13,7 +13,7 @@ namespace SecureStorageTesting
     {
         byte[] key = null;
         byte[] iv = null;
-        private string path = "..\\..\\test\\tmp\\";
+        private string path = Global.TestFolder + "tmp\\";
 
         [SetUp]
         public void Init()
