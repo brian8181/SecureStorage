@@ -77,7 +77,7 @@ namespace SecureStorageClient
         public void RefreshFileList()
         {
             //string seerver_dir = Properties.Settings.Default.output_dir;
-            XmlNodeList files = client_cloud.GetFiles(CurrentDirectory);
+            XmlNodeList files = client_cloud.GetNames(CurrentDirectory);
             serverfileList.Items.Clear();
             // add to fileList
             foreach (XmlNode n in files)
@@ -209,8 +209,14 @@ namespace SecureStorageClient
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            client_cloud.Copy("file2.txt", "file2_copy.txt");
-            RefreshFileList();
+            string src_name = (string)serverfileList.SelectedItem;
+            CopyFrm dlg = new CopyFrm(src_name);
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                client_cloud.Copy(src_name, dlg.dstfileBrowser.TextBox.Text);
+                RefreshFileList();
+            }
+          
         }
     }
 }

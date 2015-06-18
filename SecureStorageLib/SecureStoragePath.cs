@@ -22,6 +22,7 @@ namespace SecureStorageLib
         {
             // BKP simplify this sucker
             //string expression = @"^[a-zA-Z0-9\s.,;~`'@#$%^&{}()\[\]!+-=_]+$";
+
             // BKP no = sign, had problems with + sign
             string expression = @"^[a-zA-Z0-9\s._=,;~`'@#$%^&{}()\[\]!+-]+$";
             Regex regx = new Regex(expression, RegexOptions.Singleline);

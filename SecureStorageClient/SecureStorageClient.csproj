@@ -54,6 +54,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopyFrm.Designer.cs">
+      <DependentUpon>CopyFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ISecureStorageUtility.cs" />
     <Compile Include="CreateDirectoryFrm.cs">
       <SubType>Form</SubType>
@@ -87,6 +93,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="WCFStorage.cs" />
+    <EmbeddedResource Include="CopyFrm.resx">
+      <DependentUpon>CopyFrm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateDirectoryFrm.resx">
       <DependentUpon>CreateDirectoryFrm.cs</DependentUpon>
     </EmbeddedResource>

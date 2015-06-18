@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SecureStorageLib
 {
@@ -11,16 +12,10 @@ namespace SecureStorageLib
     /// </summary>
     public interface ISecureStorage
     {
-        //BKP todo .. define what ISecureStorage does?
-        //     1. builds a secure storage system from 2 intefaces IStorgae, ICrypto
-
         IStorage Store { get; }
-        //ICrypto Crypto { get; }
+        //ICryptography Cryptography { get; }
         string CurrentDirectory { get; set; }
 
-        /// <summary>
-        /// initialize root directory
-        /// </summary>
         void Initialize();
         void CreateEmptyFile(string name, int len, bool random = true);
         void CreateFile(string name, byte[] data);  
@@ -30,11 +25,12 @@ namespace SecureStorageLib
         byte[] Read(string name); // read file
         //void Move(string name); // move file
         void Copy(string src_name, string dst_name); // copy file
-        string GetDescriptor(string name);
-        //string[] GetNames(string names); // get files / dirs
-        //string[] GetFiles(string names); // get files
-        //string[] GetDirectories(string names); // get dirs
-        //long GetFileLength(string name);
+        //string GetDescriptor(string name);
+        XmlNodeList GetNames(string names); // get files / dirs
+        XmlNodeList GetFiles(string names); // get files
+        XmlNodeList GetDirectories(string names); // get dirs
+
+        //XmlDocument GetDirectoryDocument(string name)
     }   
 }
  

@@ -90,29 +90,17 @@ namespace SecureStorageLib
             return doc;
         }
 
-        //BKP new
-        public string GetDescriptor(string name)
-        {
-            byte[] encrypted_data = Store.Read(name, 0, 0);
-            byte[] data = crypto.Decrypt(encrypted_data);
+        //BKP new, STILL USING "GetDirectoryDocument"
+        //public string GetDescriptor(string name)
+        //{
+        //    byte[] encrypted_data = Store.Read(name, 0, 0);
+        //    byte[] data = crypto.Decrypt(encrypted_data);
 
-            string xml = Encoding.UTF8.GetString(data);
-            xml = RemoveByteOrderMarkUTF8(xml);
+        //    string xml = Encoding.UTF8.GetString(data);
+        //    xml = RemoveByteOrderMarkUTF8(xml);
 
-            return xml;
-        }
-
-        /// <summary>
-        /// utility removes UTF-8 byte order mark from xml string
-        /// </summary>
-        /// <returns>string, without byte order mark</returns>
-        private string RemoveByteOrderMarkUTF8(string xml)
-        {
-            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml.StartsWith(byte_order_mark))
-                xml = xml.Remove(0, byte_order_mark.Length);
-            return xml;
-        }
+        //    return xml;
+        //}
 
         /// <summary>
         /// internal function, abstarcts Creating direcoties at specified name
@@ -142,7 +130,21 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// get files in encrypted directory
+        /// GetNames: get files in encrypted directory
+        /// </summary>
+        /// <param name="dir_name">directory name</param>
+        /// <returns>files as xml</returns>
+        public XmlNodeList GetNames(string dir_name)
+        {
+            // decrypt
+            string secure_name = GetSecureName(dir_name);
+            XmlDocument doc = GetDirectoryDocument(secure_name);
+            XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
+            return nodes;
+        }
+
+        /// <summary>
+        /// GetFiles: get files in encrypted directory
         /// </summary>
         /// <param name="dir_name">directory name</param>
         /// <returns>files as xml</returns>
@@ -150,29 +152,36 @@ namespace SecureStorageLib
         {
             // decrypt
             string secure_name = GetSecureName(dir_name);
-            byte[] encrypted_data = Store.Read(secure_name, 0, 0);
-            byte[] data = crypto.Decrypt(encrypted_data);
-
-            XmlDocument doc = new XmlDocument();
-            // encode to string & remove: byte order mark (BOM)
-            string xml = UTF8Encoding.UTF8.GetString(data);
-            xml = RemoveByteOrderMarkUTF8(xml);
-            doc.LoadXml(xml);
-
-            XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
-
+            XmlDocument doc = GetDirectoryDocument(secure_name);
+            XmlNodeList nodes = doc.SelectNodes("/root/file");
             return nodes;
         }
 
         /// <summary>
-        /// get the length of an object
+        /// GetDirectories
         /// </summary>
-        /// <param name="name">the object name</param>
-        /// <returns>length in bytes</returns>
-        private int GetLength(string name)
+        /// <param name="dir_name"></param>
+        /// <returns></returns>
+        public XmlNodeList GetDirectories(string dir_name)
         {
-            string secure_name = GetSecureName(name);
-            return Store.GetLength(secure_name);
+            // decrypt
+            string secure_name = GetSecureName(dir_name);
+            XmlDocument doc = GetDirectoryDocument(secure_name);
+            XmlNodeList nodes = doc.SelectNodes("/root/directory");
+            return nodes;
+        }
+              
+
+        /// <summary>
+        /// RemoveByteOrderMarkUTF8: utility removes UTF-8 byte order mark from xml string
+        /// </summary>
+        /// <returns>string, without byte order mark</returns>
+        private string RemoveByteOrderMarkUTF8(string xml)
+        {
+            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+            if (xml.StartsWith(byte_order_mark))
+                xml = xml.Remove(0, byte_order_mark.Length);
+            return xml;
         }
 
         /// <summary>
@@ -255,14 +264,13 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// 
+        /// Copy
         /// </summary>
         /// <param name="src_name"></param>
         /// <param name="dst_name"></param>
         public void Copy(string src_name, string dst_name)
         {
-            // for now all same dir!!!!!!!!!!!!!!!!!!!
-            // get all names
+             // get all names
             string secure_src_name = GetSecureName(src_name);
             string dir_src_name = StoragePath.GetDirectory(src_name);
             string secure_dir_src_name = GetSecureName(dir_src_name);
@@ -274,13 +282,9 @@ namespace SecureStorageLib
             // create copy on storage
             Store.Copy(secure_src_name, secure_dst_name);
 
-            // do dir changes
-
             // create/append xml file node to xml directory node
             XmlDocument src_doc = GetDirectoryDocument(secure_dir_src_name);
             string hash = ReadFileSignatureXml(src_doc, src_name); // get hash from doc
-
-            // RECREATE DST DIRECTORY!
 
             XmlDocument dst_doc = GetDirectoryDocument(secure_dir_dst_name);
             AppendFileXml(dst_doc, dst_name, hash);
