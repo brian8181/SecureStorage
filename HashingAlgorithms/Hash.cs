@@ -49,7 +49,6 @@ namespace HashingAlgorithms
             byte[] len_bytes = BitConverter.GetBytes((long)(msg.Length * 8));
             // copy len bytes
             Array.Copy(len_bytes, 0, buffer, len - 8, 8); 
-            
             return buffer; 
         }
 
@@ -57,7 +56,7 @@ namespace HashingAlgorithms
         {
             // (B AND C) OR ((NOT B) AND D)
 
-            uint z = (B & C) | (~B & D);
+            uint z = ( B & C ) | ( (~B) & D );
             return z;
         }
 

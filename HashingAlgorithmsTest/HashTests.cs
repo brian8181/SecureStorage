@@ -18,7 +18,7 @@ namespace HashingAlgorithmsTest
             string text = "abc";
             byte[] data = Encoding.ASCII.GetBytes(text);
             byte[] hash = HashingAlgorithms.Hash.Sha1(data);
-                       
+           
             
             // assert false 
             //Assert.IsTrue(false);
@@ -48,13 +48,11 @@ namespace HashingAlgorithmsTest
 
             // 01100001 01100010 01100011 01100100 = 0x61626364
             uint i1 = 0x61626364;
-
-
+            
             // 01100101 00000000 00000000 00000000 = 0x65000000
             // 01100101 10000000 00000000 00000000 = 0x65800000
 
             File.ReadAllBytes("..\\..\\test\\300_bytes_file.txt");
-
         }
 
         [Test]

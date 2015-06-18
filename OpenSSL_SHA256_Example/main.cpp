@@ -72,6 +72,10 @@ int main()
     char calc_hash[65];  
     sha256_file( "Hamlet.txt", calc_hash );  
     std::cout << calc_hash << std::endl;   
-  
+
+	// just get it to pause
+	char c;
+	std::cin >> c;
+
     return 0;  
 }  
