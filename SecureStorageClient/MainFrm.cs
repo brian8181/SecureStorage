@@ -120,6 +120,10 @@ namespace SecureStorageClient
             string name = (string)serverfileList.SelectedItem;
             if (name != null)
             {
+                bool is_directory = name.EndsWith("/");
+                if (is_directory)
+                    throw new SecureStorageException("Error, is a directory.");
+
                 byte[] data = null;
                 // int len = (int)client_cloud.GetLength(name);
                 data = client_cloud.Read(name);
@@ -201,6 +205,12 @@ namespace SecureStorageClient
                     RefreshFileList();
                 }
             }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            client_cloud.Copy("file2.txt", "file2_copy.txt");
+            RefreshFileList();
         }
     }
 }

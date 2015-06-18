@@ -11,6 +11,16 @@ namespace SecureStorageLib
     /// </summary>
     public static class SecureStorageUtility
     {
+        ////testing
+        //public static string ReadHashFromXml(XmlDocument doc, string name)
+        //{
+        //    // todo
+        //    string xpath = string.Format("/root/file[name = \"{0}\"]/hash", name);
+        //    XmlNode n = doc.SelectSingleNode(xpath);
+        //    return "";
+        //}
+
+       
         /// <summary>
         /// HMACSHA256: creates a HMAC SHA256 based off name / key pair
         /// </summary>
@@ -113,7 +123,7 @@ namespace SecureStorageLib
         /// <param name="out_path"></param>
         public static void InitializeLocalRoot(string input_dir, string output_dir, byte[] key, byte[] iv)
         {
-            DirectoryInfo di= new DirectoryInfo(input_dir);
+            DirectoryInfo di = new DirectoryInfo(input_dir);
             InitializeLocal(di, output_dir, key, iv);
         }
 

@@ -32,8 +32,16 @@ namespace SecureStorageTesting
         }
 
         [Test]
-        public void Initialize()
+        public void InitializeBuildDirectoryStructure()
         {
+            SecureStorageUtility.CreateKey(path + "key", 32, 16);
+            SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
+            store.Initialize();
+
+            //todo build stucture
+
+            Assert.Inconclusive();
         }
 
         [Test]

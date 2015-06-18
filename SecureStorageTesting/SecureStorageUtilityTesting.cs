@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using NUnit.Framework;
 using SecureStorageLib;
@@ -22,6 +23,24 @@ namespace SecureStorageTesting
         public void Dispose()
         {
         }
+
+        //[Test]
+        //public void ReadHashFromXml()
+        //{
+            
+        //    SecureStorageUtility.CreateKey(Global.TestFolder + "key", 32, 16);
+        //    SecureStorageUtility.LoadKey(Global.TestFolder + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+        //    SecureStorage store = new SecureStorage(new LocalStorage(Global.TestFolder + "local"), new AES(key, iv), 1000);
+        //    store.Initialize();
+
+        //    byte[] data = File.ReadAllBytes(Global.TestFolder + "file.txt");~
+        //    string name = "blah";
+        //    store.CreateFile(name, data);
+
+
+        //    //SecureStorageUtility.ReadHashFromXml(, name);
+           
+        //}
 
         [Test]
         public void LoadKey()

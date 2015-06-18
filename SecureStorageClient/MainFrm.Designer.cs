@@ -42,6 +42,7 @@
             this.btnCreateDir = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.grpLocal = new System.Windows.Forms.GroupBox();
+            this.btnCopy = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.grpLocal.SuspendLayout();
             this.SuspendLayout();
@@ -169,6 +170,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnCopy);
             this.groupBox1.Controls.Add(this.btnCreateEmpty);
             this.groupBox1.Controls.Add(this.btnCreate);
             this.groupBox1.Controls.Add(this.btnCreateDir);
@@ -178,7 +180,7 @@
             this.groupBox1.Controls.Add(this.btnGetDirs);
             this.groupBox1.Location = new System.Drawing.Point(200, 165);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(118, 229);
+            this.groupBox1.Size = new System.Drawing.Size(118, 276);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
@@ -193,6 +195,16 @@
             this.grpLocal.TabIndex = 18;
             this.grpLocal.TabStop = false;
             this.grpLocal.Text = "Local";
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Location = new System.Drawing.Point(6, 222);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(102, 23);
+            this.btnCopy.TabIndex = 17;
+            this.btnCopy.Text = "Copy";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // MainFrm
             // 
@@ -231,6 +243,7 @@
         private System.Windows.Forms.Button btnCreateDir;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox grpLocal;
+        private System.Windows.Forms.Button btnCopy;
     }
 }
 

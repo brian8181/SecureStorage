@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="server_mirror_dir" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\tmp\cc\svr_mirror</Value>
     </Setting>
     <Setting Name="init_input_dir" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\tmp\infiles</Value>
     </Setting>
     <Setting Name="local_dir" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\tmp\cc\local</Value>

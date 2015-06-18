@@ -22,26 +22,19 @@ namespace SecureStorageLib
         /// initialize root directory
         /// </summary>
         void Initialize();
-        //void CreateEmptyFile(string name, int len, bool random = true);
-
-        //BKP new way
-        void CreateFile(string name, byte[] data);
+        void CreateEmptyFile(string name, int len, bool random = true);
+        void CreateFile(string name, byte[] data);  
         void CreateDirectory(string name);
         void DeleteFile(string name);
         void DeleteDirectory(string name);
+        byte[] Read(string name); // read file
+        //void Move(string name); // move file
+        void Copy(string src_name, string dst_name); // copy file
         string GetDescriptor(string name);
-
-        //void CreateName(string name, byte[] data);
-        //void DeleteName(string name);
-        //void ReadName(string name);
-        //void MoveName(string src_anme, string dst_name);
-        //void CopyName(string src_anme, string dst_name);
-        //string[] GetNames(string names);
-        //long GetLength(string name); ?
-
-        //string GetDirectoryInfo(string name);
-        //BKP new name maybe?
-        
+        //string[] GetNames(string names); // get files / dirs
+        //string[] GetFiles(string names); // get files
+        //string[] GetDirectories(string names); // get dirs
+        //long GetFileLength(string name);
     }   
 }
  

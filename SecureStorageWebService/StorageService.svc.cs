@@ -45,7 +45,7 @@ namespace SecureStorageWebService
         /// <param name="dst_name"></param>
         public void Copy(string src_name, string dst_name)
         {
-            File.Copy(src_name, dst_name);
+            File.Copy(working_dir + src_name, working_dir + dst_name);
         }
 
         /// <summary>
