@@ -28,7 +28,6 @@ namespace SecureStorageTesting
         [TearDown]
         public void Dispose()
         {
-            
         }
 
         [Test]
