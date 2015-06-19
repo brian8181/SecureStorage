@@ -116,15 +116,16 @@ namespace SecureStorageLib
                 {
                     using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
                     {
-                        // read it into buffer
-                        List<byte> buffer = new List<byte>();
-                        int b = cs.ReadByte();
-                        while (b != -1)
+                        long len = data.Length;
+                        byte[] buffer = new byte[len];
+                        int read = cs.Read(buffer, 0, (int)len);
+                        if (len != read)
                         {
-                            buffer.Add((byte)b);
-                            b = cs.ReadByte();
+                            byte[] copy_buffer = new byte[read];
+                            Array.Copy(buffer, copy_buffer, read);
+                            buffer = copy_buffer;
                         }
-                        return buffer.ToArray();
+                        return buffer;
                     }
                 }
             }

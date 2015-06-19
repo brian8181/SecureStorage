@@ -14,12 +14,22 @@ namespace SecureStorageTesting
         private byte[] key = null;
         private byte[] iv = null;
 
-        [Test]
-        public void Encrypt()
+        [SetUp]
+        public void Init()
         {
             string key_path = Global.TestFolder + "key";
-            string file_path = Global.TestFolder + "file.txt";
             SecureStorageUtility.LoadKey(key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+        }
+
+        [Test]
+        public void EncryptLenghtCheck()
+        {
+            string file_path = Global.TestFolder + "file.txt";
             byte[] data = File.ReadAllBytes(file_path);
 
             AES aes = new AES(key, iv);
@@ -29,6 +39,21 @@ namespace SecureStorageTesting
             int expected_enc_length = (int)Math.Ceiling((double)(data_len / 16d)) * 16;
             // output len should equal input @ 16 byte blocks
             Assert.AreEqual(data_len, expected_enc_length);
+        }
+
+        [Test]
+        public void EncryptDecrypt()
+        {
+            string str_data = "you and I have been through that and it's not our fate";
+            byte[] data = Encoding.ASCII.GetBytes(str_data);
+
+            AES aes = new AES(key, iv);
+            byte[] enc_data = aes.Encrypt(data);
+
+            byte[] denc_data = aes.Decrypt(enc_data);
+            string actual = Encoding.ASCII.GetString(denc_data);
+
+            Assert.AreEqual(str_data, actual);
         }
     }
 }
