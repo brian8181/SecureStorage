@@ -52,6 +52,14 @@ namespace SecureStorageLib
         }
 
         /// <summary>
+        /// Cryptography
+        /// </summary>
+        public ICryptography Cryptography 
+        { 
+            get{ return crypto; }
+        }
+
+        /// <summary>
         /// inititalize/create an empty root attempt to send / Store
         /// </summary>
         /// <returns>returns true if successful, otherwise false</returns>
@@ -295,7 +303,12 @@ namespace SecureStorageLib
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] encrypted_data = crypto.Encrypt(data);
             Store.Create(secure_dir_dst_name, encrypted_data, FileMode.Append);
-       }
+        }
+
+        public void Move(string src_name, string dst_name)
+        {
+            // BKP todo
+        }
 
         /// <summary>
         /// DeleteFile

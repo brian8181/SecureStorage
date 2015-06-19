@@ -34,6 +34,13 @@ namespace SecureStorageLib
             return false;
         }
 
+        /// <summary>
+        /// DescriptorExists
+        /// </summary>
+        /// <param name="sercure_name"></param>
+        /// <param name="store"></param>
+        /// <param name="crypto"></param>
+        /// <returns></returns>
         public static bool DescriptorExists(string sercure_name, IStorage store, ICryptography crypto)
         {
             string sub_dir_name = StoragePath.GetDirectory(sercure_name);
@@ -67,7 +74,7 @@ namespace SecureStorageLib
         }
         
         /// <summary>
-        /// 
+        /// GetSubDirectories
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>

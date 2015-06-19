@@ -12,7 +12,7 @@ namespace SecureStorageLib
     /// </summary>
     public interface ISecureStorage
     {
-        IStorage Store { get; }
+        //IStorage Store { get; }
         //ICryptography Cryptography { get; }
         string CurrentDirectory { get; set; }
 
@@ -23,14 +23,13 @@ namespace SecureStorageLib
         void DeleteFile(string name);
         void DeleteDirectory(string name);
         byte[] Read(string name); // read file
-        //void Move(string name); // move file
+        void Move(string src_name, string dst_name); // move file
         void Copy(string src_name, string dst_name); // copy file
         //string GetDescriptor(string name);
-        XmlNodeList GetNames(string names); // get files / dirs
+        //XmlDocument GetDirectoryDocument(string name);
+        XmlNodeList GetNames(string names); // get files &  dirs
         XmlNodeList GetFiles(string names); // get files
         XmlNodeList GetDirectories(string names); // get dirs
-
-        //XmlDocument GetDirectoryDocument(string name)
     }   
 }
  
