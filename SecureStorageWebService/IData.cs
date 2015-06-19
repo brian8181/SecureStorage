@@ -51,6 +51,15 @@ namespace SecureStorageWebService
         /// <param name="dst_name">the destination object</param>
         [OperationContract]
         void Copy(string src_name, string dst_name);
+
+
+        /// <summary>
+        /// Copy: copy object of src_name to dst_name
+        /// </summary>
+        /// <param name="src_name">the source object</param>
+        /// <param name="dst_name">the destination object</param>
+        [OperationContract]
+        void Move(string src_name, string dst_name);
         
         /// <summary>
         /// deletes a object by name

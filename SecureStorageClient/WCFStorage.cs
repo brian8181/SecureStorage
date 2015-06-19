@@ -52,6 +52,11 @@ namespace SecureStorageClient
         {
             cloud.Copy(src_name, dst_name);
         }
+
+        public void Move(string src_name, string dst_name)
+        {
+            cloud.Move(src_name, dst_name);
+        }
         
         #endregion
     }

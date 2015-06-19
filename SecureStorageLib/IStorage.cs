@@ -40,6 +40,14 @@ namespace SecureStorageLib
         /// <param name="dst_name"></param>
         void Copy(string src_name, string dst_name);
 
+
+        /// <summary>
+        /// Copy
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
+        void Move(string src_name, string dst_name);
+
         /// <summary>
         /// Delete 
         /// </summary>

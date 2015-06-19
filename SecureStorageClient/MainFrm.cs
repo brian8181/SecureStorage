@@ -218,5 +218,16 @@ namespace SecureStorageClient
             }
           
         }
+
+        private void btnMove_Click(object sender, EventArgs e)
+        {
+            string src_name = (string)serverfileList.SelectedItem;
+            MoveFrm dlg = new MoveFrm(src_name);
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                client_cloud.Move(src_name, dlg.dstfileBrowser.TextBox.Text);
+                RefreshFileList();
+            }
+        }
     }
 }

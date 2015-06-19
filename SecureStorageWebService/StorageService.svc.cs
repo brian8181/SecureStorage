@@ -49,6 +49,16 @@ namespace SecureStorageWebService
         }
 
         /// <summary>
+        /// copies object
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
+        public void Move(string src_name, string dst_name)
+        {
+            File.Move(working_dir + src_name, working_dir + dst_name);
+        }
+
+        /// <summary>
         /// deletes object name
         /// </summary>
         /// <param name="name"></param>

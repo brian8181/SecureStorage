@@ -52,6 +52,37 @@ namespace HashingAlgorithms
             return buffer; 
         }
 
+        static uint[] W = null;
+        public static uint[] GetWs(byte[] block)
+        {
+            if (block.Length != 512)
+            {
+                throw new Exception("block not 512");
+            }
+
+            int current_i = 0;
+            // divide block into 16 words
+            uint[] W = new uint[16];
+            for (int i = 0; i < 4; ++i)
+            {
+                if ((i % 4) != 0)
+                {
+                    byte[] next_word = new byte[4];
+                    W[current_i++] = BitConverter.ToUInt32(block, i - 3);
+                }
+            }
+
+            return W;
+
+        }
+
+        public static void ProcessMessageBlock(byte[] block)
+        {
+
+            W = GetWs(block);
+
+        }
+
         public static uint F0(uint B, uint C, uint D)
         {
             // (B AND C) OR ((NOT B) AND D)

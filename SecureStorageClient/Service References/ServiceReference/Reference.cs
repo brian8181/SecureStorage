@@ -45,6 +45,12 @@ namespace SecureStorageClient.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Copy", ReplyAction="http://tempuri.org/IData/CopyResponse")]
         System.Threading.Tasks.Task CopyAsync(string src_name, string dst_name);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Move", ReplyAction="http://tempuri.org/IData/MoveResponse")]
+        void Move(string src_name, string dst_name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Move", ReplyAction="http://tempuri.org/IData/MoveResponse")]
+        System.Threading.Tasks.Task MoveAsync(string src_name, string dst_name);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IData/Delete", ReplyAction="http://tempuri.org/IData/DeleteResponse")]
         void Delete(string name);
         
@@ -159,6 +165,14 @@ namespace SecureStorageClient.ServiceReference {
         
         public System.Threading.Tasks.Task CopyAsync(string src_name, string dst_name) {
             return base.Channel.CopyAsync(src_name, dst_name);
+        }
+        
+        public void Move(string src_name, string dst_name) {
+            base.Channel.Move(src_name, dst_name);
+        }
+        
+        public System.Threading.Tasks.Task MoveAsync(string src_name, string dst_name) {
+            return base.Channel.MoveAsync(src_name, dst_name);
         }
         
         public void Delete(string name) {

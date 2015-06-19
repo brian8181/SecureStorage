@@ -305,9 +305,48 @@ namespace SecureStorageLib
             Store.Create(secure_dir_dst_name, encrypted_data, FileMode.Append);
         }
 
+
+        /// <summary>
+        /// Move
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
         public void Move(string src_name, string dst_name)
         {
-            // BKP todo
+            // get all names
+            string secure_src_name = GetSecureName(src_name);
+            string dir_src_name = StoragePath.GetDirectory(src_name);
+            string secure_dir_src_name = GetSecureName(dir_src_name);
+
+            string secure_dst_name = GetSecureName(dst_name);
+            string dir_dst_name = StoragePath.GetDirectory(dst_name);
+            string secure_dir_dst_name = GetSecureName(dir_dst_name);
+
+            // create copy on storage
+            Store.Move(secure_src_name, secure_dst_name);
+
+            // create/append xml file node to xml directory node
+            XmlDocument src_doc = GetDirectoryDocument(secure_dir_src_name);
+            string hash = ReadFileSignatureXml(src_doc, src_name); // get hash from doc
+
+            RemoveNameXml(src_doc, src_name);
+            // delete old dir file
+            Store.Delete(secure_dir_src_name);
+            // create new dir file
+            string xml = src_doc.OuterXml;
+            byte[] data = Encoding.UTF8.GetBytes(xml);
+            byte[] encrypted_data = crypto.Encrypt(data);
+            Store.Create(secure_dir_src_name, encrypted_data, FileMode.Append);
+
+            XmlDocument dst_doc = GetDirectoryDocument(secure_dir_dst_name);
+            AppendFileXml(dst_doc, dst_name, hash);
+            // delete old dir file
+            Store.Delete(secure_dir_dst_name);
+            // create new dir file
+            xml = dst_doc.OuterXml;
+            data = Encoding.UTF8.GetBytes(xml);
+            encrypted_data = crypto.Encrypt(data);
+            Store.Create(secure_dir_dst_name, encrypted_data, FileMode.Append);
         }
 
         /// <summary>
