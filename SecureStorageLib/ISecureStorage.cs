@@ -12,24 +12,96 @@ namespace SecureStorageLib
     /// </summary>
     public interface ISecureStorage
     {
-        //IStorage Store { get; }
-        //ICryptography Cryptography { get; }
+        IStorage Store { get; }
+        ICryptography Cryptography { get; }
+
+        /// <summary>
+        /// CurrentDirectory
+        /// </summary>
         string CurrentDirectory { get; set; }
 
+        /// <summary>
+        /// Initialize
+        /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// CreateEmptyFile
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="len"></param>
+        /// <param name="random"></param>
         void CreateEmptyFile(string name, int len, bool random = true);
+
+        /// <summary>
+        /// CreateFile
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
         void CreateFile(string name, byte[] data);  
+
+        /// <summary>
+        /// CreateDirectory
+        /// </summary>
+        /// <param name="name"></param>
         void CreateDirectory(string name);
+
+        /// <summary>
+        /// DeleteFile
+        /// </summary>
+        /// <param name="name"></param>
         void DeleteFile(string name);
+
+        /// <summary>
+        /// DeleteDirectory
+        /// </summary>
+        /// <param name="name"></param>
         void DeleteDirectory(string name);
+
+        /// <summary>
+        /// Read
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         byte[] Read(string name); // read file
+
+        /// <summary>
+        /// Move
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
         void Move(string src_name, string dst_name); // move file
-        void Copy(string src_name, string dst_name); // copy file
+
+        /// <summary>
+        /// Copy: copy file
+        /// </summary>
+        /// <param name="src_name"></param>
+        /// <param name="dst_name"></param>
+        void Copy(string src_name, string dst_name); 
+        
+        /// <summary>
+        /// GetNames: get files &  directory nodes
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        XmlNodeList GetNames(string names); 
+
+        /// <summary>
+        /// GetFiles: get file nodes
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        XmlNodeList GetFiles(string names); 
+
+        /// <summary>
+        /// GetDirectories: get directory nodes
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns></returns>
+        XmlNodeList GetDirectories(string names); 
+
         //string GetDescriptor(string name);
         //XmlDocument GetDirectoryDocument(string name);
-        XmlNodeList GetNames(string names); // get files &  dirs
-        XmlNodeList GetFiles(string names); // get files
-        XmlNodeList GetDirectories(string names); // get dirs
     }   
 }
  

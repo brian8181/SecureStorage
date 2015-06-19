@@ -3,7 +3,7 @@
 namespace SecureStorageLib
 {
     /// <summary>
-    /// ICryptography: defines cryptographic inteface
+    /// ICryptography: defines cryptographic interface
     /// </summary>
     public interface ICryptography
     {
