@@ -12,17 +12,13 @@ namespace HashingAlgorithmsTest
     [TestFixture]
     public class HashTests
     {
-        [Test]
-        public void Sha1()
+        [TestCase("abc", "a9993e364706816aba3e25717850c26c9cd0d89d")]
+        public void Sha1(string data, string expected)
         {
-            string text = "abc";
-            byte[] data = Encoding.ASCII.GetBytes(text);
-            byte[] hash = HashingAlgorithms.Hash.Sha1(data);
-           
-            
-            // assert false 
-            //Assert.IsTrue(false);
-            Assert.Inconclusive();
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            byte[] output_bytes = HashingAlgorithms.Hash.Sha1(buffer);
+            string actual = HashingAlgorithms.Hash.FromBytesToHex(output_bytes);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -67,6 +63,25 @@ namespace HashingAlgorithmsTest
             // test output
 
             Assert.Inconclusive("work in progress");
+        }
+
+        [TestCase("ABCD", 0x20UL)]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120UL)]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120UL)]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZYabcdefghijklmnopqrstuvwxyz0123", 0x01c0UL)]
+        public void Sha1Padding(string data, ulong expected_len)
+        {
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            byte[] padded_buffer = Hash.PadMessage(buffer);
+            Assert.IsTrue(padded_buffer.Length == 64);
+            
+            byte[] len_bytes = new byte[8];
+
+            Array.Copy(padded_buffer, padded_buffer.Length - 8, len_bytes, 0, 8);
+            Array.Reverse(len_bytes);
+
+            ulong actual_len = BitConverter.ToUInt64(len_bytes, 0);
+            Assert.AreEqual(expected_len, actual_len);
         }
     }
 }

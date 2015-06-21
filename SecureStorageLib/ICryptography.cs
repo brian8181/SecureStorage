@@ -46,6 +46,8 @@ namespace SecureStorageLib
         /// <returns>ecrypted bytes</returns>
         byte[] Encrypt(byte[] data);
 
+        //byte[] Encrypt(byte[] data, bool ramdom_iv = false, bool append_end = true);
+
         /// <summary>
         /// Decrypt: decrypt data
         /// </summary>

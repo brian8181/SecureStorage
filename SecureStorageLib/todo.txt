@@ -25,7 +25,8 @@
 		
 				
 	Future:
-		*Local Read Buffer, have a location that auto buffers files based on? last used?, fequency?, size?
+		* Use PBKDF2-SHA1 (Key stretching) generate key
+		* Local Read Buffer, have a location that auto buffers files based on? last used?, fequency?, size?
 			* Optimize for least bytes downloaded
 
 		

@@ -87,7 +87,9 @@ namespace SecureStorageLib
         /// <returns>the name/doc as XmlDocument</returns>
         private XmlDocument GetDirectoryDocument(string name)
         {
+            // posssible too big a file!, use this.Read()
             byte[] encrypted_data = Store.Read(name, 0, 0);
+
             byte[] data = crypto.Decrypt(encrypted_data);
 
             string xml = Encoding.UTF8.GetString(data);

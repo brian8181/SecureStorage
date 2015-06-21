@@ -9,6 +9,10 @@ namespace SecureStorageTesting
 {
     public class AESTesting
     {
+
+        private const string STRING_TEST_DATA = "you and I have been through that and it's not our fate";
+       
+
         private byte[] key = null;
         private byte[] iv = null;
 
@@ -60,8 +64,8 @@ namespace SecureStorageTesting
         [Test]
         public void EncryptDecrypt()
         {
-            string str_data = "you and I have been through that and it's not our fate";
-            byte[] data = Encoding.ASCII.GetBytes(str_data);
+            //string str_data = "you and I have been through that and it's not our fate";
+            byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
 
             AES aes = new AES(key, iv);
             byte[] enc_data = aes.Encrypt(data);
@@ -69,7 +73,26 @@ namespace SecureStorageTesting
             byte[] denc_data = aes.Decrypt(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 
-            Assert.AreEqual(str_data, actual);
+            Assert.AreEqual(STRING_TEST_DATA, actual);
+        }
+
+        [Test]
+        public void EncryptDecrypt_RamdomIV()
+        {
+            byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
+   
+            AES aes1 = new AES(key, iv);
+            byte[] data1 = aes1.EncryptRI(data);
+
+            //AES aes2 = new AES(key, iv);
+            //byte[] data2 = aes2.Encrypt(data);
+            //Assert.AreEqual(data1.Length - AES.IV_SIZE, data2.Length);
+
+            AES aes2 = new AES(key, iv);
+            byte[] denc_data = aes2.DecryptRI(data1);
+            string actual = Encoding.ASCII.GetString(denc_data);
+
+            Assert.AreEqual(STRING_TEST_DATA, actual);
         }
     }
 }

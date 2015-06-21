@@ -68,6 +68,16 @@ namespace SecureStorageTesting
             byte[] key = SecureStorageUtility.GererateKey(10);
             Assert.AreEqual(10, key.Length);
         }
+
+        [TestCase("/", "ad9ab4fe58a9eb1473c4b60dc7be1216e7f10900e8cdf6a54853f797da0485d1")]
+        [TestCase("abc/", "50370210a407c8745652831cbec125e1129e6a11270749e6fbd4ed11672e792c")]
+        public void HMACSHA256(string name, string secure_name)
+        {
+            byte[] hash = SecureStorageUtility.HMACSHA256(name, key);
+            string actual = SecureStorageUtility.FromBytesToHex(hash);
+            Assert.AreEqual(secure_name, actual);
+
+        }
     }
 }
  

@@ -45,10 +45,14 @@ namespace HashingAlgorithms
             len += (64 - (msg.Length % 64));
             byte[] buffer = new byte[len];
             Array.Copy(msg, buffer, msg.Length);
-            buffer[msg.Length] = 1; // add a one bit to end of message
             byte[] len_bytes = BitConverter.GetBytes((long)(msg.Length * 8));
+            // to big endian
+            if(BitConverter.IsLittleEndian)
+                Array.Reverse(len_bytes);
             // copy len bytes
-            Array.Copy(len_bytes, 0, buffer, len - 8, 8); 
+            Array.Copy(len_bytes, 0, buffer, len - 8, 8);
+            // copy 0x80 "10000000" to end of message
+            buffer[msg.Length] = 0x80; // add a one bit to end of message
             return buffer; 
         }
 
@@ -110,6 +114,16 @@ namespace HashingAlgorithms
         {
             uint z = (x << n) | (x >> (32 - n));
             return z;
+        }
+
+        public static string FromBytesToHex(byte[] array)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in array)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }
