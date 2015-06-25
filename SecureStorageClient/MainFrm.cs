@@ -70,7 +70,7 @@ namespace SecureStorageClient
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key.tmp";
-            SecureStorageUtility.CreateKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE);
+            SecureStorageUtility.CreateKey(key_loc);
             StdMsgBox.OK("\"Key.tmp\" created.");
         }
 

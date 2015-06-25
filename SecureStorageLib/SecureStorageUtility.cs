@@ -20,7 +20,6 @@ namespace SecureStorageLib
         //    return "";
         //}
 
-       
         /// <summary>
         /// HMACSHA256: creates a HMAC SHA256 based off name / key pair
         /// </summary>
@@ -100,7 +99,7 @@ namespace SecureStorageLib
         /// CreateKey: create a key and write it to specified name
         /// </summary>
         /// <param name="name">name to write the key</param>
-        public static void CreateKey(string path, int key_size, int iv_size)
+        public static void CreateKey(string path)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {

@@ -33,7 +33,7 @@ namespace SecureStorageTesting
         [Test]
         public void InitializeBuildDirectoryStructure()
         {
-            SecureStorageUtility.CreateKey(path + "key", 32, 16);
+            SecureStorageUtility.CreateKey(path + "key");
             SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
             store.Initialize();
@@ -56,7 +56,7 @@ namespace SecureStorageTesting
         [Test]
         public void CreateReadFile()
         {
-            SecureStorageUtility.CreateKey(path + "key", 32, 16);
+            SecureStorageUtility.CreateKey(path + "key");
             SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
             store.Initialize();
@@ -82,7 +82,7 @@ namespace SecureStorageTesting
         [Test]
         public void CreateKeyLoadUse()
         {
-            SecureStorageUtility.CreateKey("test_tmp/key", 32, 16);
+            SecureStorageUtility.CreateKey("test_tmp/key");
             SecureStorageUtility.LoadKey("test_tmp/key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(key, iv), 1000);
 

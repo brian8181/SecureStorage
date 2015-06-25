@@ -82,16 +82,13 @@ namespace SecureStorageTesting
             byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
    
             AES aes1 = new AES(key, iv);
-            byte[] data1 = aes1.EncryptRI(data);
-
-            //AES aes2 = new AES(key, iv);
-            //byte[] data2 = aes2.Encrypt(data);
-            //Assert.AreEqual(data1.Length - AES.IV_SIZE, data2.Length);
+            byte[] enc_data = aes1.EncryptRI(data);
 
             AES aes2 = new AES(key, iv);
-            byte[] denc_data = aes2.DecryptRI(data1);
+            byte[] denc_data = aes2.DecryptRI(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 
+            Assert.AreEqual(data.Length, denc_data.Length);
             Assert.AreEqual(STRING_TEST_DATA, actual);
         }
     }

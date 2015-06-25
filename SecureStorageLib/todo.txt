@@ -1,4 +1,5 @@
 ﻿*Todo
+
 		* Finish this up, implmented in AES file, changes due LoadKey, SaveKey, etc ...
 			* random initialization vector, stored with data, or stored in directory!
 				* IMPLEMENT RANDOM IV
@@ -27,6 +28,7 @@
 				
 	Future:
 		* Use PBKDF2-SHA1 (Key stretching) generate key
+			* add function to SecureStorageUtility?
 		* Local Read Buffer, have a location that auto buffers files based on? last used?, fequency?, size?
 			* Optimize for least bytes downloaded
 
