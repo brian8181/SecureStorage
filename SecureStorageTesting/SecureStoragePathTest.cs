@@ -10,7 +10,6 @@ namespace SecureStorageTesting
     [TestFixture]
     public class SecureStoragePathTest
     {
-
         [TestCase("/", true)]
         [TestCase("/a", false)]
         [TestCase("a/", true)]
@@ -36,7 +35,16 @@ namespace SecureStorageTesting
             Assert.AreEqual(output, input);
         }
 
-      
+        [TestCase("test.jpg", true)]
+        [TestCase("a/test.jpg", true)]
+        [TestCase("a/b/test.jpg", true)]
+        [TestCase("a//test.jpg", false)]
+        public void IsValidPath(string path, bool input)
+        {
+            string[] names = path.Split('/');
+            // todo
+        }
+              
         [TestCase("C:\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("M:\\ABC\\EFG\\", "ABC/EFG/")]
         [TestCase("\\ABC\\EFG\\", "ABC/EFG/")]
@@ -49,24 +57,17 @@ namespace SecureStorageTesting
             Assert.AreEqual(output, result);
         }
 
-        //[TestCase("a//b", "b/")]
+        [TestCase("a/b", "a/")]
+        //[TestCase("a//b", "a/")]
         [TestCase("foo/boo/doo/goo/too", "foo/boo/doo/goo/")]
         [TestCase("a/b/c", "a/b/")]
         [TestCase("a/b/c/", "a/b/")]
         [TestCase("a/", "/")]
-        public void GetDirectory(string path, string output)
+        public void GetDirectory(string path, string expected)
         {
-            string result = SecureStorageLib.StoragePath.GetDirectory(path);
-            Assert.AreEqual(output, result);
+            string actual = SecureStorageLib.StoragePath.GetDirectory(path);
+            Assert.AreEqual(expected, actual);
         }
-
-        //[TestCase("a/b/c", "c")]
-        //[TestCase("a/b/c/", "c")]
-        //public void GetShortName(string path, string output)
-        //{
-        //    string result = SecureStorageLib.StoragePath.GetName(path);
-        //    Assert.AreEqual(output, result);
-        //}
 
         [TestCase("a/b/c/", new string[] {"a/b/", "a/"})]
         public void GetSubDirectories(string path, string[] output)

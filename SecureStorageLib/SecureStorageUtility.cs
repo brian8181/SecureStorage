@@ -11,14 +11,18 @@ namespace SecureStorageLib
     /// </summary>
     public static class SecureStorageUtility
     {
-        ////testing
-        //public static string ReadHashFromXml(XmlDocument doc, string name)
-        //{
-        //    // todo
-        //    string xpath = string.Format("/root/file[name = \"{0}\"]/hash", name);
-        //    XmlNode n = doc.SelectSingleNode(xpath);
-        //    return "";
-        //}
+        /// <summary>
+        /// ReadFileSignatureXml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string ReadFileSignatureXml(XmlDocument doc, string name)
+        {
+            string xpath = string.Format("/root/file[name = \"{0}\"]/signature", name);
+            XmlNode n = doc.SelectSingleNode(xpath);
+            return n.InnerText;
+        }
 
         /// <summary>
         /// HMACSHA256: creates a HMAC SHA256 based off name / key pair
@@ -95,6 +99,12 @@ namespace SecureStorageLib
             Array.Copy(key_iv, key_size, iv, 0, iv_size);
         }
 
+        // BKP
+        public static byte[] LoadKey_2(string path)
+        {
+            return File.ReadAllBytes(path); ;
+        }
+
         /// <summary>
         /// CreateKey: create a key and write it to specified name
         /// </summary>
@@ -113,6 +123,13 @@ namespace SecureStorageLib
 
                 File.WriteAllBytes(path, key);
             }
+        }
+
+        // BKP
+        public static void CreateKey_2(string path, int len)
+        {
+            byte[] key = GererateKey(len);
+            File.WriteAllBytes(path, key);
         }
 
         /// <summary>
@@ -172,7 +189,7 @@ namespace SecureStorageLib
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            AES aes = new AES(key, iv);
+            AES aes = new AES(key);
 
             FileInfo[] fis = dir.GetFiles();
             foreach (FileInfo file in fis)

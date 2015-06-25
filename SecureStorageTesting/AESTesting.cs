@@ -34,7 +34,7 @@ namespace SecureStorageTesting
             string file_path = Global.TestFolder + "file.txt";
             byte[] data = File.ReadAllBytes(file_path);
 
-            AES aes = new AES(key, iv);
+            AES aes = new AES(key);
             byte[] enc_data = aes.Encrypt(data);
 
             int data_len = data.Length;
@@ -54,11 +54,11 @@ namespace SecureStorageTesting
         {
             byte[] data = Encoding.ASCII.GetBytes(s);
 
-            AES aes = new AES(key, iv);
+            AES aes = new AES(key);
             byte[] enc_data = aes.Encrypt(data);
 
             int data_len = enc_data.Length;
-            Assert.AreEqual(expected, data_len);
+            Assert.AreEqual(expected + 16, data_len);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace SecureStorageTesting
             //string str_data = "you and I have been through that and it's not our fate";
             byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
 
-            AES aes = new AES(key, iv);
+            AES aes = new AES(key);
             byte[] enc_data = aes.Encrypt(data);
 
             byte[] denc_data = aes.Decrypt(enc_data);
@@ -81,11 +81,11 @@ namespace SecureStorageTesting
         {
             byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
    
-            AES aes1 = new AES(key, iv);
-            byte[] enc_data = aes1.EncryptRI(data);
+            AES aes1 = new AES(key);
+            byte[] enc_data = aes1.Encrypt(data);
 
-            AES aes2 = new AES(key, iv);
-            byte[] denc_data = aes2.DecryptRI(enc_data);
+            AES aes2 = new AES(key);
+            byte[] denc_data = aes2.Decrypt(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 
             Assert.AreEqual(data.Length, denc_data.Length);

@@ -25,30 +25,6 @@ namespace SecureStorageClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\tmp\\cc\\svr_mirror")]
-        public string server_mirror_dir {
-            get {
-                return ((string)(this["server_mirror_dir"]));
-            }
-            set {
-                this["server_mirror_dir"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\tmp\\infiles")]
-        public string init_input_dir {
-            get {
-                return ((string)(this["init_input_dir"]));
-            }
-            set {
-                this["init_input_dir"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\tmp\\cc\\local")]
         public string local_dir {
             get {

@@ -33,7 +33,6 @@
             this.btnRead = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreateKey = new System.Windows.Forms.Button();
-            this.btnInitializeLocal = new System.Windows.Forms.Button();
             this.btnGetDirs = new System.Windows.Forms.Button();
             this.lblSever = new System.Windows.Forms.Label();
             this.btnCreateEmpty = new System.Windows.Forms.Button();
@@ -41,9 +40,9 @@
             this.btnInitialize = new System.Windows.Forms.Button();
             this.btnCreateDir = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnMove = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.grpLocal = new System.Windows.Forms.GroupBox();
-            this.btnMove = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.grpLocal.SuspendLayout();
             this.SuspendLayout();
@@ -89,23 +88,13 @@
             // 
             // btnCreateKey
             // 
-            this.btnCreateKey.Location = new System.Drawing.Point(6, 48);
+            this.btnCreateKey.Location = new System.Drawing.Point(6, 19);
             this.btnCreateKey.Name = "btnCreateKey";
             this.btnCreateKey.Size = new System.Drawing.Size(102, 23);
             this.btnCreateKey.TabIndex = 4;
             this.btnCreateKey.Text = "CreateFile Key";
             this.btnCreateKey.UseVisualStyleBackColor = true;
             this.btnCreateKey.Click += new System.EventHandler(this.btnCreateKey_Click);
-            // 
-            // btnInitializeLocal
-            // 
-            this.btnInitializeLocal.Location = new System.Drawing.Point(6, 19);
-            this.btnInitializeLocal.Name = "btnInitializeLocal";
-            this.btnInitializeLocal.Size = new System.Drawing.Size(102, 23);
-            this.btnInitializeLocal.TabIndex = 7;
-            this.btnInitializeLocal.Text = "(Re)InitializeLocalRoot";
-            this.btnInitializeLocal.UseVisualStyleBackColor = true;
-            this.btnInitializeLocal.Click += new System.EventHandler(this.btnInitialize_Click);
             // 
             // btnGetDirs
             // 
@@ -187,6 +176,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remote";
             // 
+            // btnMove
+            // 
+            this.btnMove.Location = new System.Drawing.Point(6, 251);
+            this.btnMove.Name = "btnMove";
+            this.btnMove.Size = new System.Drawing.Size(102, 23);
+            this.btnMove.TabIndex = 18;
+            this.btnMove.Text = "Move";
+            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+            // 
             // btnCopy
             // 
             this.btnCopy.Location = new System.Drawing.Point(6, 222);
@@ -200,23 +199,12 @@
             // grpLocal
             // 
             this.grpLocal.Controls.Add(this.btnCreateKey);
-            this.grpLocal.Controls.Add(this.btnInitializeLocal);
             this.grpLocal.Location = new System.Drawing.Point(200, 34);
             this.grpLocal.Name = "grpLocal";
-            this.grpLocal.Size = new System.Drawing.Size(118, 86);
+            this.grpLocal.Size = new System.Drawing.Size(118, 52);
             this.grpLocal.TabIndex = 18;
             this.grpLocal.TabStop = false;
             this.grpLocal.Text = "Local";
-            // 
-            // btnMove
-            // 
-            this.btnMove.Location = new System.Drawing.Point(6, 251);
-            this.btnMove.Name = "btnMove";
-            this.btnMove.Size = new System.Drawing.Size(102, 23);
-            this.btnMove.TabIndex = 18;
-            this.btnMove.Text = "Move";
-            this.btnMove.UseVisualStyleBackColor = true;
-            this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // MainFrm
             // 
@@ -246,7 +234,6 @@
         private System.Windows.Forms.Button btnRead;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreateKey;
-        private System.Windows.Forms.Button btnInitializeLocal;
         private System.Windows.Forms.Button btnGetDirs;
         private System.Windows.Forms.Label lblSever;
         private System.Windows.Forms.Button btnCreateEmpty;

@@ -34,6 +34,18 @@ namespace SecureStorageLib
             return false;
         }
 
+
+        /// <summary>
+        /// IsValidPath
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static bool IsValidPath(string path)
+        {
+
+            return false;
+        }
+
         /// <summary>
         /// DescriptorExists
         /// </summary>
@@ -120,18 +132,5 @@ namespace SecureStorageLib
             string ret = sb.ToString();
             return ret != string.Empty ? ret : "/";
         }
-
-        // this makes no sense since directories are always names with a follwing /
-        ///// <summary>
-        ///// gets short name of object (no path)
-        ///// </summary>
-        ///// <param name="path">the full path</param>
-        ///// <returns>short name (no path) or null if directory</returns>
-        //public static string GetName(string path)
-        //{
-        //    int len = path.Length;
-        //    string[] splits = path.Split(StoragePath.PathSeperator);
-        //    return splits[splits.Length - 1];
-        //}
     }
 }

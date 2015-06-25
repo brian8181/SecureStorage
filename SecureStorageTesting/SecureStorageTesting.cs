@@ -35,7 +35,7 @@ namespace SecureStorageTesting
         {
             SecureStorageUtility.CreateKey(path + "key");
             SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
+            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key), 1000);
             store.Initialize();
 
             //todo build stucture
@@ -58,7 +58,7 @@ namespace SecureStorageTesting
         {
             SecureStorageUtility.CreateKey(path + "key");
             SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key, iv), 1000);
+            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key), 1000);
             store.Initialize();
             
 
@@ -84,7 +84,7 @@ namespace SecureStorageTesting
         {
             SecureStorageUtility.CreateKey("test_tmp/key");
             SecureStorageUtility.LoadKey("test_tmp/key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(key, iv), 1000);
+            SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(key), 1000);
 
             //BKP todo...
 

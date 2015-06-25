@@ -447,11 +447,15 @@ namespace SecureStorageLib
             return crypto.Decrypt(encrypted_data); ;
         }
         
+        /// <summary>
+        /// ReadFileSignatureXml
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private string ReadFileSignatureXml(XmlDocument doc, string name)
         {
-            string xpath = string.Format("/root/file[name = \"{0}\"]/signature", name);
-            XmlNode n = doc.SelectSingleNode(xpath);
-            return n.InnerText;
+            return SecureStorageUtility.ReadFileSignatureXml(doc, name);
         }
 
         /// <summary>

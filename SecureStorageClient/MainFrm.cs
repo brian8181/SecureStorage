@@ -25,8 +25,9 @@ namespace SecureStorageClient
             FRAGMENT_SIZE = Properties.Settings.Default.fragment_size;
            
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key";
-            SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            client_cloud = new SecureStorage(new WCFStorage(), new AES(key, iv), FRAGMENT_SIZE);
+            //BKP SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2(key_loc);
+            client_cloud = new SecureStorage(new WCFStorage(), new AES(key), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
         }
 
@@ -43,35 +44,35 @@ namespace SecureStorageClient
             }
         }
 
-        private void btnInitialize_Click(object sender, EventArgs e)
-        {
-            InitializeFrm dlg = new InitializeFrm();
-            dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                string output_dir = Properties.Settings.Default.server_mirror_dir;
+        //private void btnInitialize_Click(object sender, EventArgs e)
+        //{
+        //    InitializeFrm dlg = new InitializeFrm();
+        //    dlg.dirBrowser.TextBox.Text = Properties.Settings.Default.init_input_dir;
+        //    if (dlg.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string output_dir = Properties.Settings.Default.server_mirror_dir;
 
-                //delete all file server directory
-                if (Directory.Exists(output_dir))
-                    Directory.Delete(output_dir, true);
-                Directory.CreateDirectory(output_dir);
+        //        //delete all file server directory
+        //        if (Directory.Exists(output_dir))
+        //            Directory.Delete(output_dir, true);
+        //        Directory.CreateDirectory(output_dir);
 
-                // intitialize to server mirror dir
-                string initial_input_dir = dlg.dirBrowser.TextBox.Text;
-                SecureStorageUtility.InitializeLocalRoot(initial_input_dir, output_dir, key, iv);
-                // save setting for next time
-                Properties.Settings.Default.init_input_dir = initial_input_dir;
-                Properties.Settings.Default.Save();
-            }
+        //        // intitialize to server mirror dir
+        //        string initial_input_dir = dlg.dirBrowser.TextBox.Text;
+        //        SecureStorageUtility.InitializeLocalRoot(initial_input_dir, output_dir, key, iv);
+        //        // save setting for next time
+        //        Properties.Settings.Default.init_input_dir = initial_input_dir;
+        //        Properties.Settings.Default.Save();
+        //    }
 
-            StdMsgBox.OK("InitializeLocalRoot Complete");
-        }
+        //    StdMsgBox.OK("InitializeLocalRoot Complete");
+        //}
 
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-            string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key.tmp";
-            SecureStorageUtility.CreateKey(key_loc);
-            StdMsgBox.OK("\"Key.tmp\" created.");
+            string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key_new.tmp";
+            SecureStorageUtility.CreateKey_2(key_loc, 32);
+            StdMsgBox.OK("\"Key_new.tmp\" created.");
         }
 
         public void RefreshFileList()

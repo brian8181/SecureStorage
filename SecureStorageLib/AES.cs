@@ -12,7 +12,7 @@ namespace SecureStorageLib
     public class AES : ICryptography
     {
         private byte[] key = null;
-        private byte[] iv = null;
+        //private byte[] iv = null;
         public const int KEY_SIZE = 32;
         public const int IV_SIZE = 16;
 
@@ -21,21 +21,13 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="key">key</param>
         /// <param name="iv">intitialzation vector</param>
-        public AES(byte[] key, byte[] iv)
+        public AES(byte[] key)
         {
-            if (iv.Length != IV_SIZE && key.Length != KEY_SIZE)
+            if (key.Length != KEY_SIZE)
                 throw new SecureStorageCryptoException("Wrong key/iv size.");
-            this.iv = iv;
+            //this.iv = iv;
             this.key = key;
         }
-
-        ///// <summary>
-        ///// intitialzation vector random gereration
-        ///// </summary>
-        ///// <param name="key"></param>
-        //public AES(byte[] key)
-        //{
-        //}
 
         /// <summary>
         /// key
@@ -83,7 +75,7 @@ namespace SecureStorageLib
 
         
         // BKP todo
-        public byte[] EncryptRI(byte[] data)
+        public byte[] Encrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
@@ -113,12 +105,13 @@ namespace SecureStorageLib
         }
 
         // BKP todo
-        public byte[] DecryptRI(byte[] data)
+        public byte[] Decrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
             {
                 // load key & iv
                 csp.Key = key;
+                byte[] iv = new byte[IV_SIZE];
                 
                 // get random iv from end of data
                 long data_len = data.Length;
@@ -149,62 +142,62 @@ namespace SecureStorageLib
             }
         }
 
-        /// <summary>
-        /// encrypt data
-        /// </summary>
-        /// <param name="data">decrypted bytes</param>
-        /// <returns>ecrypted bytes</returns>
-        public byte[] Encrypt(byte[] data)
-        {
-            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-            {
-                // load key & iv
-                csp.Key = key;
-                csp.IV = iv;
-                ICryptoTransform encryptor = csp.CreateEncryptor(key, iv);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-                    {
-                        // Write all data to the crypto stream and flush it.
-                        cs.Write(data, 0, data.Length);
-                        cs.FlushFinalBlock();
-                        return ms.ToArray();
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// encrypt data
+        ///// </summary>
+        ///// <param name="data">decrypted bytes</param>
+        ///// <returns>ecrypted bytes</returns>
+        //public byte[] Encrypt(byte[] data)
+        //{
+        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+        //    {
+        //        // load key & iv
+        //        csp.Key = key;
+        //        csp.IV = iv;
+        //        ICryptoTransform encryptor = csp.CreateEncryptor(key, iv);
+        //        using (MemoryStream ms = new MemoryStream())
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
+        //            {
+        //                // Write all data to the crypto stream and flush it.
+        //                cs.Write(data, 0, data.Length);
+        //                cs.FlushFinalBlock();
+        //                return ms.ToArray();
+        //            }
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// decrypt data
-        /// </summary>
-        /// <param name="data">ecrypted bytes</param>
-        /// <returns>decrypted bytes</returns>
-        public byte[] Decrypt(byte[] data)
-        {
-            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-            {
-                // load key & iv
-                csp.Key = key;
-                csp.IV = iv;
-                ICryptoTransform decryptor = csp.CreateDecryptor(key, iv);
-                using (MemoryStream ms = new MemoryStream(data))
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-                    {
-                        long len = data.Length;
-                        byte[] buffer = new byte[len];
-                        int read = cs.Read(buffer, 0, (int)len); 
-                        if (len != read)
-                        {
-                            byte[] copy_buffer = new byte[read];
-                            Array.Copy(buffer, copy_buffer, read);
-                            buffer = copy_buffer;
-                        }
-                        return buffer;
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// decrypt data
+        ///// </summary>
+        ///// <param name="data">ecrypted bytes</param>
+        ///// <returns>decrypted bytes</returns>
+        //public byte[] Decrypt(byte[] data)
+        //{
+        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+        //    {
+        //        // load key & iv
+        //        csp.Key = key;
+        //        csp.IV = iv;
+        //        ICryptoTransform decryptor = csp.CreateDecryptor(key, iv);
+        //        using (MemoryStream ms = new MemoryStream(data))
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
+        //            {
+        //                long len = data.Length;
+        //                byte[] buffer = new byte[len];
+        //                int read = cs.Read(buffer, 0, (int)len); 
+        //                if (len != read)
+        //                {
+        //                    byte[] copy_buffer = new byte[read];
+        //                    Array.Copy(buffer, copy_buffer, read);
+        //                    buffer = copy_buffer;
+        //                }
+        //                return buffer;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
