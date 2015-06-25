@@ -1,7 +1,8 @@
 ﻿*Todo
-		* random initialization vector, stored with data, or stored in directory!
-			* IMPLEMENT RANDOM IV
-			* may use ArraySegment<T> Structure, humm may suck
+		* Finish this up, implmented in AES file, changes due LoadKey, SaveKey, etc ...
+			* random initialization vector, stored with data, or stored in directory!
+				* IMPLEMENT RANDOM IV
+				* may use ArraySegment<T> Structure, humm may suck
 		* add move / copy operations
 
 		* NEW Idea 

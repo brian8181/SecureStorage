@@ -18,10 +18,10 @@ namespace SecureStorageLib
         /// <summary>
         /// IV: initialization vector
         /// </summary>
-        byte[] IV
-        {
-            get;
-        }
+        //byte[] IV
+        //{
+        //    get;
+        //}
         
         /// <summary>
         /// KeySize: size of the key
@@ -34,10 +34,10 @@ namespace SecureStorageLib
         /// <summary>
         /// IVSize: size of initialization vector
         /// </summary>
-        int IVSize
-        {
-            get;
-        }
+        //int IVSize
+        //{
+        //    get;
+        //}
 
         /// <summary>
         /// Encrypt: encrypt data

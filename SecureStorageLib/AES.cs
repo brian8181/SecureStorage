@@ -48,16 +48,16 @@ namespace SecureStorageLib
             }
         }
 
-        /// <summary>
-        /// initialization vector
-        /// </summary>
-        public byte[] IV
-        {
-            get
-            {
-                return iv;
-            }
-        }
+        ///// <summary>
+        ///// initialization vector
+        ///// </summary>
+        //public byte[] IV
+        //{
+        //    get
+        //    {
+        //        return iv;
+        //    }
+        //}
 
         /// <summary>
         /// size of the key
@@ -70,17 +70,18 @@ namespace SecureStorageLib
             }
         }
 
-        /// <summary>
-        /// size of initialization vector
-        /// </summary>
-        public int IVSize
-        {
-            get
-            {
-                return KEY_SIZE;
-            }
-        }
+        ///// <summary>
+        ///// size of initialization vector
+        ///// </summary>
+        //public int IVSize
+        //{
+        //    get
+        //    {
+        //        return KEY_SIZE;
+        //    }
+        //}
 
+        
         // BKP todo
         public byte[] EncryptRI(byte[] data)
         {

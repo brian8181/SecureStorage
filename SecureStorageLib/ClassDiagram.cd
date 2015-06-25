@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="6.25" Width="1.5" />
+    <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAEgAAAAAIAA=</HashCode>
+      <HashCode>AQAAAAAAAAIAAAQYAAAEQAAAABQAAAAAAEgAAAAAIAA=</HashCode>
       <FileName>AES.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -25,7 +25,7 @@
   <Class Name="SecureStorageLib.SecureStorage" Collapsed="true">
     <Position X="3.25" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>A4AAAAAAAIQAAQAEDAQEAwAgAiUBBAABAAEAASgAAQA=</HashCode>
+      <HashCode>A4AAAAEAAIQAAQAECAQEAyAgAiQBAAABDAEAASgAAQA=</HashCode>
       <FileName>SecureStorage.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -45,23 +45,23 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="SecureStorageLib.ICryptography">
-    <Position X="0.5" Y="3.5" Width="1.5" />
+    <Position X="7.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAAEgAAAAAAAA=</HashCode>
       <FileName>ICryptography.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.IStorage">
-    <Position X="7.75" Y="3.75" Width="1.5" />
+    <Position X="6" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAgBAAAAAAgAgEAAEAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAgAgBAAAAAAgAgEAAEAAAAAAAAEAAAA=</HashCode>
       <FileName>IStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.ISecureStorage">
-    <Position X="3.25" Y="2.25" Width="2" />
+    <Position X="3.75" Y="4.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAEAAQAAAAAAAQABAAAAAEAAQAAAQA=</HashCode>
+      <HashCode>AAAAAAEAAIQAAQAEAAQAAAAgAgQAAAAADAEAAQgAAQA=</HashCode>
       <FileName>ISecureStorage.cs</FileName>
     </TypeIdentifier>
   </Interface>
