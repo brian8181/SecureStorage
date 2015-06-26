@@ -11,8 +11,6 @@ namespace SecureStorageTesting
     {
 
         private const string STRING_TEST_DATA = "you and I have been through that and it's not our fate";
-       
-
         private byte[] key = null;
         private byte[] iv = null;
 
@@ -20,7 +18,8 @@ namespace SecureStorageTesting
         public void Init()
         {
             string key_path = Global.TestFolder + "key";
-            SecureStorageUtility.LoadKey(key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            //SecureStorageUtility.LoadKey(key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            SecureStorageUtility.LoadKey_2(key_path);
         }
 
         [TearDown]
@@ -57,8 +56,8 @@ namespace SecureStorageTesting
             AES aes = new AES(key);
             byte[] enc_data = aes.Encrypt(data);
 
-            int data_len = enc_data.Length;
-            Assert.AreEqual(expected + 16, data_len);
+            int data_len = enc_data.Length - AES.IV_SIZE; // subtract IV length that is appended
+            Assert.AreEqual(expected, data_len);
         }
 
         [Test]

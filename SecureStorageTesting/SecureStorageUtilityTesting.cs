@@ -11,12 +11,13 @@ namespace SecureStorageTesting
     public class SecureStorageUtilityTesting
     {
         byte[] key = null;
-        byte[] iv = null;
+        //byte[] iv = null;
 
         [SetUp]
         public void Init()
         {
-            SecureStorageUtility.LoadKey("C:\\tmp\\aes_key\\key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            //SecureStorageUtility.LoadKey("C:\\tmp\\aes_key\\key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2(Global.TestFolder + "key");
         }
 
         [TearDown]
@@ -46,15 +47,15 @@ namespace SecureStorageTesting
         public void LoadKey()
         {
             byte[] key = null;
-            byte[] iv = null;
+            //byte[] iv = null;
 
-            SecureStorageUtility.LoadKey("C:\\tmp\\aes_key\\key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2(Global.TestFolder + "key");
           
             Assert.IsNotNull(key);
             Assert.AreEqual(AES.KEY_SIZE, key.Length);
 
-            Assert.IsNotNull(iv);
-            Assert.AreEqual(AES.IV_SIZE, iv.Length);
+            //Assert.IsNotNull(iv);
+            //Assert.AreEqual(AES.IV_SIZE, iv.Length);
         }
 
         //public void GetSecureName(string name, byte[] key)
@@ -69,14 +70,14 @@ namespace SecureStorageTesting
             Assert.AreEqual(10, key.Length);
         }
 
-        [TestCase("/", "ad9ab4fe58a9eb1473c4b60dc7be1216e7f10900e8cdf6a54853f797da0485d1")]
-        [TestCase("abc/", "50370210a407c8745652831cbec125e1129e6a11270749e6fbd4ed11672e792c")]
+        [TestCase("/", "a9c97d5c817850982cba39e31164290865c70a7c282664431ddf4048e58a47dd")]
+        [TestCase("abc/", "72780de7e8c16f220ed13e5eb80fc8cb28657a327295f774c1ea3d758f8cf94a")]
+        [TestCase("abc/efg/", "881bceff7c5e40a476a752a6906724077cbf72856d4928c2015be3a393c0bdad")]
         public void HMACSHA256(string name, string secure_name)
         {
             byte[] hash = SecureStorageUtility.HMACSHA256(name, key);
             string actual = SecureStorageUtility.FromBytesToHex(hash);
             Assert.AreEqual(secure_name, actual);
-
         }
     }
 }

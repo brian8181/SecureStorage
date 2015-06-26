@@ -12,7 +12,6 @@ namespace SecureStorageLib
     {
         public static char PathSeperator = '/';
         
-
         /// <summary>
         /// validate a name (file, or directory name before hashing)
         /// </summary>
@@ -42,7 +41,7 @@ namespace SecureStorageLib
         /// <returns></returns>
         public static bool IsValidPath(string path)
         {
-
+            // BKP todo
             return false;
         }
 

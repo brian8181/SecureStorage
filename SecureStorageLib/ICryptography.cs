@@ -16,14 +16,6 @@ namespace SecureStorageLib
         }
         
         /// <summary>
-        /// IV: initialization vector
-        /// </summary>
-        //byte[] IV
-        //{
-        //    get;
-        //}
-        
-        /// <summary>
         /// KeySize: size of the key
         /// </summary>
         int KeySize
@@ -40,16 +32,14 @@ namespace SecureStorageLib
         //}
 
         /// <summary>
-        /// Encrypt: encrypt data
+        /// Encrypt: encrypt data with internal key & appends a random IV
         /// </summary>
         /// <param name="data">decrypted bytes</param>
         /// <returns>ecrypted bytes</returns>
         byte[] Encrypt(byte[] data);
 
-        //byte[] Encrypt(byte[] data, bool ramdom_iv = false, bool append_end = true);
-
         /// <summary>
-        /// Decrypt: decrypt data
+        /// Decrypt: decrypt data with internal key & appended ramdom IV
         /// </summary>
         /// <param name="data">ecrypted bytes</param>
         /// <returns>decrypted bytes</returns>

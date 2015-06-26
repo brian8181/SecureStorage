@@ -12,7 +12,6 @@ namespace SecureStorageLib
     public class AES : ICryptography
     {
         private byte[] key = null;
-        //private byte[] iv = null;
         public const int KEY_SIZE = 32;
         public const int IV_SIZE = 16;
 
@@ -25,7 +24,6 @@ namespace SecureStorageLib
         {
             if (key.Length != KEY_SIZE)
                 throw new SecureStorageCryptoException("Wrong key/iv size.");
-            //this.iv = iv;
             this.key = key;
         }
 

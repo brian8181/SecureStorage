@@ -41,8 +41,7 @@ namespace SecureStorageLib
             get{ return current_directory; } 
             set{ current_directory = value; }
         }
-
-
+        
         /// <summary>
         /// Store
         /// </summary>

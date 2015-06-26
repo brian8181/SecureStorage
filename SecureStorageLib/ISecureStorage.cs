@@ -12,7 +12,14 @@ namespace SecureStorageLib
     /// </summary>
     public interface ISecureStorage
     {
+        /// <summary>
+        /// Store
+        /// </summary>
         IStorage Store { get; }
+
+        /// <summary>
+        /// Cryptography
+        /// </summary>
         ICryptography Cryptography { get; }
 
         /// <summary>
@@ -77,7 +84,9 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="src_name"></param>
         /// <param name="dst_name"></param>
-        void Copy(string src_name, string dst_name); 
+        void Copy(string src_name, string dst_name);
+
+        //string GetDescriptor(string name);
         
         /// <summary>
         /// GetNames: get files &  directory nodes
@@ -99,8 +108,12 @@ namespace SecureStorageLib
         /// <param name="names"></param>
         /// <returns></returns>
         XmlNodeList GetDirectories(string names); 
-
-        //string GetDescriptor(string name);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         //XmlDocument GetDirectoryDocument(string name);
     }   
 }

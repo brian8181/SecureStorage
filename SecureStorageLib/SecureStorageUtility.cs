@@ -88,18 +88,22 @@ namespace SecureStorageLib
         /// <param name="iv_size">the iv size</param>
         /// <param name="key">the key</param>
         /// <param name="iv">the iv</param>
-        public static void LoadKey(string path, int key_size, int iv_size, out byte[] key, out byte[] iv)
-        {
-            byte[] key_iv = File.ReadAllBytes(path);
+        //public static void LoadKey(string path, int key_size, int iv_size, out byte[] key, out byte[] iv)
+        //{
+        //    byte[] key_iv = File.ReadAllBytes(path);
 
-            iv = new byte[iv_size];
-            key = new byte[key_size];
+        //    iv = new byte[iv_size];
+        //    key = new byte[key_size];
 
-            Array.Copy(key_iv, key, key_size);
-            Array.Copy(key_iv, key_size, iv, 0, iv_size);
-        }
+        //    Array.Copy(key_iv, key, key_size);
+        //    Array.Copy(key_iv, key_size, iv, 0, iv_size);
+        //}
 
-        // BKP
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static byte[] LoadKey_2(string path)
         {
             return File.ReadAllBytes(path); ;
@@ -109,23 +113,27 @@ namespace SecureStorageLib
         /// CreateKey: create a key and write it to specified name
         /// </summary>
         /// <param name="name">name to write the key</param>
-        public static void CreateKey(string path)
-        {
-            using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-            {
-                csp.GenerateKey();
-                csp.GenerateIV();
+        //public static void CreateKey(string path)
+        //{
+        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
+        //    {
+        //        csp.GenerateKey();
+        //        csp.GenerateIV();
 
-                byte[] key = new byte[csp.Key.Length + csp.IV.Length];
+        //        byte[] key = new byte[csp.Key.Length + csp.IV.Length];
 
-                Array.Copy(csp.Key, key, csp.Key.Length);
-                Array.Copy(csp.IV, 0, key, csp.Key.Length, csp.IV.Length);
+        //        Array.Copy(csp.Key, key, csp.Key.Length);
+        //        Array.Copy(csp.IV, 0, key, csp.Key.Length, csp.IV.Length);
 
-                File.WriteAllBytes(path, key);
-            }
-        }
+        //        File.WriteAllBytes(path, key);
+        //    }
+        //}
 
-        // BKP
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="len"></param>
         public static void CreateKey_2(string path, int len)
         {
             byte[] key = GererateKey(len);

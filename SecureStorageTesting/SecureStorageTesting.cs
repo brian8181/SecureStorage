@@ -12,7 +12,7 @@ namespace SecureStorageTesting
     public class SecureStorageTesting
     {
         byte[] key = null;
-        byte[] iv = null;
+        //byte[] iv = null;
         private string path = Global.TestFolder + "tmp\\";
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace SecureStorageTesting
             string cur_dir = Directory.GetCurrentDirectory();
             if (Directory.Exists(path))
                 Directory.Delete(path, true);
-            Directory.CreateDirectory(path);
+            Directory.CreateDirectory(path); 
         }
 
         [TearDown]
@@ -33,8 +33,9 @@ namespace SecureStorageTesting
         [Test]
         public void InitializeBuildDirectoryStructure()
         {
-            SecureStorageUtility.CreateKey(path + "key");
-            SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            SecureStorageUtility.CreateKey_2(path + "key", 32);
+            //SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2(path + "key");
             SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key), 1000);
             store.Initialize();
 
@@ -56,8 +57,10 @@ namespace SecureStorageTesting
         [Test]
         public void CreateReadFile()
         {
-            SecureStorageUtility.CreateKey(path + "key");
-            SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            //SecureStorageUtility.CreateKey(path + "key");
+            SecureStorageUtility.CreateKey_2(path + "key", AES.KEY_SIZE);
+            //SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2(path + "key");
             SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key), 1000);
             store.Initialize();
             
@@ -82,8 +85,10 @@ namespace SecureStorageTesting
         [Test]
         public void CreateKeyLoadUse()
         {
-            SecureStorageUtility.CreateKey("test_tmp/key");
-            SecureStorageUtility.LoadKey("test_tmp/key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            //SecureStorageUtility.CreateKey("test_tmp/key");
+            SecureStorageUtility.CreateKey_2("test_tmp/key", AES.KEY_SIZE);
+            //SecureStorageUtility.LoadKey("test_tmp/key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
+            key = SecureStorageUtility.LoadKey_2("test_tmp/key");
             SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(key), 1000);
 
             //BKP todo...

@@ -1,11 +1,6 @@
 ﻿*Todo
-
-		* Finish this up, implmented in AES file, changes due LoadKey, SaveKey, etc ...
-			* random initialization vector, stored with data, or stored in directory!
-				* IMPLEMENT RANDOM IV
-				* may use ArraySegment<T> Structure, humm may suck
-		* add move / copy operations
-
+		* Use PBKDF2-SHA1 (Key stretching) generate key
+			* add function to SecureStorageUtility?
 		* NEW Idea 
 			* Two Names
 				* Desciptor the file on ther server ( ecrypted xml in this case )
@@ -19,13 +14,11 @@
 				5. Invalid name
 				6. Not a descriptor (name is not in descriptor format)
 				7. Not a file (name is not in file) - not sure how i would know?
-
 		
-		* remopve / rethink error handling responsibilities
+		* remove / rethink error handling responsibilities
 		* keyloaded is this a good validation?
 		* name validation, validate all name, valid len, characters etc
-		
-				
+						
 	Future:
 		* Use PBKDF2-SHA1 (Key stretching) generate key
 			* add function to SecureStorageUtility?
@@ -108,7 +101,11 @@
         }
 
 	Done:
-		
+		* Finish this up, implmented in AES file, changes due LoadKey, SaveKey, etc ...
+			* random initialization vector, stored with data, or stored in directory!
+				* IMPLEMENT RANDOM IV
+				* may use ArraySegment<T> Structure, humm may suck
+		* add move / copy operations
 		* IStorage GetLength should return long, says me!
 		* create ISecureStorgae interface		
 		*FINISHED/READY Version.1.0.RC.1
