@@ -19,7 +19,7 @@ namespace SecureStorageTesting
         {
             string key_path = Global.TestFolder + "key";
             //SecureStorageUtility.LoadKey(key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            SecureStorageUtility.LoadKey_2(key_path);
+            key = SecureStorageUtility.LoadKey_2(key_path);
         }
 
         [TearDown]
