@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SecureStorageBufferLib
 {
-    class IStorageBuffer
+    public interface IStorageBuffer
     {
     }
 }

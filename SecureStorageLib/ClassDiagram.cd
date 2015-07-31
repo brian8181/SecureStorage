@@ -3,7 +3,7 @@
   <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
     <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAIAAAQYAAAEQAAAABQAAAAAAEgAAAAAIAA=</HashCode>
+      <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AES.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -33,21 +33,29 @@
   <Class Name="SecureStorageLib.StoragePath">
     <Position X="5.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAEAAEAAAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
+      <HashCode>AAAAAIAAAACAAEAAEAAAAAAAAIAAIAAAEAAAAAAAAQA=</HashCode>
       <FileName>SecureStoragePath.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SecureStorageLib.SecureStorageUtility">
     <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAEEAAAAIAAAAEACgBAAAAAAAAQAAAAQAAAAIAAAAA=</HashCode>
+      <HashCode>AABEEAAAAIAAAAEACgBAACAAAAAQAAAAQAAAAAAAAAA=</HashCode>
       <FileName>SecureStorageUtility.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="SecureStorageLib.Cryptography" Collapsed="true">
+    <Position X="3.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAQYAAAEAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cryptography.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="SecureStorageLib.ICryptography">
     <Position X="7.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAAEgAAAAAAAA=</HashCode>
+      <HashCode>AQAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ICryptography.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -59,7 +67,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="SecureStorageLib.ISecureStorage">
-    <Position X="3.75" Y="4.25" Width="2" />
+    <Position X="3" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAEAAIQAAQAEAAQAAAAgAgQAAAAADAEAAQgAAQA=</HashCode>
       <FileName>ISecureStorage.cs</FileName>

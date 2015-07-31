@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="local_dir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\tmp\cc\local</Value>
+      <Value Profile="(Default)">C:\tmp\secure_storage_test\local_store\</Value>
     </Setting>
     <Setting Name="max_msg_size" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30000</Value>
@@ -12,7 +12,7 @@
       <Value Profile="(Default)">20000</Value>
     </Setting>
     <Setting Name="key_loc" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\tmp\aes_key\</Value>
+      <Value Profile="(Default)">C:\tmp\secure_storage_test\key\</Value>
     </Setting>
   </Settings>
 </SettingsFile>

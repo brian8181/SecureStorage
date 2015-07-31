@@ -1,4 +1,5 @@
 ﻿*Todo
+		* remove - public AES(byte[] key) & SecureStorageUtility.LoadKey_2(key_loc)
 		* Use PBKDF2-SHA1 (Key stretching) generate key
 			* add function to SecureStorageUtility?
 		* NEW Idea 

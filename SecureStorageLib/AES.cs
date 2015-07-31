@@ -19,12 +19,20 @@ namespace SecureStorageLib
         /// ctor
         /// </summary>
         /// <param name="key">key</param>
-        /// <param name="iv">intitialzation vector</param>
         public AES(byte[] key)
         {
             if (key.Length != KEY_SIZE)
                 throw new SecureStorageCryptoException("Wrong key/iv size.");
             this.key = key;
+        }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="key_path">path to key</param>
+        public AES(string key_path)
+        {
+            this.key = File.ReadAllBytes(key_path); 
         }
 
         /// <summary>
@@ -71,8 +79,12 @@ namespace SecureStorageLib
         //    }
         //}
 
-        
-        // BKP todo
+
+        /// <summary>
+        /// encrypt data
+        /// </summary>
+        /// <param name="data">decrypted bytes</param>
+        /// <returns>ecrypted bytes</returns>
         public byte[] Encrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
@@ -102,7 +114,11 @@ namespace SecureStorageLib
             }
         }
 
-        // BKP todo
+        /// <summary>
+        /// decrypt data
+        /// </summary>
+        /// <param name="data">ecrypted bytes</param>
+        /// <returns>decrypted bytes</returns>
         public byte[] Decrypt(byte[] data)
         {
             using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
@@ -140,11 +156,7 @@ namespace SecureStorageLib
             }
         }
 
-        ///// <summary>
-        ///// encrypt data
-        ///// </summary>
-        ///// <param name="data">decrypted bytes</param>
-        ///// <returns>ecrypted bytes</returns>
+        
         //public byte[] Encrypt(byte[] data)
         //{
         //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
@@ -166,11 +178,7 @@ namespace SecureStorageLib
         //    }
         //}
 
-        ///// <summary>
-        ///// decrypt data
-        ///// </summary>
-        ///// <param name="data">ecrypted bytes</param>
-        ///// <returns>decrypted bytes</returns>
+        
         //public byte[] Decrypt(byte[] data)
         //{
         //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="PATH" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\tmp\svr\</Value>
+      <Value Profile="(Default)">C:\tmp\secure_storage_test\local_online_store\</Value>
     </Setting>
   </Settings>
 </SettingsFile>

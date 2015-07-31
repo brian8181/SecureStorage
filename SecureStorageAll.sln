@@ -80,8 +80,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBKDF2-SHA1", "PBKDF2-SHA1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBKDF2-SHA1_Testing", "PBKDF2-SHA1_Testing\PBKDF2-SHA1_Testing.csproj", "{BE5D3896-7AAE-4BDA-9524-28F7AE0787B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSATest", "RSATest\RSATest.csproj", "{0C9C883C-6281-46EC-9B06-57FC096A9C98}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -408,7 +406,6 @@ Global
 		{029E1218-86AD-4925-BA09-B7146050124C}.Release|Win32.ActiveCfg = Release|Any CPU
 		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{37239AE6-01AA-472D-8E85-6291028287E6}.Debug|Win32.Build.0 = Debug|Win32
 		{37239AE6-01AA-472D-8E85-6291028287E6}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -508,7 +505,6 @@ Global
 		{86396355-B4B2-4C7A-BF0E-A1FE62E2E2DE}.Release|Win32.ActiveCfg = Release|Any CPU
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Debug|Win32.ActiveCfg = Debug|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Debug|Win32.Build.0 = Debug|Win32
 		{2C0C17E7-DFE5-4BAA-950D-43F173872FEA}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32
@@ -565,21 +561,6 @@ Global
 		{BE5D3896-7AAE-4BDA-9524-28F7AE0787B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BE5D3896-7AAE-4BDA-9524-28F7AE0787B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BE5D3896-7AAE-4BDA-9524-28F7AE0787B2}.Release|Win32.ActiveCfg = Release|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Deploy_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Deploy_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Deploy_Debug|Win32.ActiveCfg = Debug|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{0C9C883C-6281-46EC-9B06-57FC096A9C98}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

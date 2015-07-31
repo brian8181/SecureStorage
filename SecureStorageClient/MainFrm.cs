@@ -23,11 +23,15 @@ namespace SecureStorageClient
             InitializeComponent();
             MAX_SIZE = Properties.Settings.Default.max_msg_size;
             FRAGMENT_SIZE = Properties.Settings.Default.fragment_size;
-           
+            
+            
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key";
             //BKP SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            key = SecureStorageUtility.LoadKey_2(key_loc);
-            client_cloud = new SecureStorage(new WCFStorage(), new AES(key), FRAGMENT_SIZE);
+            if (!File.Exists(key_loc))
+                return;
+
+            //key = SecureStorageUtility.LoadKey_2(key_loc);
+            client_cloud = new SecureStorage(new WCFStorage(), new AES(key_loc), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
         }
 
@@ -71,7 +75,7 @@ namespace SecureStorageClient
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key_new.tmp";
-            SecureStorageUtility.CreateKey_2(key_loc, 32);
+            SecureStorageUtility.CreateKey(key_loc, 32);
             StdMsgBox.OK("\"Key_new.tmp\" created.");
         }
 

@@ -12,6 +12,6 @@ namespace PBKDF2_SHA1
         {
             string hash = Utility.PasswordHash.CreateHash("abc");
             byte[] key = PBKDF2_SHA1.DeriveKeyFunction.DeriveKey("abc");
-        }
+         }
     }
 }

@@ -31,6 +31,8 @@ namespace SecureStorageLib
         //    get;
         //}
 
+        //byte[] GetSecureHash(string data);
+
         /// <summary>
         /// Encrypt: encrypt data with internal key & appends a random IV
         /// </summary>

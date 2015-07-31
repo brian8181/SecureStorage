@@ -88,7 +88,6 @@ namespace SecureStorageLib
         {
             // posssible too big a file!, use this.Read()
             byte[] encrypted_data = Store.Read(name, 0, 0);
-
             byte[] data = crypto.Decrypt(encrypted_data);
 
             string xml = Encoding.UTF8.GetString(data);
@@ -112,7 +111,7 @@ namespace SecureStorageLib
         //}
 
         /// <summary>
-        /// internal function, abstarcts Creating direcoties at specified name
+        /// internal function, abstarcts Creating directories at specified name
         /// </summary>
         /// <param name="name">name of directory</param>
         /// <returns></returns>
@@ -139,13 +138,12 @@ namespace SecureStorageLib
         }
 
         /// <summary>
-        /// GetNames: get files in encrypted directory
+        /// GetNames: get files & directories in encrypted directory
         /// </summary>
         /// <param name="dir_name">directory name</param>
         /// <returns>files as xml</returns>
         public XmlNodeList GetNames(string dir_name)
         {
-            // decrypt
             string secure_name = GetSecureName(dir_name);
             XmlDocument doc = GetDirectoryDocument(secure_name);
             XmlNodeList nodes = doc.SelectNodes("/root/file | /root/directory");
@@ -159,7 +157,6 @@ namespace SecureStorageLib
         /// <returns>files as xml</returns>
         public XmlNodeList GetFiles(string dir_name)
         {
-            // decrypt
             string secure_name = GetSecureName(dir_name);
             XmlDocument doc = GetDirectoryDocument(secure_name);
             XmlNodeList nodes = doc.SelectNodes("/root/file");
@@ -173,7 +170,6 @@ namespace SecureStorageLib
         /// <returns></returns>
         public XmlNodeList GetDirectories(string dir_name)
         {
-            // decrypt
             string secure_name = GetSecureName(dir_name);
             XmlDocument doc = GetDirectoryDocument(secure_name);
             XmlNodeList nodes = doc.SelectNodes("/root/directory");
@@ -215,8 +211,8 @@ namespace SecureStorageLib
         /// <summary>
         /// CreateFile
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="data"></param>
+        /// <param name="name">name of file</param>
+        /// <param name="data">file data</param>
         public void CreateFile(string name, byte[] data)
         {
             // get all names

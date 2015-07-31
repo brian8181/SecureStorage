@@ -11,7 +11,7 @@ namespace SecureStorageLib
         /// <summary>
         /// Create
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of object</param>
         /// <param name="data"></param>
         /// <param name="mode"></param>
         void Create(string name, byte[] data, FileMode mode = FileMode.Create);
@@ -27,7 +27,7 @@ namespace SecureStorageLib
         /// <summary>
         /// Read
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of object</param>
         /// <param name="offset"></param>
         /// <param name="len"></param>
         /// <returns></returns>
@@ -36,7 +36,7 @@ namespace SecureStorageLib
         /// <summary>
         /// Copy
         /// </summary>
-        /// <param name="src_name"></param>
+        /// <param name="src_name">name of object</param>
         /// <param name="dst_name"></param>
         void Copy(string src_name, string dst_name);
 
@@ -44,27 +44,27 @@ namespace SecureStorageLib
         /// <summary>
         /// Copy
         /// </summary>
-        /// <param name="src_name"></param>
-        /// <param name="dst_name"></param>
+        /// <param name="src_name">name of source object</param>
+        /// <param name="dst_name">name of destination object</param>
         void Move(string src_name, string dst_name);
 
         /// <summary>
         /// Delete 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of object</param>
         void Delete(string name);
 
         /// <summary>
         /// GetLength
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of object</param>
         /// <returns></returns>
         int GetLength(string name);
 
         /// <summary>
         /// Exists
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of object</param>
         /// <returns></returns>
         bool Exists(string name);
         

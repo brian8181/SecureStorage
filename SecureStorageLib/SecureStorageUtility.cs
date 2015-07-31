@@ -106,35 +106,15 @@ namespace SecureStorageLib
         /// <returns></returns>
         public static byte[] LoadKey_2(string path)
         {
-            return File.ReadAllBytes(path); ;
+            return File.ReadAllBytes(path);
         }
 
         /// <summary>
         /// CreateKey: create a key and write it to specified name
         /// </summary>
-        /// <param name="name">name to write the key</param>
-        //public static void CreateKey(string path)
-        //{
-        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-        //    {
-        //        csp.GenerateKey();
-        //        csp.GenerateIV();
-
-        //        byte[] key = new byte[csp.Key.Length + csp.IV.Length];
-
-        //        Array.Copy(csp.Key, key, csp.Key.Length);
-        //        Array.Copy(csp.IV, 0, key, csp.Key.Length, csp.IV.Length);
-
-        //        File.WriteAllBytes(path, key);
-        //    }
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="len"></param>
-        public static void CreateKey_2(string path, int len)
+        /// <param name="path">path to key</param>
+        /// <param name="len">lenght in bytes of key to be created</param>
+        public static void CreateKey(string path, int len)
         {
             byte[] key = GererateKey(len);
             File.WriteAllBytes(path, key);
@@ -145,7 +125,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="in_path"></param>
         /// <param name="out_path"></param>
-        public static void InitializeLocalRoot(string input_dir, string output_dir, byte[] key, byte[] iv)
+        public static void InitializeLocalRoot(string input_dir, string output_dir, string key, byte[] iv)
         {
             DirectoryInfo di = new DirectoryInfo(input_dir);
             InitializeLocal(di, output_dir, key, iv);
@@ -185,8 +165,9 @@ namespace SecureStorageLib
         /// <param name="output_dir"></param>
         /// <param name="key"></param>
         /// <param name="iv"></param>
-        private static void InitializeLocal(DirectoryInfo dir, string output_dir, byte[] key, byte[] iv)
+        private static void InitializeLocal(DirectoryInfo dir, string output_dir, string key_path, byte[] iv)
         {
+            byte[] key = File.ReadAllBytes(key_path);
             string cloud_dir_name = GetCloudPath(dir.FullName);
             string secure_dir_name = GetSecureName(cloud_dir_name, key);
 
@@ -197,7 +178,7 @@ namespace SecureStorageLib
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            AES aes = new AES(key);
+            AES aes = new AES(key_path);
 
             FileInfo[] fis = dir.GetFiles();
             foreach (FileInfo file in fis)
@@ -262,7 +243,7 @@ namespace SecureStorageLib
 
                 root.AppendChild(dir_node);
 
-                InitializeLocal(sub_dir, output_dir, key, iv);
+                InitializeLocal(sub_dir, output_dir, key_path, iv);
             }
 
             doc.Save(secure_dir_name);
