@@ -32,8 +32,8 @@ namespace HashingAlgorithms
 
             //padding to 512 bit block length
             uint num_pad_bytes = (uint)(data.Length % SHA1_BLOCK_SIZE);
-            byte bit = 0x80;
-            ushort len_bytes = 0;
+            //byte bit = 0x80;
+            //ushort len_bytes = 0;
 
 
             return null;

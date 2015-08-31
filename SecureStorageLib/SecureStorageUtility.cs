@@ -66,6 +66,17 @@ namespace SecureStorageLib
         }
 
         /// <summary>
+        /// CreateKey: create a key and write it to specified name
+        /// </summary>
+        /// <param name="path">path to key</param>
+        /// <param name="len">lenght in bytes of key to be created</param>
+        public static void GererateWriteKey(string path, int len)
+        {
+            byte[] key = GererateKey(len);
+            File.WriteAllBytes(path, key);
+        }
+
+        /// <summary>
         /// FromBytesToHex: coverts bytes into hex string
         /// </summary>
         /// <param name="array">the bytes</param>
@@ -80,45 +91,7 @@ namespace SecureStorageLib
             return sb.ToString();
         }
 
-        /// <summary>
-        /// LoadKey: loads a key from file
-        /// </summary>
-        /// <param name="path">path to key</param>
-        /// <param name="key_size">the key size</param>
-        /// <param name="iv_size">the iv size</param>
-        /// <param name="key">the key</param>
-        /// <param name="iv">the iv</param>
-        //public static void LoadKey(string path, int key_size, int iv_size, out byte[] key, out byte[] iv)
-        //{
-        //    byte[] key_iv = File.ReadAllBytes(path);
-
-        //    iv = new byte[iv_size];
-        //    key = new byte[key_size];
-
-        //    Array.Copy(key_iv, key, key_size);
-        //    Array.Copy(key_iv, key_size, iv, 0, iv_size);
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static byte[] LoadKey_2(string path)
-        {
-            return File.ReadAllBytes(path);
-        }
-
-        /// <summary>
-        /// CreateKey: create a key and write it to specified name
-        /// </summary>
-        /// <param name="path">path to key</param>
-        /// <param name="len">lenght in bytes of key to be created</param>
-        public static void CreateKey(string path, int len)
-        {
-            byte[] key = GererateKey(len);
-            File.WriteAllBytes(path, key);
-        }
+        
 
         /// <summary>
         /// InitializeLocalRoot: initialize/create a directory based on input directory
@@ -178,7 +151,8 @@ namespace SecureStorageLib
             XmlElement root = doc.CreateElement(string.Empty, "root", string.Empty);
             doc.AppendChild(root);
 
-            AES aes = new AES(key_path);
+            //byte[] key = File.ReadAllBytes(key_path);
+            AES aes = new AES(key);
 
             FileInfo[] fis = dir.GetFiles();
             foreach (FileInfo file in fis)

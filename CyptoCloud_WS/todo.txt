@@ -1,6 +1,0 @@
-﻿* interface & desgin issues
-	* figure out create/open flags
-		* createAppend
-		* createNoappend ? delete if exists	
-		* createNew ?
-		* createOverwrite ?

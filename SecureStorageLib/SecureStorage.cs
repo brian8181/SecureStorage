@@ -111,7 +111,7 @@ namespace SecureStorageLib
         //}
 
         /// <summary>
-        /// internal function, abstarcts Creating directories at specified name
+        /// internal function, abstracts creating directories at specified name
         /// </summary>
         /// <param name="name">name of directory</param>
         /// <returns></returns>
@@ -183,9 +183,29 @@ namespace SecureStorageLib
         /// <returns>string, without byte order mark</returns>
         private string RemoveByteOrderMarkUTF8(string xml)
         {
-            string byte_order_mark = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml.StartsWith(byte_order_mark))
-                xml = xml.Remove(0, byte_order_mark.Length);
+            bool bom_present = true;
+            byte[] utf8_bom = new byte[3] { 0xEF, 0xBB, 0xBF };
+            byte[] bts = Encoding.UTF8.GetBytes(xml);
+
+            // check for BOM
+            for (int i = 0; i < 3; ++i)
+            {
+                if (utf8_bom[i] != bts[i])
+                {
+                    bom_present = false;
+                    break;
+                }
+            }
+
+            // remove BOM
+            int len = bts.Length;
+            byte[] no_bom_bts = new byte[len-3];
+            if (bom_present)
+            {
+                Array.Copy(bts, 3, no_bom_bts, 0, len-3);
+                xml = Encoding.UTF8.GetString(no_bom_bts);
+            }
+
             return xml;
         }
 
@@ -271,11 +291,11 @@ namespace SecureStorageLib
         /// <summary>
         /// Copy
         /// </summary>
-        /// <param name="src_name"></param>
-        /// <param name="dst_name"></param>
+        /// <param name="src_name">the plain text source</param>
+        /// <param name="dst_name">the plain test destination</param>
         public void Copy(string src_name, string dst_name)
         {
-             // get all names
+            // get secure names
             string secure_src_name = GetSecureName(src_name);
             string dir_src_name = StoragePath.GetDirectory(src_name);
             string secure_dir_src_name = GetSecureName(dir_src_name);
@@ -306,11 +326,11 @@ namespace SecureStorageLib
         /// <summary>
         /// Move
         /// </summary>
-        /// <param name="src_name"></param>
-        /// <param name="dst_name"></param>
+        /// <param name="src_name">the plain text source</param>
+        /// <param name="dst_name">the plain test destination</param>
         public void Move(string src_name, string dst_name)
         {
-            // get all names
+            // get secure names
             string secure_src_name = GetSecureName(src_name);
             string dir_src_name = StoragePath.GetDirectory(src_name);
             string secure_dir_src_name = GetSecureName(dir_src_name);
@@ -349,7 +369,7 @@ namespace SecureStorageLib
         /// <summary>
         /// DeleteFile
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">the name of file to delete</param>
         public void DeleteFile(string name)
         {
             string secure_name = GetSecureName(name);
@@ -373,7 +393,7 @@ namespace SecureStorageLib
         /// <summary>
         /// DeleteDirectory
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">the name of the directory to delete</param>
         public void DeleteDirectory(string name)
         {
             // delete file 
@@ -544,17 +564,17 @@ namespace SecureStorageLib
                 {
                     data_chunk = new byte[FRAGMENT_SIZE];
                     Array.Copy(data, idx, data_chunk, 0, FRAGMENT_SIZE);
-
+                    // append fragment to file
                     Store.Create(name, data_chunk, FileMode.Append);
                     idx += FRAGMENT_SIZE;
                 }
 
+                // last block (if not already sent), less that full fragment size
                 int left_over = (LEN - idx);
                 if (left_over > 0)
                 {
                     data_chunk = new byte[left_over];
                     Array.Copy(data, idx, data_chunk, 0, left_over);
-
                     Store.Create(name, data_chunk, FileMode.Append);
                 }
             }

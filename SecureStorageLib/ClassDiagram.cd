@@ -3,8 +3,8 @@
   <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
     <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AES.cs</FileName>
+      <HashCode>AQAAAAAAAAAAAAQYAACEAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\AES.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
@@ -40,14 +40,14 @@
   <Class Name="SecureStorageLib.SecureStorageUtility">
     <Position X="7.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AABEEAAAAIAAAAEACgBAACAAAAAQAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEEAAAAIBAAAEACgAAACAAAAAQAAAAQAAAAAAAAAA=</HashCode>
       <FileName>SecureStorageUtility.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SecureStorageLib.Cryptography" Collapsed="true">
     <Position X="3.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAAAAAAAAAAAAQYAAAEAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AQAAAgAAAAAABAQYAACEAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Cryptography.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

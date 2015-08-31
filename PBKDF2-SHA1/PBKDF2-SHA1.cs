@@ -43,13 +43,11 @@ namespace Utility
         // The following constants may be changed without breaking existing hashes.
         public const int SALT_BYTE_SIZE = 32;
         public const int HASH_BYTE_SIZE = 32;
-        //public const int SALT_BYTE_SIZE = 24;
-        //public const int HASH_BYTE_SIZE = 24;
         public const int PBKDF2_ITERATIONS = 1000;
         public const int ITERATION_INDEX = 0;
         public const int SALT_INDEX = 1;
         public const int PBKDF2_INDEX = 2;
-
+         
         /// <summary>
         /// Creates a salted PBKDF2 hash of the password.
         /// </summary>
@@ -66,10 +64,10 @@ namespace Utility
             byte[] hash = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
             return PBKDF2_ITERATIONS + ":" +
                 Convert.ToBase64String(salt) + ":" +
-                Convert.ToBase64String(hash);
+                Convert.ToBase64String(hash);    
         }
 
-        /// <summary>
+        /// <summary>   
         /// Validates a password given a hash of the correct one.
         /// </summary>
         /// <param name="password">The password to check.</param>
@@ -116,7 +114,7 @@ namespace Utility
         {
             Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);
             pbkdf2.IterationCount = iterations;
-            return pbkdf2.GetBytes(outputBytes);
+            return pbkdf2.GetBytes(outputBytes); 
         }
     }
 }

@@ -7,20 +7,16 @@ using SecureStorageLib;
 
 namespace SecureStorageTesting
 {
+    [TestFixture]
     public class AESTesting
     {
 
         private const string STRING_TEST_DATA = "you and I have been through that and it's not our fate";
-        private byte[] key = null;
-        private byte[] iv = null;
         private readonly string KEY_PATH = Global.TestFolder + "key";
         
         [SetUp]
         public void Init()
         {
-            //string key_path = Global.TestFolder + "key";
-            ////SecureStorageUtility.LoadKey(key_path, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            //SecureStorageUtility.LoadKey_2(key_path);
         }
 
         [TearDown]
@@ -34,7 +30,7 @@ namespace SecureStorageTesting
             string file_path = Global.TestFolder + "file.txt";
             byte[] data = File.ReadAllBytes(file_path);
 
-            AES aes = new AES(KEY_PATH);
+            AES aes = new AES( File.ReadAllBytes(KEY_PATH) );
             byte[] enc_data = aes.Encrypt(data);
 
             int data_len = data.Length;
@@ -54,10 +50,10 @@ namespace SecureStorageTesting
         {
             byte[] data = Encoding.ASCII.GetBytes(s);
 
-            AES aes = new AES(KEY_PATH);
+            AES aes = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] enc_data = aes.Encrypt(data);
 
-            int data_len = enc_data.Length - AES.IV_SIZE; // subtract IV length that is appended
+            int data_len = enc_data.Length - AES.DEFAULT_IV_SIZE; // subtract IV length that is appended
             Assert.AreEqual(expected, data_len);
         }
 
@@ -67,7 +63,7 @@ namespace SecureStorageTesting
             //string str_data = "you and I have been through that and it's not our fate";
             byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
 
-            AES aes = new AES(KEY_PATH);
+            AES aes = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] enc_data = aes.Encrypt(data);
 
             byte[] denc_data = aes.Decrypt(enc_data);
@@ -81,10 +77,10 @@ namespace SecureStorageTesting
         {
             byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
 
-            AES aes1 = new AES(KEY_PATH);
+            AES aes1 = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] enc_data = aes1.Encrypt(data);
 
-            AES aes2 = new AES(KEY_PATH);
+            AES aes2 = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] denc_data = aes2.Decrypt(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 

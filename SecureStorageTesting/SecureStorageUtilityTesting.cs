@@ -10,14 +10,14 @@ namespace SecureStorageTesting
     [TestFixture]
     public class SecureStorageUtilityTesting
     {
-        byte[] key = null;
+        AES aes = new AES(File.ReadAllBytes(Global.TestFolder + "key"));
+        //byte[] key = null;
         //byte[] iv = null;
 
         [SetUp]
         public void Init()
         {
-            //SecureStorageUtility.LoadKey("C:\\tmp\\aes_key\\key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            key = SecureStorageUtility.LoadKey_2(Global.TestFolder + "key");
+            
         }
 
         [TearDown]
@@ -43,20 +43,7 @@ namespace SecureStorageTesting
            
         //}
 
-        [Test]
-        public void LoadKey()
-        {
-            byte[] key = null;
-            //byte[] iv = null;
-
-            key = SecureStorageUtility.LoadKey_2(Global.TestFolder + "key");
-          
-            Assert.IsNotNull(key);
-            Assert.AreEqual(AES.KEY_SIZE, key.Length);
-
-            //Assert.IsNotNull(iv);
-            //Assert.AreEqual(AES.IV_SIZE, iv.Length);
-        }
+       
 
         //public void GetSecureName(string name, byte[] key)
         //{
@@ -75,7 +62,7 @@ namespace SecureStorageTesting
         [TestCase("abc/efg/", "881bceff7c5e40a476a752a6906724077cbf72856d4928c2015be3a393c0bdad")]
         public void HMACSHA256(string name, string secure_name)
         {
-            byte[] hash = SecureStorageUtility.HMACSHA256(name, key);
+            byte[] hash = SecureStorageUtility.HMACSHA256(name, aes.Key);
             string actual = SecureStorageUtility.FromBytesToHex(hash);
             Assert.AreEqual(secure_name, actual);
         }

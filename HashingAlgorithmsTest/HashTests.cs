@@ -12,7 +12,7 @@ namespace HashingAlgorithmsTest
     [TestFixture]
     public class HashTests
     {
-        [TestCase("abc", "a9993e364706816aba3e25717850c26c9cd0d89d")]
+        //[TestCase("abc", "a9993e364706816aba3e25717850c26c9cd0d89d")]
         public void Sha1(string data, string expected)
         {
             byte[] buffer = Encoding.ASCII.GetBytes(data);
@@ -43,7 +43,7 @@ namespace HashingAlgorithmsTest
 
 
             // 01100001 01100010 01100011 01100100 = 0x61626364
-            uint i1 = 0x61626364;
+            //uint i1 = 0x61626364;
             
             // 01100101 00000000 00000000 00000000 = 0x65000000
             // 01100101 10000000 00000000 00000000 = 0x65800000

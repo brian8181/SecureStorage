@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigIntegerTestConsole", "BigIntegerTestConsole\BigIntegerTestConsole.csproj", "{DC4CF831-53AD-47AB-95ED-778A8591B231}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utility.v4.5", "..\utility\utility\utility.v4.5.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Deploy_Debug|Any CPU = Deploy_Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC4CF831-53AD-47AB-95ED-778A8591B231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Deploy_Debug|Any CPU.ActiveCfg = Deploy_Debug|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Deploy_Debug|Any CPU.Build.0 = Deploy_Debug|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DFC8774-E67D-4EFF-9249-301C0D5EB158}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

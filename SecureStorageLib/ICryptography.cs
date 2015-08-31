@@ -32,6 +32,7 @@ namespace SecureStorageLib
         //}
 
         //byte[] GetSecureHash(string data);
+        //byte[] PBKeyDF(string password);
 
         /// <summary>
         /// Encrypt: encrypt data with internal key & appends a random IV
@@ -46,5 +47,7 @@ namespace SecureStorageLib
         /// <param name="data">ecrypted bytes</param>
         /// <returns>decrypted bytes</returns>
         byte[] Decrypt(byte[] data);
+
+        
     }
 }

@@ -11,13 +11,13 @@ namespace SecureStorageTesting
     [TestFixture]
     public class SecureStorageTesting
     {
-        byte[] key = null;
-        //byte[] iv = null;
+        private AES aes = new AES( File.ReadAllBytes(Global.TestFolder + "key") );
         private string path = Global.TestFolder + "tmp\\";
 
         [SetUp]
         public void Init()
         {
+            
 
             string cur_dir = Directory.GetCurrentDirectory();
             if (Directory.Exists(path))
@@ -33,10 +33,7 @@ namespace SecureStorageTesting
         [Test]
         public void InitializeBuildDirectoryStructure()
         {
-            SecureStorageUtility.CreateKey(path + "key", 32);
-            //SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            key = SecureStorageUtility.LoadKey_2(path + "key");
-            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(key), 1000);
+            SecureStorage store = new SecureStorage(new LocalStorage(path), aes, 1000);
             store.Initialize();
 
             //todo build stucture
@@ -57,11 +54,8 @@ namespace SecureStorageTesting
         [Test]
         public void CreateReadFile()
         {
-            //SecureStorageUtility.CreateKey(path + "key");
-            SecureStorageUtility.CreateKey(path + "key", AES.KEY_SIZE);
-            //SecureStorageUtility.LoadKey(path + "key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            //key = SecureStorageUtility.LoadKey_2(path + "key");
-            SecureStorage store = new SecureStorage(new LocalStorage(path), new AES(path + "key"), 1000);
+           
+            SecureStorage store = new SecureStorage(new LocalStorage(path), aes, 1000);
             store.Initialize();
             
 
@@ -85,11 +79,13 @@ namespace SecureStorageTesting
         [Test]
         public void CreateKeyLoadUse()
         {
-            //SecureStorageUtility.CreateKey("test_tmp/key");
-            SecureStorageUtility.CreateKey("test_tmp/key", AES.KEY_SIZE);
-            //SecureStorageUtility.LoadKey("test_tmp/key", AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
-            key = SecureStorageUtility.LoadKey_2("test_tmp/key");
-            SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(key), 1000);
+            string unit_test_folder = Global.TestFolder + "CreateKeyLoadUse";
+            if (!Directory.Exists(unit_test_folder))
+                Directory.CreateDirectory(Global.TestFolder + "CreateKeyLoadUse");
+            string key_path = unit_test_folder + "\\key";
+
+            SecureStorageUtility.GererateWriteKey(unit_test_folder + "\\key", AES.DEFAULT_KEY_SIZE);
+            SecureStorage store = new SecureStorage(new LocalStorage("test_tmp"), new AES(File.ReadAllBytes(key_path)), 1000);
 
             //BKP todo...
 

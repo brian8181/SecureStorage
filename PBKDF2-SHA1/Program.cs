@@ -10,8 +10,10 @@ namespace PBKDF2_SHA1
     {
         static void Main(string[] args)
         {
+            // used Derive validate password
             string hash = Utility.PasswordHash.CreateHash("abc");
-            byte[] key = PBKDF2_SHA1.DeriveKeyFunction.DeriveKey("abc");
+
+            
          }
     }
 }

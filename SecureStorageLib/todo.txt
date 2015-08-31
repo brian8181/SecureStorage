@@ -1,7 +1,11 @@
 ﻿*Todo
 		* remove - public AES(byte[] key) & SecureStorageUtility.LoadKey_2(key_loc)
-		* Use PBKDF2-SHA1 (Key stretching) generate key
+		* Use PBKDF2-SHA1 (Key stretching) generate key, 
+			* (only gets 160 bits I need / want 256 ) This is not true I can configure to get 256 bits and will do it 
+			* this may need to wait I am looking fot sha256 implmentaion or I could try it my self until
+			then I could use a straight sha256 only diffrence is it too fast but its better tahn nothing for now
 			* add function to SecureStorageUtility?
+		
 		* NEW Idea 
 			* Two Names
 				* Desciptor the file on ther server ( ecrypted xml in this case )
@@ -12,13 +16,14 @@
 				2. Path does not exist
 				3. Name locked (future)
 				4. Uninitialized?
-				5. Invalid name
+				5. Invalid name	
 				6. Not a descriptor (name is not in descriptor format)
 				7. Not a file (name is not in file) - not sure how i would know?
 		
 		* remove / rethink error handling responsibilities
 		* keyloaded is this a good validation?
 		* name validation, validate all name, valid len, characters etc
+		* Test on other machines Bug with Byte Order Mark (BOM)
 						
 	Future:
 		* Use PBKDF2-SHA1 (Key stretching) generate key

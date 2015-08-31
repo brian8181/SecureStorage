@@ -86,6 +86,11 @@ namespace SecureStorageLib
         /// <param name="dst_name"></param>
         void Copy(string src_name, string dst_name);
 
+        /// <summary>
+        /// file that describes a directory
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         //string GetDescriptor(string name);
         
         /// <summary>
@@ -100,7 +105,15 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="names"></param>
         /// <returns></returns>
-        XmlNodeList GetFiles(string names); 
+        XmlNodeList GetFiles(string names);
+
+
+         //Maybe something like this
+        //public class FileAttributes
+        //{
+        //}
+             
+        //FileAttributes[] GetFilesAttributes(string names);
 
         /// <summary>
         /// GetDirectories: get directory nodes
