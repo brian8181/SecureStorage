@@ -12,27 +12,22 @@ namespace SecureStorageLib
     public class AES : ICryptography
     {
         private byte[] key = null;
-        public const int KEY_SIZE = 32;
-        public const int IV_SIZE = 16;
+        public const int DEFAULT_KEY_SIZE = 32;
+        public const int DEFAULT_IV_SIZE = 16;
 
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="key">key</param>
+        ///// <summary>
+        ///// ctor
+        ///// </summary>
+        ///// <param name="key_path">path to key</param>
+        //public AES(string key_path)
+        //{
+        //    if(File.Exists(key_path))
+        //        this.key = File.ReadAllBytes(key_path); 
+        //}
+
         public AES(byte[] key)
         {
-            if (key.Length != KEY_SIZE)
-                throw new SecureStorageCryptoException("Wrong key/iv size.");
             this.key = key;
-        }
-
-        /// <summary>
-        /// ctor
-        /// </summary>
-        /// <param name="key_path">path to key</param>
-        public AES(string key_path)
-        {
-            this.key = File.ReadAllBytes(key_path); 
         }
 
         /// <summary>
@@ -46,17 +41,7 @@ namespace SecureStorageLib
             }
         }
 
-        ///// <summary>
-        ///// initialization vector
-        ///// </summary>
-        //public byte[] IV
-        //{
-        //    get
-        //    {
-        //        return iv;
-        //    }
-        //}
-
+        
         /// <summary>
         /// size of the key
         /// </summary>
@@ -64,21 +49,9 @@ namespace SecureStorageLib
         {
             get
             {
-                return KEY_SIZE;
+                return DEFAULT_KEY_SIZE;
             }
         }
-
-        ///// <summary>
-        ///// size of initialization vector
-        ///// </summary>
-        //public int IVSize
-        //{
-        //    get
-        //    {
-        //        return KEY_SIZE;
-        //    }
-        //}
-
 
         /// <summary>
         /// encrypt data
@@ -106,7 +79,7 @@ namespace SecureStorageLib
 
                         // write iv to output
                         long ms_len = ms.Length;
-                        ms.Write(iv, 0, AES.IV_SIZE);
+                        ms.Write(iv, 0, AES.DEFAULT_IV_SIZE);
                         byte[] output = ms.ToArray();
                         return output;
                     }
@@ -125,12 +98,12 @@ namespace SecureStorageLib
             {
                 // load key & iv
                 csp.Key = key;
-                byte[] iv = new byte[IV_SIZE];
+                byte[] iv = new byte[DEFAULT_IV_SIZE];
                 
                 // get random iv from end of data
                 long data_len = data.Length;
-                long len = data_len - AES.IV_SIZE;
-                Array.Copy(data, len, iv, 0, AES.IV_SIZE);
+                long len = data_len - AES.DEFAULT_IV_SIZE;
+                Array.Copy(data, len, iv, 0, AES.DEFAULT_IV_SIZE);
                 csp.IV = iv;
                  
                 // why do i need this
@@ -155,55 +128,5 @@ namespace SecureStorageLib
                 }
             }
         }
-
-        
-        //public byte[] Encrypt(byte[] data)
-        //{
-        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-        //    {
-        //        // load key & iv
-        //        csp.Key = key;
-        //        csp.IV = iv;
-        //        ICryptoTransform encryptor = csp.CreateEncryptor(key, iv);
-        //        using (MemoryStream ms = new MemoryStream())
-        //        {
-        //            using (CryptoStream cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write))
-        //            {
-        //                // Write all data to the crypto stream and flush it.
-        //                cs.Write(data, 0, data.Length);
-        //                cs.FlushFinalBlock();
-        //                return ms.ToArray();
-        //            }
-        //        }
-        //    }
-        //}
-
-        
-        //public byte[] Decrypt(byte[] data)
-        //{
-        //    using (AesCryptoServiceProvider csp = new AesCryptoServiceProvider())
-        //    {
-        //        // load key & iv
-        //        csp.Key = key;
-        //        csp.IV = iv;
-        //        ICryptoTransform decryptor = csp.CreateDecryptor(key, iv);
-        //        using (MemoryStream ms = new MemoryStream(data))
-        //        {
-        //            using (CryptoStream cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read))
-        //            {
-        //                long len = data.Length;
-        //                byte[] buffer = new byte[len];
-        //                int read = cs.Read(buffer, 0, (int)len); 
-        //                if (len != read)
-        //                {
-        //                    byte[] copy_buffer = new byte[read];
-        //                    Array.Copy(buffer, copy_buffer, read);
-        //                    buffer = copy_buffer;
-        //                }
-        //                return buffer;
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

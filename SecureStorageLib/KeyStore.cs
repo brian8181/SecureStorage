@@ -25,7 +25,7 @@ namespace SecureStorageLib
             this.PATH = path;
             this.PASSWORD = password;
         }
-        
+
         /// <summary>
         /// indexer
         /// </summary>
@@ -33,31 +33,30 @@ namespace SecureStorageLib
         /// <returns></returns>
         public byte[] this[uint i]
         {
-            get 
+            get
             {
                 byte[] wrapped_keys = File.ReadAllBytes(PATH);
                 byte[] iter_bytes = new byte[4];
                 byte[] salt = new byte[32];
-                                
-                // fill - copy functions - todo
+
                 Array.Copy(wrapped_keys, 0, iter_bytes, 0, 4);
                 Array.Copy(wrapped_keys, 4, salt, 0, 32);
                 int iter = BitConverter.ToInt32(iter_bytes, 0);
 
                 byte[] outter_key = DeriveKeyFunction.PBKDF2(PASSWORD, salt, iter, 32);
-                                
+
                 byte[] enc_keys = new byte[wrapped_keys.Length - (4 + 32)];
-                Array.Copy(wrapped_keys, 4 + 32, enc_keys, 0, enc_keys.Length);
+                Array.Copy(wrapped_keys, (4 + 32), enc_keys, 0, enc_keys.Length);
 
                 AES aes = new AES(outter_key);
                 byte[] denc_all_keys = aes.Decrypt(enc_keys);
-                
+
                 byte[] key = new byte[32];
                 uint idx = i * 32;
                 Array.Copy(denc_all_keys, idx, key, 0, 32);
 
-                return key; 
-            } 
+                return key;
+            }
         }
 
         /// <summary>
@@ -69,23 +68,23 @@ namespace SecureStorageLib
         public static void CreateStore(string path, string passowrd, params byte[][] key)
         {
             byte[] key_data = new byte[key.Length * key_size];
-            
+
             // pack all keys in an byte[]
             for (int i = 0; i < key.Length; ++i)
-                Array.Copy(key[i], 0, key_data, i * 32, (int)key_size); 
+                Array.Copy(key[i], 0, key_data, i * 32, (int)key_size);
 
             // enc with aes
-            byte[] dk = DeriveKeyFunction.DeriveKey(passowrd) ;
+            byte[] dk = DeriveKeyFunction.DeriveKey(passowrd);
             byte[] iter_bytes = new byte[4];
             byte[] salt = new byte[32];
             byte[] kek = new byte[32];
-            
+
             // copy values
             Array.Copy(dk, 0, iter_bytes, 0, 4);
             Array.Copy(dk, 4, salt, 0, 32);
             Array.Copy(dk, 4 + 32, kek, 0, 32);
             int iters = BitConverter.ToInt32(iter_bytes, 0);
-                        
+
             AES aes = new AES(kek);
             byte[] enc_all_keys = aes.Encrypt(key_data);
 

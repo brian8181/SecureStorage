@@ -11,8 +11,7 @@ namespace SecureStorageTesting
     public class AESTesting
     {
 
-        private const string STRING_TEST_DATA = "you and I have been through that and it's not our fate";
-        private readonly string KEY_PATH = Global.TestFolder + "key";
+       private readonly string KEY_PATH = Global.TestFolder + "key";
         
         [SetUp]
         public void Init()
@@ -47,7 +46,7 @@ namespace SecureStorageTesting
         [TestCase("123-123-123-123-123-123-123-123", 32)]
         [TestCase("123-123-123-123-123-123-123-123-", 48)]
         public void EncryptLengthCheck(string s, int expected)
-        {
+         {
             byte[] data = Encoding.ASCII.GetBytes(s);
 
             AES aes = new AES(File.ReadAllBytes(KEY_PATH));
@@ -61,7 +60,7 @@ namespace SecureStorageTesting
         public void EncryptDecrypt()
         {
             //string str_data = "you and I have been through that and it's not our fate";
-            byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
+            byte[] data = Encoding.ASCII.GetBytes(Global.STRING_TEST_DATA);
 
             AES aes = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] enc_data = aes.Encrypt(data);
@@ -69,13 +68,13 @@ namespace SecureStorageTesting
             byte[] denc_data = aes.Decrypt(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 
-            Assert.AreEqual(STRING_TEST_DATA, actual);
+            Assert.AreEqual(Global.STRING_TEST_DATA, actual);
         }
 
         [Test]
         public void EncryptDecrypt_RamdomIV()
         {
-            byte[] data = Encoding.ASCII.GetBytes(STRING_TEST_DATA);
+            byte[] data = Encoding.ASCII.GetBytes(Global.STRING_TEST_DATA);
 
             AES aes1 = new AES(File.ReadAllBytes(KEY_PATH));
             byte[] enc_data = aes1.Encrypt(data);
@@ -85,7 +84,7 @@ namespace SecureStorageTesting
             string actual = Encoding.ASCII.GetString(denc_data);
 
             Assert.AreEqual(data.Length, denc_data.Length);
-            Assert.AreEqual(STRING_TEST_DATA, actual);
+            Assert.AreEqual(Global.STRING_TEST_DATA, actual);
         }
     }
 }

@@ -3,8 +3,16 @@
   <Class Name="SecureStorageLib.AES" BaseTypeListCollapsed="true">
     <Position X="0.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+<<<<<<< .mine
+      <HashCode>AQAAAAAAAAAAAAQYAACEAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AES.cs</FileName>
+||||||| .r132
+      <HashCode>AQAAAAAAAAIAAAQYAAAEAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AES.cs</FileName>
+=======
       <HashCode>AQAAAAAAAAAAAAQYAACEAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\AES.cs</FileName>
+>>>>>>> .r134
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>

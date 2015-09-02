@@ -71,9 +71,13 @@ namespace SecureStorageClient
 
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-            string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key_new.tmp";
-            SecureStorageUtility.GererateWriteKey(key_loc, 32);
-            StdMsgBox.OK("\"Key_new.tmp\" created.");
+            string keystore_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\keystore.tmp";
+            //SecureStorageUtility.GererateWriteKey(key_loc, 32);
+            //StdMsgBox.OK("\"Key_new.tmp\" created.");
+
+            byte[] key = SecureStorageUtility.GererateKey(32);
+            KeyStore.CreateStore(keystore_loc, "abc", key);
+            StdMsgBox.OK("\"keystore.tmp\" created.");
         }
 
         public void RefreshFileList()

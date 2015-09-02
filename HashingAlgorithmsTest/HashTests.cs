@@ -67,7 +67,6 @@ namespace HashingAlgorithmsTest
 
         [TestCase("ABCD", 0x20UL)]
         [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120UL)]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120UL)]
         [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZYabcdefghijklmnopqrstuvwxyz0123", 0x01c0UL)]
         public void Sha1Padding(string data, ulong expected_len)
         {
