@@ -63,6 +63,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CryptographyLib\CryptographyLib.csproj">
+      <Project>{8fb01665-84ee-4500-b4ab-6759797bcdc5}</Project>
+      <Name>CryptographyLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SecureStorageLib\SecureStorageLib.csproj">
       <Project>{668c34d7-2d2e-4f8e-98d2-dcaa36ff850c}</Project>
       <Name>SecureStorageLib</Name>

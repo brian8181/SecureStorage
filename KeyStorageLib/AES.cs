@@ -4,7 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 
-namespace SecureStorageLib
+namespace KeyStorage
 {
     /// <summary>
     /// AES implemenation of ICypto inteface

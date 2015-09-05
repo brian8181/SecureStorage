@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using NUnit.Framework;
 using SecureStorageLib;
+using System.Security.Cryptography;
 
 namespace SecureStorageTesting
 {
@@ -80,6 +81,29 @@ namespace SecureStorageTesting
             byte[] enc_data = aes1.Encrypt(data);
 
             AES aes2 = new AES(File.ReadAllBytes(KEY_PATH));
+            byte[] denc_data = aes2.Decrypt(enc_data);
+            string actual = Encoding.ASCII.GetString(denc_data);
+
+            Assert.AreEqual(data.Length, denc_data.Length);
+            Assert.AreEqual(Global.STRING_TEST_DATA, actual);
+        }
+
+        [Test]
+        public void EncryptDecrypt_RamdomIV_Generic()
+        {
+            byte[] data = Encoding.ASCII.GetBytes(Global.STRING_TEST_DATA);
+            byte[] key = File.ReadAllBytes(KEY_PATH);
+
+            //AES aes1 = new AES(File.ReadAllBytes(KEY_PATH));
+            CryptographyLib.Cryptography<AesCryptoServiceProvider> aes1 = 
+                new CryptographyLib.Cryptography<AesCryptoServiceProvider>(key);
+
+            byte[] enc_data = aes1.Encrypt(data);
+
+            //AES aes2 = new AES(File.ReadAllBytes(KEY_PATH));
+            CryptographyLib.Cryptography<AesCryptoServiceProvider> aes2 =
+               new CryptographyLib.Cryptography<AesCryptoServiceProvider>(key);
+
             byte[] denc_data = aes2.Decrypt(enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 

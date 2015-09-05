@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecureStorageLib
+namespace CryptographyLib
 {
     /// <summary>
     /// ICryptography: defines cryptographic interface

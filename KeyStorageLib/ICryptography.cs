@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SecureStorageLib
+namespace KeyStorage
 {
     /// <summary>
     /// ICryptography: defines cryptographic interface
