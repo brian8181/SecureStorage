@@ -121,7 +121,7 @@ namespace SecureStorageLib
         /// <summary>
         /// GetSecureName: get a secure name
         /// </summary>
-        /// <param name="name">orginal name</param>
+        /// <param name="name">original name</param>
         /// <returns>secure name based off original</returns>
         public static string GetSecureName(string name, byte[] key)
         {

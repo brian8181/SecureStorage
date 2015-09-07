@@ -23,12 +23,15 @@ namespace SecureStorageClient
             FRAGMENT_SIZE = Properties.Settings.Default.fragment_size;
             
             
-            string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\key";
+            string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\keystore";
             //BKP SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             if (!File.Exists(key_loc))
                 return;
 
-            client_cloud = new SecureStorage(new WCFStorage(), new AES(File.ReadAllBytes(key_loc)), FRAGMENT_SIZE);
+            KeyStore store = new KeyStore(key_loc, "abc");
+            byte[] key = store[0];
+
+            client_cloud = new SecureStorage(new WCFStorage(), new AES( key ), FRAGMENT_SIZE);
             lblSever.Text = current_dir;
         }
 
