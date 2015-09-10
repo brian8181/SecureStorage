@@ -17,6 +17,8 @@ namespace CryptographyLib
         private const int DEFAULT_IV_SIZE = 16;
         private readonly byte[] key = null;
         private readonly int key_size = DEFAULT_KEY_SIZE;
+
+        //private readonly uint[] legal_key_sizes;
         
         public Cryptography(byte[] key)
             : this(key, DEFAULT_KEY_SIZE)

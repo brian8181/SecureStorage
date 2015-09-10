@@ -12,6 +12,7 @@ namespace CryptographyLib
         private byte[] key = null;
         public const int DEFAULT_KEY_SIZE = 32;
         public const int DEFAULT_IV_SIZE = 16;
+        
 
         ///// <summary>
         ///// ctor

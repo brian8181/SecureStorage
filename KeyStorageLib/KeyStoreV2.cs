@@ -12,7 +12,7 @@ namespace KeyStorage
         /// 
         /// </summary>
         /// <param name="crypt"></param>
-        public KeyStoreV2(SecureStorageLib.ICryptography crypt)
+        public KeyStoreV2(ICryptography crypt)
         {
 
         }
