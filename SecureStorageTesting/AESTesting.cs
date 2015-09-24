@@ -94,21 +94,31 @@ namespace SecureStorageTesting
             byte[] data = Encoding.ASCII.GetBytes(Global.STRING_TEST_DATA);
             byte[] key = File.ReadAllBytes(KEY_PATH);
 
-            //AES aes1 = new AES(File.ReadAllBytes(KEY_PATH));
             CryptographyLib.Cryptography<AesCryptoServiceProvider> aes1 = 
                 new CryptographyLib.Cryptography<AesCryptoServiceProvider>(key);
 
-            byte[] enc_data = aes1.Encrypt(data);
-
-            //AES aes2 = new AES(File.ReadAllBytes(KEY_PATH));
+            // test encyrpt by ICryptography interface
+            byte[] enc_data = Encrypt(aes1, data);
+                   
             CryptographyLib.Cryptography<AesCryptoServiceProvider> aes2 =
                new CryptographyLib.Cryptography<AesCryptoServiceProvider>(key);
 
-            byte[] denc_data = aes2.Decrypt(enc_data);
+            // test encyrpt by ICryptography interface
+            byte[] denc_data = Decrypt(aes1, enc_data);
             string actual = Encoding.ASCII.GetString(denc_data);
 
             Assert.AreEqual(data.Length, denc_data.Length);
             Assert.AreEqual(Global.STRING_TEST_DATA, actual);
+        }
+
+        public byte[] Encrypt(CryptographyLib.ICryptography crypt, byte[] data)
+        {
+            return crypt.Encrypt(data);
+        }
+
+        public byte[] Decrypt(CryptographyLib.ICryptography crypt, byte[] data)
+        {
+            return crypt.Decrypt(data);
         }
     }
 }

@@ -32,5 +32,11 @@ namespace SecureStorageTesting
             CollectionAssert.AreNotEqual(key3, key22);
             CollectionAssert.AreEqual(key3, key33);
         }
+
+        [Test]
+        public void CreateKeyStoreV2()
+        {
+            KeyStorage.KeyStoreV2 store = new KeyStorage.KeyStoreV2(null, null, null);
+        }
     }
 }

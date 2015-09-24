@@ -72,6 +72,15 @@ namespace SecureStorageLib
         /// <returns></returns>
         byte[] Read(string name); // read file
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        //byte[] Read(string name, uint len); 
+
         /// <summary>
         /// Move
         /// </summary>

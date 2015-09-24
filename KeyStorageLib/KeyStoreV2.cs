@@ -12,7 +12,7 @@ namespace KeyStorage
         /// 
         /// </summary>
         /// <param name="crypt"></param>
-        public KeyStoreV2(ICryptography crypt)
+        public KeyStoreV2(string path, string password, ICryptography crypt)
         {
 
         }
@@ -28,6 +28,17 @@ namespace KeyStorage
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="passowrd"></param>
+        /// <param name="keys"></param>
+        public static void CreateStore(string path, string passowrd, params Key[] keys)
+        {
+
         }
     
     }

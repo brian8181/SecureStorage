@@ -67,6 +67,10 @@
       <Project>{8fb01665-84ee-4500-b4ab-6759797bcdc5}</Project>
       <Name>CryptographyLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyStorageLib\KeyStorageLib.csproj">
+      <Project>{317a8d6e-916b-4c05-a907-67e24d80ec99}</Project>
+      <Name>KeyStorageLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SecureStorageLib\SecureStorageLib.csproj">
       <Project>{668c34d7-2d2e-4f8e-98d2-dcaa36ff850c}</Project>
       <Name>SecureStorageLib</Name>

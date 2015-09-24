@@ -9,7 +9,7 @@ namespace CryptographyLib
     /// <summary>
     /// Cryptography
     /// </summary>
-    public /*abstract*/ class Cryptography<T> /*: ICryptography*/
+    public /*abstract*/ class Cryptography<T> : ICryptography
         where T : SymmetricAlgorithm, new()
     {
         //private SymmetricAlgorithm csp = null;
@@ -59,7 +59,10 @@ namespace CryptographyLib
         /// <summary>
         /// KeySize
         /// </summary>
-        //public abstract int KeySize { get; }
+        public int KeySize 
+        {
+            get { return key_size; }
+        }
         
         /// <summary>
         /// Encrypt

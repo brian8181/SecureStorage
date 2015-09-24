@@ -19,8 +19,12 @@ namespace SecureStorageLib
         /// <returns></returns>
         public static bool IsValidName(string name)
         {
+
+            // ^[a-zA-Z0-9\s\.,;~`'@#\$%\^&{}\(\)\[\]!\+-=_]+$
+
             // BKP simplify this sucker
             //string expression = @"^[a-zA-Z0-9\s.,;~`'@#$%^&{}()\[\]!+-=_]+$";
+
 
             // BKP no = sign, had problems with + sign
             string expression = @"^[a-zA-Z0-9\s._=,;~`'@#$%^&{}()\[\]!+-]+$";

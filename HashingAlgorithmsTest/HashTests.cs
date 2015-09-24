@@ -65,9 +65,9 @@ namespace HashingAlgorithmsTest
             Assert.Inconclusive("work in progress");
         }
 
-        [TestCase("ABCD", 0x20UL)]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120UL)]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZYabcdefghijklmnopqrstuvwxyz0123", 0x01c0UL)]
+        [TestCase("ABCD", 0x20ul)]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZY0123456789", 0x120ul)]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUVWXZYabcdefghijklmnopqrstuvwxyz0123", 0x01c0ul)]
         public void Sha1Padding(string data, ulong expected_len)
         {
             byte[] buffer = Encoding.ASCII.GetBytes(data);
