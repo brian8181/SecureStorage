@@ -175,8 +175,6 @@ namespace CryptographyLib
         //public static byte[] PBKDF2(string password)
         //{
         //    return DeriveKeyFunction.DeriveKey(password);
-
-
          
     }
 }
