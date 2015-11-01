@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using KeyStorage;
+using NUnit.Framework;
 using SecureStorageLib;
 using System;
 using System.Collections.Generic;

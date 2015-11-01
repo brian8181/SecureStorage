@@ -13,16 +13,6 @@ namespace CryptographyLib
         public const int DEFAULT_KEY_SIZE = 32;
         public const int DEFAULT_IV_SIZE = 16;
 
-        ///// <summary>
-        ///// ctor
-        ///// </summary>
-        ///// <param name="key_path">path to key</param>
-        //public AES(string key_path)
-        //{
-        //    if(File.Exists(key_path))
-        //        this.key = File.ReadAllBytes(key_path); 
-        //}
-
         public AES(byte[] key)
         {
             this.key = key;

@@ -6,6 +6,7 @@ using System.Xml;
 using SecureStorageClient;
 using SecureStorageLib;
 using Utility;
+using KeyStorage;
 
 namespace SecureStorageClient
 {
@@ -28,10 +29,18 @@ namespace SecureStorageClient
             if (!File.Exists(key_loc))
                 return;
 
-            KeyStore store = new KeyStore(key_loc, "abc");
+            // load key store from path
+            string pass = Properties.Settings.Default.keystore_pass;
+            KeyStore store = new KeyStore(key_loc, pass);
+            // get first key; just so happens to be an AES key
             byte[] key = store[0];
 
-            client_cloud = new SecureStorage(new WCFStorage(), new AES( key ), FRAGMENT_SIZE);
+
+            client_cloud = new SecureStorage(new WCFStorage(), new SecureStorageLib.AES( key ), FRAGMENT_SIZE);
+            
+            //TODO - use new abstract classes
+            //client_cloud = new SecureStorage(new WCFStorage(), new CryptographyLib.Cryptography<AES>( key, 256 ), FRAGMENT_SIZE);
+            
             lblSever.Text = current_dir;
         }
 

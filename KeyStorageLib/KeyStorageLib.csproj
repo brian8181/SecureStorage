@@ -38,14 +38,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AES.cs" />
-    <Compile Include="ICryptography.cs" />
     <Compile Include="IKeyStorage.cs" />
     <Compile Include="Key.cs" />
     <Compile Include="KeyStore.cs" />
     <Compile Include="KeyStoreV2.cs" />
     <Compile Include="PBKDF2_SHA1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CryptographyLib\CryptographyLib.csproj">
+      <Project>{8fb01665-84ee-4500-b4ab-6759797bcdc5}</Project>
+      <Name>CryptographyLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
