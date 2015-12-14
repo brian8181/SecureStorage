@@ -42,7 +42,6 @@
     <Compile Include="Key.cs" />
     <Compile Include="KeyStore.cs" />
     <Compile Include="KeyStoreV2.cs" />
-    <Compile Include="PBKDF2_SHA1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

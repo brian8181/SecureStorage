@@ -27,7 +27,10 @@ namespace SecureStorageClient
             string key_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\keystore";
             //BKP SecureStorageUtility.LoadKey(key_loc, AES.KEY_SIZE, AES.IV_SIZE, out key, out iv);
             if (!File.Exists(key_loc))
+            {
+                //throw new Exception("No key @ " + "\"" + key_loc + "\"");
                 return;
+            }
 
             // load key store from path
             string pass = Properties.Settings.Default.keystore_pass;

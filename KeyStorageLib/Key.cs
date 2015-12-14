@@ -8,8 +8,8 @@ namespace KeyStorage
 {
     public class Key
     {
-        string name;
-        uint size;
-        byte[] data;
+    //    string name;
+    //    uint size;
+    //    byte[] data;
     }
 }

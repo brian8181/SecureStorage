@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using CryptographyLib;
 
 namespace KeyStorage
 {
@@ -96,6 +97,7 @@ namespace KeyStorage
 
             if (File.Exists(path))
                 File.Delete(path);
+             
             // save
             File.WriteAllBytes(path, iters_salt_enc_all_keys);
         }
