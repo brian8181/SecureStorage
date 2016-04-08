@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePOCs", "ConsolePOCs\ConsolePOCs.csproj", "{4BE8E0F8-C3E6-4ED9-9CA0-4F5AD8A3506A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utility", "..\utility\utility\utility.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
@@ -182,7 +184,6 @@ Global
 		{8AC73EC3-63F1-4D4D-932C-49C46DF86F0D}.Release|Win32.ActiveCfg = Release|Any CPU
 		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Debug|Win32.Build.0 = Debug|Win32
 		{9E9E590B-C33E-4453-B47D-997FF1D3B622}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Win32

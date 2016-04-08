@@ -7,7 +7,7 @@ namespace CryptographyLib
     /// <summary>
     /// AES implemenation of ICypto inteface
     /// </summary>
-    public class AES : ICryptography
+    public class AES /*AESWrapper*/ : ICryptography
     {
         private byte[] key = null;
         public const int DEFAULT_KEY_SIZE = 32;
