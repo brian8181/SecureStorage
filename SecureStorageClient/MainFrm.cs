@@ -29,6 +29,7 @@ namespace SecureStorageClient
             if (!File.Exists(key_loc))
             {
                 //throw new Exception("No key @ " + "\"" + key_loc + "\"");
+                MessageBox.Show("Key not found @ " + key_loc, "No key found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -87,6 +88,8 @@ namespace SecureStorageClient
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
             string keystore_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\keystore.tmp";
+
+            // old way, raw key, no keystore
             //SecureStorageUtility.GererateWriteKey(key_loc, 32);
             //StdMsgBox.OK("\"Key_new.tmp\" created.");
 
