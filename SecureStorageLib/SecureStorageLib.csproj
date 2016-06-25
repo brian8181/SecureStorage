@@ -41,7 +41,6 @@
     <Compile Include="AES.cs" />
     <Compile Include="Cryptography.cs" />
     <Compile Include="PBKDF2_SHA1.cs" />
-    <Compile Include="ICryptography.cs" />
     <Compile Include="IFileInfo.cs" />
     <Compile Include="ISecureStorage.cs" />
     <Compile Include="SecureStorage.cs" />

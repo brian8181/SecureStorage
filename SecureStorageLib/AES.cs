@@ -10,7 +10,7 @@ namespace SecureStorageLib
     /// AES implemenation of ICypto inteface
     /// </summary>
     [Obsolete("use CryptographyLib namespace!")]
-    public class AES : ICryptography
+    public class AES : CryptographyLib.ICryptography
     {
         private byte[] key = null;
         public const int DEFAULT_KEY_SIZE = 32;

@@ -9,7 +9,7 @@ namespace SecureStorageLib
     /// Cryptography
     /// </summary>
     [Obsolete("use CryptographyLib namespace!")]
-    public abstract class Cryptography : ICryptography
+    public abstract class Cryptography : CryptographyLib.ICryptography
     {
         private const int DEFAULT_KEY_SIZE = 32;
         private readonly byte[] key = null;

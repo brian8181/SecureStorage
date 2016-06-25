@@ -15,7 +15,7 @@ namespace SecureStorageLib
         /// <summary>
         /// Cryptography
         /// </summary>
-        ICryptography Cryptography { get; }
+        CryptographyLib.ICryptography Cryptography { get; }
 
         /// <summary>
         /// CurrentDirectory
