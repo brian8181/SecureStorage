@@ -99,7 +99,7 @@ namespace CryptographyLib
 
                         // write iv to output
                         long ms_len = ms.Length;
-                        ms.Write(iv, 0, AES.DEFAULT_IV_SIZE);
+                        ms.Write(iv, 0, DEFAULT_IV_SIZE);
                         byte[] output = ms.ToArray();
                         return output;
                     }
@@ -129,8 +129,8 @@ namespace CryptographyLib
 
                 // get random iv from end of data
                 long data_len = data.Length;
-                long len = data_len - AES.DEFAULT_IV_SIZE;
-                Array.Copy(data, len, iv, 0, AES.DEFAULT_IV_SIZE);
+                long len = data_len - DEFAULT_IV_SIZE;
+                Array.Copy(data, len, iv, 0, DEFAULT_IV_SIZE);
                 csp.IV = iv;
 
                 // why do i need this
