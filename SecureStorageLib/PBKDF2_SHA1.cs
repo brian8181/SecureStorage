@@ -41,9 +41,7 @@ namespace SecureStorageLib
             
             return full_key;
         }
-
         
-
         /// <summary>
         /// Computes the PBKDF2-SHA1 hash of a password.
         /// </summary>

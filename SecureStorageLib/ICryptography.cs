@@ -5,6 +5,7 @@ namespace SecureStorageLib
     /// <summary>
     /// ICryptography: defines cryptographic interface
     /// </summary>
+    [Obsolete("use CryptographyLib namespace!")]
     public interface ICryptography
     {
         /// <summary>

@@ -58,6 +58,12 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CryptographyLib\CryptographyLib.csproj">
+      <Project>{8fb01665-84ee-4500-b4ab-6759797bcdc5}</Project>
+      <Name>CryptographyLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
