@@ -72,5 +72,6 @@ namespace SecureStorageLib
         /// DeleteAll
         /// </summary>
         void DeleteAll();
+
     }
 }

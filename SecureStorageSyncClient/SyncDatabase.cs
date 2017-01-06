@@ -6,7 +6,32 @@ using System.Threading.Tasks;
 
 namespace SecureStorageSyncClient
 {
-    class SyncDatabase
+    public class SyncDatabase
     {
+        public void Sync()
+        {
+        }
+        
+        #region Tools
+
+        public void LoadSettings()
+        {
+        }
+
+        public void UpdateSettings()
+        {
+        }
+
+        public void CreateFromLocal()
+        {
+        }
+
+        public void CreateFromCloud()
+        {
+
+        }
+
+        #endregion
+
     }
 }

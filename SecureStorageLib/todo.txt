@@ -1,4 +1,4 @@
-﻿*Todo
+﻿ *Todo
 		* remove - public AES(byte[] key) & SecureStorageUtility.LoadKey_2(key_loc)
 		* Use PBKDF2-SHA1 (Key stretching) generate key, 
 			* (only gets 160 bits I need / want 256 ) This is not true I can configure to get 256 bits and will do it 

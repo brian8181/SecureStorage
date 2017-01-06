@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePOCs", "ConsolePOCs\ConsolePOCs.csproj", "{4BE8E0F8-C3E6-4ED9-9CA0-4F5AD8A3506A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "utility", "..\utility\utility\utility.csproj", "{4DFC8774-E67D-4EFF-9249-301C0D5EB158}"
@@ -65,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyStorageLib", "KeyStorageLib\KeyStorageLib.csproj", "{317A8D6E-916B-4C05-A907-67E24D80EC99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptographyLib", "CryptographyLib\CryptographyLib.csproj", "{8FB01665-84EE-4500-B4AB-6759797BCDC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStorageSyncClient", "SecureStorageSyncClient\SecureStorageSyncClient.csproj", "{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -449,6 +449,7 @@ Global
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{317A8D6E-916B-4C05-A907-67E24D80EC99}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -475,6 +476,21 @@ Global
 		{8FB01665-84EE-4500-B4AB-6759797BCDC5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8FB01665-84EE-4500-B4AB-6759797BCDC5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8FB01665-84EE-4500-B4AB-6759797BCDC5}.Release|Win32.ActiveCfg = Release|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Deploy_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Deploy_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Deploy_Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Deploy_Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Deploy_Debug|Win32.ActiveCfg = Debug|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{11B5BC7E-B52F-4D98-BF53-3E86B056A1D2}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

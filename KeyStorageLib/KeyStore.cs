@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using CryptographyLib;
@@ -9,7 +10,7 @@ namespace KeyStorage
 {
     /// <summary>
     /// KeyStore
-    /// </summary>
+    /// </summary> 
     public class KeyStore
     {
         private const byte key_size = 32;
@@ -49,7 +50,7 @@ namespace KeyStorage
                 byte[] enc_keys = new byte[wrapped_keys.Length - (4 + 32)];
                 Array.Copy(wrapped_keys, (4 + 32), enc_keys, 0, enc_keys.Length);
 
-                AES aes = new AES(outter_key);
+                Cryptography<AesCryptoServiceProvider> aes = new Cryptography<AesCryptoServiceProvider>(outter_key);
                 byte[] denc_all_keys = aes.Decrypt(enc_keys);
                 
                 byte[] key = new byte[32];
@@ -85,8 +86,9 @@ namespace KeyStorage
             Array.Copy(dk, 4, salt, 0, 32);
             Array.Copy(dk, 4 + 32, kek, 0, 32);
             int iters = BitConverter.ToInt32(iter_bytes, 0);
-                        
-            AES aes = new AES(kek);
+
+            Cryptography<AesCryptoServiceProvider> aes = new Cryptography<AesCryptoServiceProvider>(kek);
+            //Cryptography<Aes> aes = new Cryptography<Aes>(kek);
             byte[] enc_all_keys = aes.Encrypt(key_data);
 
             byte[] iters_salt_enc_all_keys = new byte[enc_all_keys.Length + 4 + 32];

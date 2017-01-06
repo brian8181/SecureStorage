@@ -95,6 +95,9 @@ namespace SecureStorageLib
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
+#if DEBUG
+            doc.Save("root.xml");
+#endif
             return doc;
         }
 
@@ -260,6 +263,8 @@ namespace SecureStorageLib
             encrypted_data = crypto.Encrypt(data);
             Store.Create(secure_dir_name, encrypted_data, FileMode.Append);
         }
+
+        public void Update(string name, byte[] data) { }
 
         /// <summary>
         /// CreateDirectory

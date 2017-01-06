@@ -88,7 +88,7 @@ namespace SecureStorageLib
         /// <returns>byte[]</returns>
         public static byte[] PBKDF2(string password)
         {
-            return DeriveKeyFunction.DeriveKey(password);
+            return CryptographyLib.DeriveKeyFunction.DeriveKey(password);
         }
     }
 }

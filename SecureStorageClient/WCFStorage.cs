@@ -57,6 +57,12 @@ namespace SecureStorageClient
         {
             cloud.Move(src_name, dst_name);
         }
+
+        public byte[] GetHash(string names)
+        {
+            //todo
+            return null;
+        }
         
         #endregion
     }

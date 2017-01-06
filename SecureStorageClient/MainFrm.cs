@@ -43,7 +43,7 @@ namespace SecureStorageClient
             client_cloud = new SecureStorage(new WCFStorage(), new SecureStorageLib.AES( key ), FRAGMENT_SIZE);
             
             //TODO - use new abstract classes
-            //client_cloud = new SecureStorage(new WCFStorage(), new CryptographyLib.Cryptography<AES>( key, 256 ), FRAGMENT_SIZE);
+            //client_cloud = new SecureStorage(new WCFStorage(), new new Cryptography<AesCryptoServiceProvider>(key, 256), FRAGMENT_SIZE);
             
             lblSever.Text = current_dir;
         }
