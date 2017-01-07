@@ -84,7 +84,7 @@ namespace SecureStorageLib
         /// </summary>
         /// <param name="name">name of directory</param>
         /// <returns>the name/doc as XmlDocument</returns>
-        private XmlDocument GetDirectoryDocument(string name)
+        private  XmlDocument GetDirectoryDocument(string name)
         {
             // posssible too big a file!, use this.Read()
             byte[] encrypted_data = Store.Read(name, 0, 0);
@@ -96,9 +96,15 @@ namespace SecureStorageLib
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
 #if DEBUG
-            doc.Save("root.xml");
+            doc.Save(name + ".xml");
 #endif
             return doc;
+        }
+
+        // BKP need public access so i added this
+        public XmlDocument GetDescriptorDocument(string name)
+        {
+            return GetDirectoryDocument(GetSecureName(name));
         }
 
         //BKP new, STILL USING "GetDirectoryDocument"
@@ -197,7 +203,7 @@ namespace SecureStorageLib
                 {
                     bom_present = false;
                     break;
-                }
+                } 
             }
 
             // remove BOM
@@ -521,7 +527,7 @@ namespace SecureStorageLib
             XmlNode node = doc.CreateElement(string.Empty, "directory", string.Empty); ;
             AppendCommonNodesXml(doc, node, name);
 
-            root.AppendChild(node);
+            root.AppendChild(node); 
         }
 
         /// <summary>
