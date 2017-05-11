@@ -24,7 +24,18 @@ namespace SecureStorageSyncClient
 
         public void CreateFromLocal()
         {
+            // resuse code init local, see below
         }
+             /// <summary>
+        ///// InitializeLocal
+        ///// </summary>
+        ///// <param name="dir"></param>
+        ///// <param name="output_dir"></param>
+        ///// <param name="key"></param>
+        ///// <param name="iv"></param> 
+        //private static void InitializeLocal(DirectoryInfo dir, string output_dir, string key_path, byte[] iv)
+        //{
+        //}
 
         public void CreateFromCloud()
         {

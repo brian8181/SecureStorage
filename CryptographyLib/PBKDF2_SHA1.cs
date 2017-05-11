@@ -28,7 +28,7 @@ namespace CryptographyLib
             csprng.GetBytes(salt);
 
             // Hash the password and encode the parameters
-            byte[] key = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
+            byte[] key = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE); 
 
             //need salt & iterations
             byte[] iter_bytes = BitConverter.GetBytes(PBKDF2_ITERATIONS);

@@ -17,7 +17,5 @@ namespace SecureStorageClient
             InitializeComponent();
             srcfileBrowser.TextBox.Text = src_name;
         }
-
-      
     }
 }

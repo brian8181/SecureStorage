@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using CryptographyLib;
@@ -22,6 +15,7 @@ namespace SecureStorageSyncClient
         private string current_dir = "/";
         private readonly int FRAGMENT_SIZE;
         private readonly int MAX_SIZE;
+        //private byte[] key = null;
                
 
         public ToolsFrm()
@@ -56,15 +50,22 @@ namespace SecureStorageSyncClient
 
         private void btnFromCloud_Click(object sender, EventArgs e)
         {
+            //SSXmlDocument doc = new SSXmlDocument();
+            //doc.Create(Properties.Settings.Default.local_folder + "\\test.xml");
+
+                    
             BuildFromCloud("/");
+            MessageBox.Show("Done!");
         }
 
         private void BuildFromCloud(string dir)
         {
-             XmlNodeList files2 = client_cloud.GetFiles(dir);
-
+           
+            // download files
+            XmlNodeList files = client_cloud.GetFiles(dir);
+                      
             // add to fileList
-            foreach (XmlNode n in files2)
+            foreach (XmlNode n in files)
             {
                 string name = n["name"].InnerText;
                 Read(name);
@@ -78,6 +79,12 @@ namespace SecureStorageSyncClient
                 string name = n["name"].InnerText;
                 BuildFromCloud(name);
             }
+
+            // save Directory Documents!
+            XmlDocument doc = client_cloud.GetDescriptorDocument(dir);
+            string dir_tmp = dir.Replace('/', '\\');
+            doc.Save(Properties.Settings.Default.local_folder + "\\" + dir_tmp + "_.xml");
+
         }
 
         /// <summary>

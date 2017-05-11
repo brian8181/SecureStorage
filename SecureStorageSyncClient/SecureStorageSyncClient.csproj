@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -66,6 +66,7 @@
     <Compile Include="SettingsFrm.Designer.cs">
       <DependentUpon>SettingsFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SSXmlDocument.cs" />
     <Compile Include="SyncDatabase.cs" />
     <Compile Include="ToolsFrm.cs">
       <SubType>Form</SubType>

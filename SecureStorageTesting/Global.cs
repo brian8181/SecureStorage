@@ -15,7 +15,5 @@ namespace SecureStorageTesting
         {
             get { return PATH; }
         }
-
-        
     }
 }
