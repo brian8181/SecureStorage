@@ -7,6 +7,7 @@ using SecureStorageClient;
 using SecureStorageLib;
 using Utility;
 using KeyStorage;
+using System.Security.Cryptography;
 
 namespace SecureStorageClient
 {
@@ -40,10 +41,10 @@ namespace SecureStorageClient
             byte[] key = store[0];
 
 
-            client_cloud = new SecureStorage(new WCFStorage(), new SecureStorageLib.AES( key ), FRAGMENT_SIZE);
+            //client_cloud = new SecureStorage(new WCFStorage(), new SecureStorageLib.AES( key ), FRAGMENT_SIZE);
             
             //TODO - use new abstract classes
-            //client_cloud = new SecureStorage(new WCFStorage(), new new Cryptography<AesCryptoServiceProvider>(key, 256), FRAGMENT_SIZE);
+            client_cloud = new SecureStorage(new WCFStorage(), new CryptographyLib.Cryptography<AesCryptoServiceProvider>(key, 256), FRAGMENT_SIZE);
             
             lblSever.Text = current_dir;
         }

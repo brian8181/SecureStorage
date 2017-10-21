@@ -414,7 +414,7 @@ namespace SecureStorageLib
             XmlNodeList me_node = me_doc.SelectNodes("/root/file | /root/directory");
             if (me_node.Count > 0)
             {
-                //BKP delete all
+                //BKP delete all?
                 throw new SecureStorageException("Directory is not empty.");
             }
 
