@@ -87,7 +87,14 @@ namespace SecureStorageClient
 
         private void btnCreateKey_Click(object sender, EventArgs e)
         {
-            string keystore_loc = Properties.Settings.Default.key_loc.TrimEnd('\\') + "\\keystore.tmp";
+            string path = Properties.Settings.Default.key_loc.TrimEnd('\\');
+            if (!File.Exists(path))
+            {
+                MessageBox.Show("Key path not found @ " + path, "check key_loc setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string keystore_loc = path + "\\keystore.tmp"; //BKP todo remove .tmp
 
             // old way, raw key, no keystore
             //SecureStorageUtility.GererateWriteKey(key_loc, 32);
