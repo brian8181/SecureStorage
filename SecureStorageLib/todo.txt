@@ -1,14 +1,10 @@
 ﻿ *Todo
 		* remove - public AES(byte[] key) & SecureStorageUtility.LoadKey_2(key_loc)
-		* Use PBKDF2-SHA1 (Key stretching) generate key, 
-			* (only gets 160 bits I need / want 256 ) This is not true I can configure to get 256 bits and will do it 
-			* this may need to wait I am looking fot sha256 implmentaion or I could try it my self until
-			then I could use a straight sha256 only diffrence is it too fast but its better tahn nothing for now
-			* add function to SecureStorageUtility?
+		
 		
 		* NEW Idea 
 			* Two Names
-				* Desciptor the file on ther server ( ecrypted xml in this case )
+				* Desciptor the file on the server ( ecrypted xml in this case )
 				* Directory a virtual thing you can see ( made by addtion to description and it own descriptor)
 			* Possible Errors
 				1. Name exists
@@ -26,8 +22,7 @@
 		* Test on other machines Bug with Byte Order Mark (BOM)
 						
 	Future:
-		* Use PBKDF2-SHA1 (Key stretching) generate key
-			* add function to SecureStorageUtility?
+	
 		* Local Read Buffer, have a location that auto buffers files based on? last used?, fequency?, size?
 			* Optimize for least bytes downloaded
 
@@ -107,6 +102,13 @@
         }
 
 	Done:
+		* Use PBKDF2-SHA1 (Key stretching) generate key, 
+			* (only gets 160 bits I need / want 256 ) This is not true I can configure to get 256 bits and will do it 
+			* this may need to wait I am looking fot sha256 implmentaion or I could try it my self until
+			then I could use a straight sha256 only diffrence is it too fast but its better tahn nothing for now
+			* add function to SecureStorageUtility?
+		* Use PBKDF2-SHA1 (Key stretching) generate key
+			* add function to SecureStorageUtility?
 		* Finish this up, implmented in AES file, changes due LoadKey, SaveKey, etc ...
 			* random initialization vector, stored with data, or stored in directory!
 				* IMPLEMENT RANDOM IV

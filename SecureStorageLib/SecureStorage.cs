@@ -260,9 +260,9 @@ namespace SecureStorageLib
             hash = Convert.ToBase64String(sha256);
             AppendFileXml(doc, name, hash);
 
-            // delete old dir file
+            // delete old directory file
             Store.Delete(secure_dir_name);
-            // create new dir file
+            // create new directory file
             string xml = doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
             encrypted_data = crypto.Encrypt(data);
@@ -323,9 +323,9 @@ namespace SecureStorageLib
 
             XmlDocument dst_doc = GetDirectoryDocument(secure_dir_dst_name);
             AppendFileXml(dst_doc, dst_name, hash);
-            // delete old dir file
+            // delete old directory file
             Store.Delete(secure_dir_dst_name);
-            // create new dir file
+            // create new directory file
             string xml = dst_doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] encrypted_data = crypto.Encrypt(data);
@@ -357,9 +357,9 @@ namespace SecureStorageLib
             string hash = ReadFileSignatureXml(src_doc, src_name); // get hash from doc
 
             RemoveNameXml(src_doc, src_name);
-            // delete old dir file
+            // delete old directory file
             Store.Delete(secure_dir_src_name);
-            // create new dir file
+            // create new directory file
             string xml = src_doc.OuterXml;
             byte[] data = Encoding.UTF8.GetBytes(xml);
             byte[] encrypted_data = crypto.Encrypt(data);
@@ -367,9 +367,9 @@ namespace SecureStorageLib
 
             XmlDocument dst_doc = GetDirectoryDocument(secure_dir_dst_name);
             AppendFileXml(dst_doc, dst_name, hash);
-            // delete old dir file
+            // delete old directory file
             Store.Delete(secure_dir_dst_name);
-            // create new dir file
+            // create new directory file
             xml = dst_doc.OuterXml;
             data = Encoding.UTF8.GetBytes(xml);
             encrypted_data = crypto.Encrypt(data);
