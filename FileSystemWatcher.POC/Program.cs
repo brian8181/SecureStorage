@@ -27,27 +27,35 @@ public class Watcher
         // Create a new FileSystemWatcher and set its properties.
         FileSystemWatcher watcher = new FileSystemWatcher();
         watcher.Path = args[1];
+        watcher.IncludeSubdirectories = true;
         /* Watch for changes in LastAccess and LastWrite times, and
            the renaming of files or directories. */
         //watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
         //   | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
-        watcher.NotifyFilter = NotifyFilters.Attributes |
-            NotifyFilters.CreationTime |
-            NotifyFilters.FileName |
-            NotifyFilters.LastAccess |
-            NotifyFilters.LastWrite |
-            NotifyFilters.Size |
-            NotifyFilters.Security;
+        //watcher.NotifyFilter = NotifyFilters.Attributes |
+        //    NotifyFilters.CreationTime |
+        //    NotifyFilters.FileName |
+        //   NotifyFilters.LastAccess |
+        //    NotifyFilters.LastWrite |
+        //    NotifyFilters.Size;
+        //NotifyFilters.Security*/;
+
+        // created & deleted
+        watcher.NotifyFilter = NotifyFilters.FileName;
+
+        // file changed
+        //todo
 
         // Only watch text files.
         watcher.Filter = "*.*";
 
         // Add event handlers.
         watcher.Changed += new FileSystemEventHandler(OnChanged);
-        watcher.Created += new FileSystemEventHandler(OnChanged);
-        watcher.Deleted += new FileSystemEventHandler(OnChanged);
+        watcher.Created += new FileSystemEventHandler(OnCreated);
+        watcher.Deleted += new FileSystemEventHandler(OnDeleted);
         watcher.Renamed += new RenamedEventHandler(OnRenamed);
+    
 
         // Begin watching.
         watcher.EnableRaisingEvents = true;
@@ -55,6 +63,19 @@ public class Watcher
         // Wait for the user to quit the program.
         Console.WriteLine("Press \'q\' to quit the sample.");
         while (Console.Read() != 'q') ;
+    }
+    // Define the event handlers.
+    private static void OnDeleted(object source, FileSystemEventArgs e)
+    {
+        // Specify what is done when a file is changed, created, or deleted.
+        Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
+    }
+
+    // Define the event handlers.
+    private static void OnCreated(object source, FileSystemEventArgs e)
+    {
+        // Specify what is done when a file is changed, created, or deleted.
+        Console.WriteLine("File: " + e.FullPath + " " + e.ChangeType);
     }
 
     // Define the event handlers.

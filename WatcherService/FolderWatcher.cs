@@ -15,6 +15,8 @@ namespace WatcherService
         public FolderWatcher(string folder)
         {
             watcher.Path = folder;
+            watcher.IncludeSubdirectories = true;
+
             /* Watch for changes in LastAccess and LastWrite times, and
                the renaming of files or directories. */
             //watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
@@ -30,6 +32,7 @@ namespace WatcherService
 
             // Only watch text files.
             watcher.Filter = "*.*";
+            
 
             // Add event handlers.
             watcher.Changed += new FileSystemEventHandler(OnChanged);
@@ -42,6 +45,11 @@ namespace WatcherService
         }
 
         // Define the event handlers.
+        //private static void OnCreated(object source, FileSystemEventArgs e)
+        //{
+
+        //}
+
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
 
